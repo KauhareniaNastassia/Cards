@@ -1,0 +1,21 @@
+.label {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+
+.checkbox {
+    width: 30px;
+    height: 30px;
+    margin: 10px;
+    cursor: pointer;
+    background-color: #FFE4E1;
+    border-color: #FF9BAA;
+}
+
+.checkbox:checked{
+    appearance: auto;
+    background-color: #FFE4E1;
+}
+
