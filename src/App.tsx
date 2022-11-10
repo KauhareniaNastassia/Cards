@@ -1,18 +1,23 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-import {Route} from "react-router-dom";
+import {HashRouter, Route} from "react-router-dom"
 
 function App() {
   return (
     <div className="App">
-      <Route path='/care' render={() => <Login/>}/>
-      <Route path='/care' render={() => <Registration/>}/>
-      <Route path='/care' render={() => <Profile/>}/>
-      <Route path='/care' render={() => <Error404/>}/>
-      <Route path='/care' render={() => <EnterNewPassword/>}/>
-      <Route path='/care' render={() => <TestComponents/>}/>
-      <Route path='/care' render={() => <TestComponents/>}/>
+
+        <HashRouter>
+            <Route path={'/care'} element={<Login/>}/>
+            <Route path={'/care'} element={<Registration/>}/>
+            <Route path={'/care'} element={<Profile/>}/>
+            <Route path={'/care'} element={<Error404/>}/>
+            <Route path={'/care'} element={<EnterNewPassword/>}/>
+            <Route path={'/care'} element={<TestComponents/>}/>
+            <Route path={'/care'} element={<Login/>}/>
+            <Route path={'/care'} element={<PasswordRecovery/>}/>
+        </HashRouter>
+
+
     </div>
   );
 }
