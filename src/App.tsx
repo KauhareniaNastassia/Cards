@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import {HashRouter, Navigate, Route, Routes} from "react-router-dom"
+import {Navigate, Route, Routes} from "react-router-dom"
 import TestComponents from "./components/TestComponents/TestComponents";
 import {Error404} from "./components/Error404/Error404";
 import {Registration} from "./components/Registration/Registration";

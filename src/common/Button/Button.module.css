@@ -11,6 +11,16 @@
     font-size: 16px;
 }
 
+.btn:hover{
+    cursor: pointer;
+    background-color:#ff9baa;
+}
+
+.btn:active{
+    cursor: pointer;
+    background-color: #fb607f;
+}
+
 .red {
     background: #C10020;
     color: #003399;
