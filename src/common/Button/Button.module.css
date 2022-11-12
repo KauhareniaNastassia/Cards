@@ -1,27 +1,31 @@
 .default {
-
 }
 
 .btn {
-    background: #FFC0CB;
-    color: #003399;
-    border: none;
-    margin-bottom: 5px;
-    font-family: LiSu;
-    font-size: 16px;
+  margin-bottom: 5px;
+
+  font-family: LiSu;
+  font-size: 16px;
+  color: #003399;
+
+  background: #ffc0cb;
+  border: none;
 }
 
-.btn:hover{
-    cursor: pointer;
-    background-color:#ff9baa;
+.btn:hover {
+  cursor: pointer;
+
+  background-color: #ff9baa;
 }
 
-.btn:active{
-    cursor: pointer;
-    background-color: #fb607f;
+.btn:active {
+  cursor: pointer;
+
+  background-color: #fb607f;
 }
 
 .red {
-    background: #C10020;
-    color: #003399;
+  color: #003399;
+
+  background: #c10020;
 }

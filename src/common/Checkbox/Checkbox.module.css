@@ -1,21 +1,23 @@
 .label {
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-}
+  cursor: pointer;
 
+  display: flex;
+  align-items: center;
+}
 
 .checkbox {
-    width: 30px;
-    height: 30px;
-    margin: 10px;
-    cursor: pointer;
-    background-color: #FFE4E1;
-    border-color: #FF9BAA;
+  cursor: pointer;
+
+  width: 30px;
+  height: 30px;
+  margin: 10px;
+
+  background-color: #ffe4e1;
+  border-color: #ff9baa;
 }
 
-.checkbox:checked{
-    appearance: auto;
-    background-color: #FFE4E1;
-}
+.checkbox:checked {
+  background-color: #ffe4e1;
 
+  appearance: auto;
+}

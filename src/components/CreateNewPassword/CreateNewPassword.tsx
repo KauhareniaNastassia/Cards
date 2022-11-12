@@ -1,10 +1,5 @@
-import React from 'react';
+import React from 'react'
 
 export const CreateNewPassword = () => {
-    return (
-        <div>
-            CreateNewPassword
-        </div>
-    );
-};
-
+  return <div>CreateNewPassword</div>
+}
