@@ -2,7 +2,7 @@ import React from 'react'
 
 import './App.css'
 
-import { Link, Navigate, Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 
 import { CreateNewPassword } from '../components/CreateNewPassword/CreateNewPassword'
 import { Error404 } from '../components/Error404/Error404'
