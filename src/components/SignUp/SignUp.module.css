@@ -1,7 +1,17 @@
 .wrapp {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
   margin: 5% 0;
 
   text-align: center;
+}
+.inner {
+  padding: 20px;
+
+  border: 2px solid #f1f1f2;
+  border-radius: 20px;
 }
 .formWrapp {
   display: flex;
