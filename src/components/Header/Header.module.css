@@ -5,3 +5,23 @@
 
   margin: 10px 10%;
 }
+
+@media only screen and (max-width: 400px) {
+  .logo {
+    max-width: 150px;
+  }
+  .logo img {
+    width: 100%;
+    height: auto;
+  }
+}
+
+@media only screen and (max-width: 330px) {
+  .logo {
+    max-width: 100px;
+  }
+  .logo img {
+    width: 100%;
+    height: auto;
+  }
+}

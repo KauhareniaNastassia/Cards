@@ -12,7 +12,9 @@ const Header = () => {
       <a href="https://it-incubator.io/" target="_blank" className={s.logo} rel="noreferrer">
         <img src={incubatorLogo} alt="incubatorLogo" />
       </a>
-      <Button variant="contained">Sign In</Button>
+      <Button variant="contained" style={{ borderRadius: '20px' }}>
+        Sign In
+      </Button>
     </div>
   )
 }

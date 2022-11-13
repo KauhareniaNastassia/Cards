@@ -1,0 +1,19 @@
+.wrapp {
+  margin: 5% 0;
+
+  text-align: center;
+}
+.formWrapp {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  width: 300px;
+  margin: 0 auto;
+}
+
+@media only screen and (max-width: 330px) {
+  .formWrapp {
+    width: 250px;
+  }
+}
