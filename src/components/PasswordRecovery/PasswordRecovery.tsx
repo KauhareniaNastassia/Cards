@@ -3,7 +3,9 @@ import React from 'react'
 import { Button } from '@mui/material'
 import TextField from '@mui/material/TextField/TextField'
 import { useFormik } from 'formik'
+import { Link, Navigate } from 'react-router-dom'
 
+import { PATH } from '../../app/App'
 import { validateUtil } from '../../utils/validate'
 import s from '../SignUp/SignUp.module.css'
 
@@ -45,9 +47,7 @@ export const PasswordRecovery = () => {
           >
             Did you remember your password?
           </Button>
-          <Button variant="text" style={{ color: 'blue', textTransform: 'inherit' }}>
-            Try logging in
-          </Button>
+          <Link to={PATH.Login}>Try Loggin in</Link>
         </form>
       </div>
     </section>

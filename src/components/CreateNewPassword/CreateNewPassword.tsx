@@ -14,6 +14,7 @@ export const CreateNewPassword = () => {
     },
     validate: validateUtil,
     onSubmit: values => {
+      console.log('submit')
       alert(JSON.stringify(values, null, 2))
     },
   })

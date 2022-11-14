@@ -13,45 +13,38 @@ type DefaultInputPropsType = DetailedHTMLProps<
   HTMLInputElement
 >
 
-interface State {
-  password: string
-  showPassword: boolean
-}
 type inputPropsType = DefaultInputPropsType &
   OutlinedInputProps & {
     nameField: string
   }
 
-const InputPassword: React.FC<inputPropsType> = ({ nameField, ...restProps }) => {
-  const [values, setValues] = useState<State>({
-    password: '',
-    showPassword: false,
-  })
+const InputPassword: React.FC<inputPropsType> = ({ nameField, value, onChange, ...restProps }) => {
+  const [eye, setEye] = useState<boolean>(false)
 
-  const handleChange = (prop: keyof State) => (event: ChangeEvent<HTMLInputElement>) => {
-    setValues({ ...values, [prop]: event.currentTarget.value })
-    // props.onChangeText(event.currentTarget.value)
-  }
+  // console.log('input')
+  // const handleChange = (prop: keyof State) => (event: ChangeEvent<HTMLInputElement>) => {
+  //   setValues({ ...values, [prop]: event.currentTarget.value })
+  //   // props.onChangeText(event.currentTarget.value)
+  // }
 
   const handleClickShowPassword = () => {
-    setValues({
-      ...values,
-      showPassword: !values.showPassword,
-    })
+    setEye(!eye)
   }
 
   const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
   }
 
+  console.log('InputPassword')
+
   return (
     <FormControl variant="outlined">
       <InputLabel htmlFor="outlined-adornment-password">{nameField}</InputLabel>
       <OutlinedInput
-        name={nameField}
-        type={values.showPassword ? 'text' : 'password'}
-        value={values.password}
-        onChange={handleChange('password')}
+        // name={nameField}
+        type={eye ? 'text' : 'password'}
+        value={value}
+        onChange={onChange}
         endAdornment={
           <InputAdornment position="end">
             <IconButton
@@ -60,7 +53,7 @@ const InputPassword: React.FC<inputPropsType> = ({ nameField, ...restProps }) =>
               onMouseDown={handleMouseDownPassword}
               edge="end"
             >
-              {values.showPassword ? <VisibilityOff /> : <Visibility />}
+              {eye ? <VisibilityOff /> : <Visibility />}
             </IconButton>
           </InputAdornment>
         }
