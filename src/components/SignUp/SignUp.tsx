@@ -3,15 +3,24 @@ import React from 'react'
 import { Button } from '@mui/material'
 import TextField from '@mui/material/TextField/TextField'
 import { useFormik } from 'formik'
-import { Link } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
 
+import { RegistrationRequestDataType } from '../../api/auth-API'
 import { PATH } from '../../app/App'
 import InputPassword from '../../common/inputsFromMateUI/InputPassword'
+import { RegisterMeTC } from '../../redux/auth-Reducer'
+import { useAppDispatch, useAppSelector } from '../../utils/hooks'
 import { validateUtil } from '../../utils/validate'
 
 import s from './SignUp.module.css'
 
 const SignUp = () => {
+  const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
+  const dispatch = useAppDispatch()
+
+  if (isLoggedIn) {
+    return <Navigate to={PATH.home} />
+  }
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -19,8 +28,10 @@ const SignUp = () => {
       confirmPassword: '',
     },
     validate: validateUtil,
-    onSubmit: values => {
-      alert(JSON.stringify(values, null, 2))
+    onSubmit: (values: RegistrationRequestDataType) => {
+      console.log('vv')
+      dispatch(RegisterMeTC(values))
+      formik.resetForm()
     },
   })
 
@@ -56,7 +67,7 @@ const SignUp = () => {
             Sign Up
           </Button>
           <span>Already have an account?</span>
-          <Link to={PATH.Login}>SIGN IN</Link>
+          <Link to={PATH.login}>SIGN IN</Link>
         </form>
       </div>
     </section>

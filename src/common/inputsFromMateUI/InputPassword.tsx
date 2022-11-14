@@ -35,8 +35,6 @@ const InputPassword: React.FC<inputPropsType> = ({ nameField, value, onChange, .
     event.preventDefault()
   }
 
-  console.log('InputPassword')
-
   return (
     <FormControl variant="outlined">
       <InputLabel htmlFor="outlined-adornment-password">{nameField}</InputLabel>
