@@ -19,6 +19,9 @@ export const CreateNewPassword = () => {
     },
   })
 
+  console.log('formik', formik)
+  console.log('create new pass page')
+
   return (
     <section className={s.wrapp}>
       <div className={s.inner}>
@@ -35,6 +38,7 @@ export const CreateNewPassword = () => {
           <span style={{ opacity: '50%' }}>
             Create new password and we will send you further instructions to email
           </span>
+          <button type="submit">Submit</button>
           <Button
             type="submit"
             variant="contained"
