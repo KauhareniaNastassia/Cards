@@ -5,12 +5,12 @@ import './App.css'
 import { Link, Navigate, Route, Routes } from 'react-router-dom'
 
 import { CreateNewPassword } from '../components/CreateNewPassword/CreateNewPassword'
-import { Error404 } from '../components/Error404/Error404'
+import Error404 from '../components/Error404/Error404'
 import Header from '../components/Header/Header'
 import { Login } from '../components/Login/Login'
 import NavigationForUs from '../components/NavigationForUs/NavigationForUs'
 import { PasswordRecovery } from '../components/PasswordRecovery/PasswordRecovery'
-import { Profile } from '../components/Profile/Profile'
+import Profile from '../components/Profile/Profile'
 import SignUp from '../components/SignUp/SignUp'
 import TestComponents from '../components/TestComponents/TestComponents'
 
@@ -24,6 +24,7 @@ export const PATH = {
   createNewPassword: '/createNewPassword',
   testComponents: '/testComponents',
 }
+
 function App() {
   return (
     <div className="App">
