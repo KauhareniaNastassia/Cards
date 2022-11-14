@@ -47,7 +47,7 @@ export const PasswordRecovery = () => {
           >
             Did you remember your password?
           </Button>
-          <Link to={PATH.Login}>Try Loggin in</Link>
+          <Link to={PATH.login}>Try Loggin in</Link>
         </form>
       </div>
     </section>
