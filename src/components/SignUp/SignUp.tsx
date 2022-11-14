@@ -14,18 +14,8 @@ const SignUp = () => {
         <h2>Sign Up</h2>
         <form className={s.formWrapp}>
           <TextField name="email" label="Email" placeholder={'Email'} />
-          <InputPassword
-            nameField={'Password'}
-            onChangeText={value => {
-              console.log(value)
-            }}
-          />
-          <InputPassword
-            nameField={'Confirm Password'}
-            onChangeText={value => {
-              console.log(value)
-            }}
-          />
+          <InputPassword nameField={'Password'} />
+          <InputPassword nameField={'Confirm Password'} />
           <Button variant="contained" style={{ borderRadius: '20px' }}>
             Sign Up
           </Button>

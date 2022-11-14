@@ -1,22 +1,28 @@
-import React, { ChangeEvent, useState } from 'react'
+import React, { ChangeEvent, DetailedHTMLProps, InputHTMLAttributes, useState } from 'react'
 
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import FormControl from '@mui/material/FormControl/FormControl'
 import IconButton from '@mui/material/IconButton/IconButton'
 import InputAdornment from '@mui/material/InputAdornment'
 import InputLabel from '@mui/material/InputLabel/InputLabel'
-import OutlinedInput from '@mui/material/OutlinedInput/OutlinedInput'
+import OutlinedInput, { OutlinedInputProps } from '@mui/material/OutlinedInput/OutlinedInput'
+
+// тип пропсов обычного инпута
+type DefaultInputPropsType = DetailedHTMLProps<
+  InputHTMLAttributes<HTMLInputElement>,
+  HTMLInputElement
+>
 
 interface State {
   password: string
   showPassword: boolean
 }
-type inputPropsType = {
-  nameField: string
-  onChangeText: (value: string) => void
-}
+type inputPropsType = DefaultInputPropsType &
+  OutlinedInputProps & {
+    nameField: string
+  }
 
-function InputPassword(props: inputPropsType) {
+const InputPassword: React.FC<inputPropsType> = ({ nameField, ...restProps }) => {
   const [values, setValues] = useState<State>({
     password: '',
     showPassword: false,
@@ -24,7 +30,7 @@ function InputPassword(props: inputPropsType) {
 
   const handleChange = (prop: keyof State) => (event: ChangeEvent<HTMLInputElement>) => {
     setValues({ ...values, [prop]: event.currentTarget.value })
-    props.onChangeText(event.currentTarget.value)
+    // props.onChangeText(event.currentTarget.value)
   }
 
   const handleClickShowPassword = () => {
@@ -40,9 +46,9 @@ function InputPassword(props: inputPropsType) {
 
   return (
     <FormControl variant="outlined">
-      <InputLabel htmlFor="outlined-adornment-password">{props.nameField}</InputLabel>
+      <InputLabel htmlFor="outlined-adornment-password">{nameField}</InputLabel>
       <OutlinedInput
-        name={props.nameField}
+        name={nameField}
         type={values.showPassword ? 'text' : 'password'}
         value={values.password}
         onChange={handleChange('password')}
@@ -58,7 +64,8 @@ function InputPassword(props: inputPropsType) {
             </IconButton>
           </InputAdornment>
         }
-        label={props.nameField}
+        label={nameField}
+        {...restProps}
       />
     </FormControl>
   )
