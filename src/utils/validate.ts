@@ -18,8 +18,8 @@ export const validateUtil = (values: validateType) => {
   if (values.password !== undefined) {
     if (!values.password) {
       errors.password = 'Required'
-    } else if (values.password.length < 4) {
-      errors.password = 'Password Must be 4 characters or more'
+    } else if (values.password.length < 7) {
+      errors.password = 'Password Must be 7 characters or more'
     }
   }
   if (values.confirmPassword !== undefined) {
