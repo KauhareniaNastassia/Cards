@@ -1,13 +1,17 @@
 import React from 'react'
 
-import css_err from './Error.module.css'
+import style from './Error.module.css'
 
-export const Error404 = () => {
+const Error404 = () => {
   return (
-    <div className={css_err.wrapper}>
-      <div className={css_err.num}>404</div>
-
-      <div className={css_err.message}>Oops... Something went wrong, but it is okey=)</div>
+    <div className={style.container}>
+      <h1 className={style.title}>404: PAGE NOT FOUND</h1>
+      <img
+        className={style.image}
+        src="https://images.all-free-download.com/images/graphiclarge/error_404_page_not_found_6845510.jpg"
+      />
     </div>
   )
 }
+
+export default Error404

@@ -1,33 +1,10 @@
-.wrapper {
-  display: flex;
-  flex-direction: column;
-  align-content: center;
-  justify-content: center;
-
-  height: 100%;
-  margin-top: 50px;
+.title {
+    color: #2e009e;
 }
 
-.message {
-  margin-top: 20px;
-  padding-left: 40px;
-
-  font-family: LiSu;
-  font-size: 36px;
-  font-weight: bold;
-  font-style: italic;
-  color: #fb607f;
-  text-align: center;
-}
-
-.num {
-  margin-top: 5px;
-  padding-left: 40px;
-
-  font-family: LiSu;
-  font-size: 36px;
-  font-weight: bold;
-  font-style: italic;
-  color: #fb607f;
-  text-align: center;
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
