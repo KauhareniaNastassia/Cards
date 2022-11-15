@@ -1,6 +1,6 @@
 import { Dispatch } from 'redux'
 
-import { authAPI, RegistrationRequestDataType } from '../api/auth-API'
+import { authAPI, passwordRecoveryDataType, RegistrationRequestDataType } from '../api/auth-API'
 
 import { IsInitializedAC } from './app-Reducer'
 import { AppThunkType } from './store'
@@ -40,6 +40,27 @@ export const RegisterMeTC =
         // dispatch(isLoggedInAC(true))
         dispatch(IsInitializedAC(true))
       }
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+export const PasswordRecoveryTC =
+  (email: string): AppThunkType =>
+  async dispatch => {
+    const data: passwordRecoveryDataType = {
+      email: email,
+      message: `<div style="background-color: lime; padding: 15px">
+password recovery link:
+<a href='http://localhost:3000/Cards#/createNewPassword/$token$'>
+link</a>
+</div>`,
+    }
+
+    try {
+      const res = await authAPI.passwordRecovery(data)
+
+      console.log(res.data)
     } catch (e) {
       console.log(e)
     }

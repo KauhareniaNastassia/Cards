@@ -3,20 +3,25 @@ import React from 'react'
 import { Button } from '@mui/material'
 import TextField from '@mui/material/TextField/TextField'
 import { useFormik } from 'formik'
-import { Link, Navigate } from 'react-router-dom'
+import { Link, Navigate, useParams } from 'react-router-dom'
 
 import { PATH } from '../../app/App'
+import { PasswordRecoveryTC } from '../../redux/auth-Reducer'
+import { useAppDispatch } from '../../utils/hooks'
 import { validateUtil } from '../../utils/validate'
 import s from '../SignUp/SignUp.module.css'
 
 export const PasswordRecovery = () => {
+  const dispatch = useAppDispatch()
   const formik = useFormik({
     initialValues: {
       email: '',
     },
     validate: validateUtil,
     onSubmit: values => {
-      alert(JSON.stringify(values, null, 2))
+      if (values.email) {
+        dispatch(PasswordRecoveryTC(values.email))
+      }
     },
   })
 

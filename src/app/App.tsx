@@ -21,7 +21,7 @@ export const PATH = {
   profile: '/profile',
   error404: '/error404',
   passwordRecovery: '/passwordRecovery',
-  createNewPassword: '/createNewPassword',
+  createNewPassword: '/createNewPassword/:token',
 }
 
 function App() {

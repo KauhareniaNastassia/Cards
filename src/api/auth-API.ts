@@ -31,8 +31,12 @@ export const authAPI = {
   logout() {
     return instance.delete(`/auth/me`)
   },
-  passwordRecovery() {
-    return instance.post('/auth/forgot', {})
+  // passwordRecovery работает только на heroku  не забить пофиксить .env
+  passwordRecovery(data: passwordRecoveryDataType) {
+    return axios.post<passwordRecoveryDataType, AxiosResponse<passwordRecoveryResponseType>>(
+      'https://neko-back.herokuapp.com/2.0/auth/forgot',
+      data
+    )
   },
   setNewPassword() {
     return instance.post('/auth/set-new-password', {})
@@ -94,4 +98,12 @@ export type LogInResponseUserDataType = {
   token: string
   tokenDeathTime: number
   avatar: string
+}
+export type passwordRecoveryDataType = {
+  email: string
+  message: string
+}
+export type passwordRecoveryResponseType = {
+  info: string
+  error: string
 }

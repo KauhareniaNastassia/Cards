@@ -2,12 +2,16 @@ import React from 'react'
 
 import { Button } from '@mui/material'
 import { useFormik } from 'formik'
+import { useParams } from 'react-router-dom'
 
 import InputPassword from '../../common/inputsFromMateUI/InputPassword'
 import { validateUtil } from '../../utils/validate'
 import s from '../SignUp/SignUp.module.css'
 
 export const CreateNewPassword = () => {
+  const { token } = useParams()
+
+  console.log(token)
   const formik = useFormik({
     initialValues: {
       password: '',
