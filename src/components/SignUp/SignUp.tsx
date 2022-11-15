@@ -7,12 +7,11 @@ import { Link, Navigate } from 'react-router-dom'
 
 import { RegistrationRequestDataType } from '../../api/auth-API'
 import { PATH } from '../../app/App'
+import s from '../../assets/styles/FormsStyle.module.css'
 import InputPassword from '../../common/inputsFromMateUI/InputPassword'
 import { RegisterMeTC } from '../../redux/auth-Reducer'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks'
 import { validateUtil } from '../../utils/validate'
-
-import s from './SignUp.module.css'
 
 const SignUp = () => {
   const isInitialized = useAppSelector(state => state.app.isInitialized)

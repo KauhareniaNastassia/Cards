@@ -4,6 +4,7 @@ import './App.css'
 
 import { Navigate, Route, Routes } from 'react-router-dom'
 
+import CheckEmail from '../components/CheckEmail/CheckEmail'
 import { CreateNewPassword } from '../components/CreateNewPassword/CreateNewPassword'
 import Error404 from '../components/Error404/Error404'
 import Header from '../components/Header/Header'
@@ -22,6 +23,7 @@ export const PATH = {
   error404: '/error404',
   passwordRecovery: '/passwordRecovery',
   createNewPassword: '/createNewPassword/:token',
+  checkEmail: '/checkEmail',
 }
 
 function App() {
@@ -37,6 +39,7 @@ function App() {
         <Route path={PATH.error404} element={<Error404 />} />
         <Route path={PATH.passwordRecovery} element={<PasswordRecovery />} />
         <Route path={PATH.createNewPassword} element={<CreateNewPassword />} />
+        <Route path={PATH.checkEmail} element={<CheckEmail />} />
       </Routes>
     </div>
   )

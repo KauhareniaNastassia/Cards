@@ -22,6 +22,18 @@
   width: 300px;
   margin: 0 auto;
 }
+.button {
+  padding: 10px;
+
+  color: white;
+  text-decoration: none;
+
+  background-color: #1976D2;
+  border-radius: 20px
+}
+.button:hover {
+  background-color: dodgerblue;
+}
 
 @media only screen and (max-width: 330px) {
   .formWrapp {

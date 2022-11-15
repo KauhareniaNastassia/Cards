@@ -6,10 +6,10 @@ import { useFormik } from 'formik'
 import { Link, Navigate, useParams } from 'react-router-dom'
 
 import { PATH } from '../../app/App'
+import s from '../../assets/styles/FormsStyle.module.css'
 import { PasswordRecoveryTC } from '../../redux/auth-Reducer'
 import { useAppDispatch } from '../../utils/hooks'
 import { validateUtil } from '../../utils/validate'
-import s from '../SignUp/SignUp.module.css'
 
 export const PasswordRecovery = () => {
   const dispatch = useAppDispatch()
