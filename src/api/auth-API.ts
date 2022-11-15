@@ -1,5 +1,7 @@
 import axios, { AxiosResponse } from 'axios'
 
+import { UserType } from '../redux/profileReducer'
+
 export const instance = axios.create({
   baseURL: 'http://localhost:7542/2.0/',
   // baseURL:
@@ -25,8 +27,11 @@ export const authAPI = {
       data
     )
   },
-  updateProfile() {
-    return instance.put(`/auth/me`)
+  updateProfile(user: UserType) {
+    return instance.put<UserType, AxiosResponse<ResponseUserType<{ name: string }>>>(
+      `/auth/me`,
+      user
+    )
   },
   logout() {
     return instance.delete(`/auth/me`)
@@ -54,17 +59,19 @@ type RegistrationResponseType = {
   error?: string
 }
 
-type ResponseUserType = {
+type ResponseUserType<D = {}> = {
   _id: string
   email: string
   rememberMe: boolean
   isAdmin: boolean
   name: string
+  avatar: string
   verified: boolean
   publicCardPacksCount: number
   created: string
   updated: string
   __v: number
+  data: D
 }
 // export type registrationNegativeResponseType = {
 //   error: string
