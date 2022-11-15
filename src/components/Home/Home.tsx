@@ -16,19 +16,19 @@ const Home = () => {
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
   const isInitialized = useAppSelector(state => state.app.isInitialized)
 
+  // useEffect(() => {
+  //   dispatch(initializeAppTC(token))
+  // }, [])
+
+  // if (!isInitialized) {
+  //   return (
+  //     <div style={{ position: 'fixed', top: '30%', textAlign: 'center', width: '100%' }}>
+  //       <CircularProgress />
+  //     </div>
+  //   )
+  // }
   if (!isLoggedIn) {
     return <Navigate to={PATH.login} />
-  }
-  useEffect(() => {
-    dispatch(initializeAppTC())
-  }, [])
-
-  if (!isInitialized) {
-    return (
-      <div style={{ position: 'fixed', top: '30%', textAlign: 'center', width: '100%' }}>
-        <CircularProgress />
-      </div>
-    )
   }
 
   return (

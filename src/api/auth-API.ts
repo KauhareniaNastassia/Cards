@@ -16,11 +16,11 @@ export const authAPI = {
       values
     )
   },
-  me() {
-    return instance.post<AxiosResponse<ResponseUserType>>('/auth/me')
+  me(token: string) {
+    return instance.post<AxiosResponse<ResponseUserType>>(`/auth/me?token=${token}`)
   },
   logIn(data: LogInRequestDataType) {
-    return instance.post<LogInRequestDataType, AxiosResponse<LogInResponseType>>(
+    return instance.post<LogInRequestDataType, AxiosResponse<LogInResponseUserDataType>>(
       '/auth/login',
       data
     )
@@ -80,7 +80,7 @@ export type LogInRequestDataType = {
   rememberMe: boolean
 }
 
-type LogInResponseType = {
+export type LogInResponseUserDataType = {
   _id: string
   email: string
   rememberMe: boolean

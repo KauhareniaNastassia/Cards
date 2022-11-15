@@ -37,7 +37,7 @@ export const RegisterMeTC =
       const res = await authAPI.registration(values)
 
       if (res.data.addedUser._id) {
-        dispatch(isLoggedInAC(true))
+        // dispatch(isLoggedInAC(true))
         dispatch(IsInitializedAC(true))
       }
     } catch (e) {
