@@ -7,20 +7,16 @@ import { Link, Navigate } from 'react-router-dom'
 
 import { RegistrationRequestDataType } from '../../api/auth-API'
 import { PATH } from '../../app/App'
+import s from '../../assets/styles/FormsStyle.module.css'
 import InputPassword from '../../common/inputsFromMateUI/InputPassword'
 import { RegisterMeTC } from '../../redux/auth-Reducer'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks'
 import { validateUtil } from '../../utils/validate'
 
-import s from './SignUp.module.css'
-
 const SignUp = () => {
-  const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
+  const isInitialized = useAppSelector(state => state.app.isInitialized)
   const dispatch = useAppDispatch()
 
-  if (isLoggedIn) {
-    return <Navigate to={PATH.home} />
-  }
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -29,11 +25,14 @@ const SignUp = () => {
     },
     validate: validateUtil,
     onSubmit: (values: RegistrationRequestDataType) => {
-      console.log('vv')
       dispatch(RegisterMeTC(values))
       formik.resetForm()
     },
   })
+
+  if (isInitialized) {
+    return <Navigate to={PATH.login} />
+  }
 
   return (
     <section className={s.wrapp}>

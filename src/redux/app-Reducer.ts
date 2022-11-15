@@ -39,15 +39,17 @@ export const IsInitializedAC = (value: boolean) => {
 }
 
 ////////    Thunks   /////////
-export const initializeAppTC = (): AppThunkType => async dispatch => {
-  try {
-    const res = await authAPI.me()
+export const initializeAppTC =
+  (token: string): AppThunkType =>
+  async dispatch => {
+    try {
+      const res = await authAPI.me(token)
 
-    if (res.data.data._id) {
-      dispatch(isLoggedInAC(true))
-      dispatch(IsInitializedAC(true))
+      if (res.data.data._id) {
+        dispatch(isLoggedInAC(true))
+        dispatch(IsInitializedAC(true))
+      }
+    } catch (e) {
+      console.log(e)
     }
-  } catch (e) {
-    console.log(e)
   }
-}

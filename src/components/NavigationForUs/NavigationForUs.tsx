@@ -18,6 +18,7 @@ const NavigationForUs = () => {
       <Link to={PATH.passwordRecovery}>passwordRecovery</Link>
       <Link to={PATH.profile}>profile</Link>
       <Link to={PATH.registration}>registration</Link>
+      <Link to={PATH.checkEmail}>checkEmail</Link>
     </nav>
   )
 }

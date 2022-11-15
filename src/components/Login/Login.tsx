@@ -7,9 +7,9 @@ import { useAppSelector } from '../../utils/hooks'
 export const Login = () => {
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
 
-  if (isLoggedIn) {
-    return <Navigate to={'/'} />
-  }
+  // if (isLoggedIn) {
+  //   return <Navigate to={'/'} />
+  // }
 
   return <div>Login</div>
 }
