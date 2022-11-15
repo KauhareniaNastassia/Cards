@@ -1,9 +1,15 @@
 import React from 'react'
 
+import { useSelector } from 'react-redux'
+
+import { AppRootStateType } from '../../redux/store'
+
 import ProfileCard from './ProfileCard/ProfileCard'
 
 const Profile = () => {
-  return <ProfileCard />
+  const profile = useSelector<AppRootStateType>(state => state.profile)
+
+  return <ProfileCard profile={profile} />
 }
 
 export default Profile

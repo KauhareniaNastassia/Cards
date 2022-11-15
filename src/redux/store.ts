@@ -3,20 +3,22 @@ import thunk, { ThunkAction, ThunkDispatch } from 'redux-thunk'
 
 import { appReducer, appReducerAT } from './app-Reducer'
 import { authReducer, authReducerAT } from './auth-Reducer'
+import { profileReducer, ProfileReducerAT } from './profileReducer'
 
 const RootReducer = combineReducers({
+  profile: profileReducer,
   auth: authReducer,
   app: appReducer,
 })
 
 export const store = createStore(RootReducer, applyMiddleware(thunk))
 
-export type RootReducerType = ReturnType<typeof RootReducer>
-export type AppActionsType = authReducerAT | appReducerAT
-export type AppDispatchType = ThunkDispatch<RootReducerType, unknown, AppActionsType>
+export type AppRootStateType = ReturnType<typeof RootReducer>
+export type AppActionsType = authReducerAT | appReducerAT | ProfileReducerAT
+export type AppDispatchType = ThunkDispatch<AppRootStateType, unknown, AppActionsType>
 export type AppThunkType<ReturnType = void> = ThunkAction<
   ReturnType,
-  RootReducerType,
+  AppRootStateType,
   unknown,
   AppActionsType
 >

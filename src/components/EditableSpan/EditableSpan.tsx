@@ -7,7 +7,7 @@ import TextField from '@mui/material/TextField'
 import s from './EditableSpan.module.css'
 
 type EditableSpanPropsType = {
-  value: string
+  value: string | undefined
   onChange: (newValue: string) => void
 }
 
