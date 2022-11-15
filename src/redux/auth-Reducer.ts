@@ -21,12 +21,21 @@ export const authReducer = (state = initState, action: authReducerAT): authReduc
   }
 }
 
-export type authReducerAT = ReturnType<typeof isLoggedInAC>
+export type authReducerAT = ReturnType<typeof isLoggedInAC> | setAuthUserDataType
 
 //////   Actions  ///////////
 export const isLoggedInAC = (value: boolean) =>
   ({ type: 'auth/IS-PERSON-LOGGED-IN', value } as const)
-
+type setAuthUserDataType = ReturnType<typeof setAuthUserData>
+export const setAuthUserData = (
+  email: string,
+  name: string,
+  _id: string,
+  avatar: string,
+  isLoggedIn: boolean
+) => {
+  return { type: 'SET-USER-DATA', payload: { email, name, _id, avatar, isLoggedIn } } as const
+}
 //////   Thunks  ///////////
 
 export const RegisterMeTC =

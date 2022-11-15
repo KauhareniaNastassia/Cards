@@ -1,33 +1,43 @@
+const SET_USER_PROFILE = 'SET-USER-PROFILE'
+
 const initialState = {
-  profile: null,
+  _id: '111',
+  email: 'hohoho@gmail.com',
+  name: 'Tatsiana',
+  avatar:
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQI-SfCS7BGFuSKOXfVz_4UspTZDGuRJX42Rwpcopk&s',
 }
 
-export interface IProfile {
-  profile: IUser | null
-}
-
-export interface IUser {
+export type UserType = {
   _id: string
   email: string
   name: string
-  avatar?: string
-  publicCardPacksCount: number
-  isAdmin: boolean
-  verified: boolean
-  rememberMe: boolean
+  avatar: string
 }
 
-export const profileReducer = (state = initialState, action: ProfileReducerAT): IProfile => {
+export const profileReducer = (
+  state: UserType = initialState,
+  action: ProfileReducerAT
+): UserType => {
   switch (action.type) {
-    case 'SET-USER-PROFILE':
-      return { ...state, profile: action.profile }
+    case SET_USER_PROFILE:
+      return {
+        ...state,
+        ...action.profile,
+      }
 
     default:
       return state
   }
 }
-type SetUserProfileType = ReturnType<typeof setUserProfile>
-export const setUserProfile = (profile: IUser | null) => {
-  return { type: 'SET-USER-PROFILE', profile } as const
+//thunks
+
+//actions
+export const setUserProfile = (_id: string, email: string, name: string, avatar: string) => {
+  return { type: SET_USER_PROFILE, profile: { _id, email, name, avatar } } as const
 }
+
+//types
 export type ProfileReducerAT = SetUserProfileType
+
+type SetUserProfileType = ReturnType<typeof setUserProfile>
