@@ -11,7 +11,6 @@ import { validateUtil } from '../../utils/validate'
 export const CreateNewPassword = () => {
   const { token } = useParams()
 
-  console.log(token)
   const formik = useFormik({
     initialValues: {
       password: '',

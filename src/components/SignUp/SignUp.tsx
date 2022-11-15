@@ -65,7 +65,7 @@ const SignUp = () => {
           <Button type="submit" variant="contained" style={{ borderRadius: '20px' }}>
             Sign Up
           </Button>
-          <span>Already have an account?</span>
+          <span className={s.text}>Already have an account?</span>
           <Link to={PATH.login}>SIGN IN</Link>
         </form>
       </div>

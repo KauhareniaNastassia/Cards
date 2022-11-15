@@ -3,16 +3,18 @@ import React from 'react'
 import { Button } from '@mui/material'
 import TextField from '@mui/material/TextField/TextField'
 import { useFormik } from 'formik'
-import { Link, Navigate, useParams } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
 
 import { PATH } from '../../app/App'
 import s from '../../assets/styles/FormsStyle.module.css'
 import { PasswordRecoveryTC } from '../../redux/auth-Reducer'
-import { useAppDispatch } from '../../utils/hooks'
+import { useAppDispatch, useAppSelector } from '../../utils/hooks'
 import { validateUtil } from '../../utils/validate'
 
 export const PasswordRecovery = () => {
   const dispatch = useAppDispatch()
+  const emailRecovery = useAppSelector(state => state.auth.emailRecovery)
+
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -24,6 +26,10 @@ export const PasswordRecovery = () => {
       }
     },
   })
+
+  if (emailRecovery) {
+    return <Navigate to={PATH.checkEmail} />
+  }
 
   return (
     <section className={s.wrapp}>
@@ -37,7 +43,9 @@ export const PasswordRecovery = () => {
             error={!!(formik.touched.email && formik.errors.email)}
             helperText={formik.errors.email}
           />
-          <span>Enter your email address and we will send you further instructions </span>
+          <span className={s.text}>
+            Enter your email address and we will send you further instructions
+          </span>
           <Button type="submit" variant="contained" style={{ borderRadius: '20px' }}>
             Send Instructions
           </Button>

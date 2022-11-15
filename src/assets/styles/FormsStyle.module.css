@@ -22,6 +22,9 @@
   width: 300px;
   margin: 0 auto;
 }
+.text{
+  opacity: 0.6;
+}
 .button {
   padding: 10px;
 

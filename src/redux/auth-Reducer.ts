@@ -1,14 +1,16 @@
-import { Dispatch } from 'redux'
-
-import { authAPI, passwordRecoveryDataType, RegistrationRequestDataType } from '../api/auth-API'
+import { authAPI, PasswordRecoveryDataType, RegistrationRequestDataType } from '../api/auth-API'
 
 import { IsInitializedAC } from './app-Reducer'
 import { AppThunkType } from './store'
 
-export type authReducerStateType = { isLoggedIn: boolean }
+export type authReducerStateType = {
+  isLoggedIn: boolean
+  emailRecovery: string
+}
 
 const initState: authReducerStateType = {
   isLoggedIn: false,
+  emailRecovery: '',
 }
 
 export const authReducer = (state = initState, action: authReducerAT): authReducerStateType => {
@@ -16,16 +18,23 @@ export const authReducer = (state = initState, action: authReducerAT): authReduc
     case 'auth/IS-PERSON-LOGGED-IN':
       return { ...state, isLoggedIn: action.value }
 
+    case 'auth/IS-PASS_RECOVERY_MESSAGE-SENT':
+      return { ...state, emailRecovery: action.email }
     default:
       return state
   }
 }
 
-export type authReducerAT = ReturnType<typeof isLoggedInAC> | setAuthUserDataType
+export type authReducerAT =
+  | ReturnType<typeof isLoggedInAC>
+  | ReturnType<typeof MessageRecoverySentAC>
 
 //////   Actions  ///////////
 export const isLoggedInAC = (value: boolean) =>
   ({ type: 'auth/IS-PERSON-LOGGED-IN', value } as const)
+export const MessageRecoverySentAC = (email: string) =>
+  ({ type: 'auth/IS-PASS_RECOVERY_MESSAGE-SENT', email } as const)
+
 type setAuthUserDataType = ReturnType<typeof setAuthUserData>
 export const setAuthUserData = (
   email: string,
@@ -57,7 +66,7 @@ export const RegisterMeTC =
 export const PasswordRecoveryTC =
   (email: string): AppThunkType =>
   async dispatch => {
-    const data: passwordRecoveryDataType = {
+    const data: PasswordRecoveryDataType = {
       email: email,
       message: `<div style="background-color: lime; padding: 15px">
 password recovery link:
@@ -67,9 +76,12 @@ link</a>
     }
 
     try {
+      //dispatch(loader)
       const res = await authAPI.passwordRecovery(data)
 
-      console.log(res.data)
+      if (res.data.success) {
+        dispatch(MessageRecoverySentAC(email))
+      }
     } catch (e) {
       console.log(e)
     }

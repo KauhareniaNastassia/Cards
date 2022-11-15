@@ -12,8 +12,7 @@ const Profile = () => {
   const dispatch = useDispatch<Dispatch<any>>()
   const profile = useSelector<AppRootStateType, UserType>(state => state.profile)
 
-  // return <ProfileCard profile={profile} />
-  return <div>profile</div>
+  return <ProfileCard profile={profile} />
 }
 
 export default Profile
