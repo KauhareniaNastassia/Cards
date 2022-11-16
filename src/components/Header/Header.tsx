@@ -8,6 +8,7 @@ import { PATH } from '../../app/App'
 import incubatorLogo from '../../assets/picture/incubatorLogo.png'
 import { AppRootStateType } from '../../redux/store'
 import { useAppSelector } from '../../utils/hooks'
+import { customAvatar } from '../Profile/ProfileCard/ProfileCard'
 
 import s from './Header.module.css'
 
@@ -30,11 +31,7 @@ const Header = () => {
               <Avatar
                 sx={{ width: 36, height: 36 }}
                 alt={'User Name'}
-                src={
-                  profile.avatar === ''
-                    ? 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQI-SfCS7BGFuSKOXfVz_4UspTZDGuRJX42Rwpcopk&s'
-                    : profile.avatar
-                }
+                src={profile.avatar === '' ? customAvatar : profile.avatar}
               />
             </Stack>
           </div>

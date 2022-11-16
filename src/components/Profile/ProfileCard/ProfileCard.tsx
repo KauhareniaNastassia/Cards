@@ -9,15 +9,20 @@ import photoCamera from '../../../assets/picture/icons8-camera-48.png'
 import SuperButton from '../../../common/Button/SuperButton/SuperButton'
 import { logOutTC } from '../../../redux/auth-Reducer'
 import { UserType } from '../../../redux/profileReducer'
-import { useAppDispatch } from '../../../utils/hooks'
+import { useAppDispatch, useAppSelector } from '../../../utils/hooks'
 import { EditableSpan } from '../../EditableSpan/EditableSpan'
 
 import s from './ProfileCard.module.css'
-//--force
+
 export type ProfileType = {
   profile: UserType
 }
+export const customAvatar =
+  'https://media.istockphoto.com/id/1223671392/vector/default-profile-picture-avatar-photo-placeholder-vector-illustration.jpg?s=612x612&w=0&k=20&c=s0aTdmT5aU6b8ot7VKm11DeID6NctRCpB755rA1BIP0='
+
 const ProfileCard = (props: ProfileType) => {
+  const profile = useAppSelector(state => state.profile)
+
   const SmallAvatar = styled(Avatar)(({ theme }) => ({
     width: 36,
     height: 36,
@@ -47,15 +52,11 @@ const ProfileCard = (props: ProfileType) => {
             <Avatar
               sx={{ width: 96, height: 96 }}
               alt={'User Name'}
-              src={
-                props.profile.avatar === ''
-                  ? 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScVWdpSX0xv-SPTJEGBorXQzdtwZuCh-XdyA&usqp=CAU'
-                  : props.profile.avatar
-              }
+              src={profile.avatar === '' ? customAvatar : profile.avatar}
             />
           </Badge>
-          <EditableSpan value={props.profile.name} onChange={() => {}} />
-          <div className={s.email}>{props.profile.email}</div>
+          <EditableSpan value={profile.name} />
+          <div className={s.email}>{profile.email}</div>
           <SuperButton onClick={logOutHandler} className={s.button}>
             <LogoutIcon /> Log out
           </SuperButton>

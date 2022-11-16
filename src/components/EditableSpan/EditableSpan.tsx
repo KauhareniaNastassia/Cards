@@ -1,49 +1,53 @@
-import React, { ChangeEvent, useState } from 'react'
+import React, { ChangeEvent, useEffect, useState } from 'react'
 
 import EditIcon from '@mui/icons-material/Edit'
 import { Button } from '@mui/material'
 import TextField from '@mui/material/TextField'
 
+import { updateUserProfileTC } from '../../redux/profileReducer'
+import { useAppDispatch, useAppSelector } from '../../utils/hooks'
+
 import s from './EditableSpan.module.css'
 
 type EditableSpanPropsType = {
   value: string
-  onChange: (newValue: string) => void
 }
-
 export const EditableSpan = React.memo(function (props: EditableSpanPropsType) {
+  const dispatch = useAppDispatch()
+  const profile = useAppSelector(state => state.profile)
   let [editMode, setEditMode] = useState(false)
-  let [title, setTitle] = useState(props.value)
+  const [userName, setUserName] = useState(profile.name)
 
+  useEffect(() => {}, [profile.name])
   const activateEditMode = () => {
     setEditMode(true)
-    setTitle(props.value)
   }
-  const activateViewMode = () => {
+  const deactivateMode = () => {
     setEditMode(false)
-    props.onChange(title)
+    dispatch(updateUserProfileTC(userName))
   }
-  const changeTitle = (e: ChangeEvent<HTMLInputElement>) => {
-    setTitle(e.currentTarget.value)
+  const onStatusChange = (event: ChangeEvent<HTMLInputElement>) => {
+    return setUserName(event.currentTarget.value)
   }
 
   return editMode ? (
     <div className={s.input}>
       <TextField
-        onChange={changeTitle}
-        value={title}
+        onChange={onStatusChange}
+        value={userName}
         id="standard-basic"
         label="Nickname"
         variant="standard"
         autoFocus
       />
-      <Button onClick={activateViewMode} variant="contained">
+      <Button onClick={deactivateMode} variant="contained">
         SAVE
       </Button>
     </div>
   ) : (
     <div onDoubleClick={activateEditMode} className={s.userName}>
-      {props.value} <EditIcon fontSize={'small'} />
+      {profile.name}
+      <EditIcon fontSize={'small'} />
     </div>
   )
 })

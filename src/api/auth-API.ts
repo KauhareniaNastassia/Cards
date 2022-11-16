@@ -27,11 +27,10 @@ export const authAPI = {
       data
     )
   },
-  updateProfile(user: UserType) {
-    return instance.put<UserType, AxiosResponse<ResponseUserType<{ name: string }>>>(
-      `/auth/me`,
-      user
-    )
+  updateProfile(name: string) {
+    return instance.put<{ name: string }, AxiosResponse<ResponseType>>(`/auth/me`, {
+      name,
+    })
   },
   logout() {
     return instance.delete<{}, AxiosResponse<{ info: string }>>(`/auth/me`, {})
@@ -66,7 +65,6 @@ type RegistrationResponseType = {
   addedUser: ResponseUserType
   error?: string
 }
-
 type ResponseUserType<D = {}> = {
   _id: string
   email: string
