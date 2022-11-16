@@ -1,4 +1,9 @@
-import { authAPI, PasswordRecoveryDataType, RegistrationRequestDataType } from '../api/auth-API'
+import {
+  authAPI,
+  PasswordRecoveryDataType,
+  RegistrationRequestDataType,
+  setNewPasswordDataType,
+} from '../api/auth-API'
 
 import { IsInitializedAC } from './app-Reducer'
 import { AppThunkType } from './store'
@@ -6,20 +11,24 @@ import { AppThunkType } from './store'
 export type authReducerStateType = {
   isLoggedIn: boolean
   emailRecovery: string
+  token: string
 }
 
 const initState: authReducerStateType = {
   isLoggedIn: false,
   emailRecovery: '',
+  token: '',
 }
 
 export const authReducer = (state = initState, action: authReducerAT): authReducerStateType => {
   switch (action.type) {
     case 'auth/IS-PERSON-LOGGED-IN':
       return { ...state, isLoggedIn: action.value }
-
     case 'auth/IS-PASS_RECOVERY_MESSAGE-SENT':
       return { ...state, emailRecovery: action.email }
+    case 'auth/SET-NEW-PASSWORD-TOKEN':
+      return { ...state, token: action.token }
+
     default:
       return state
   }
@@ -28,12 +37,15 @@ export const authReducer = (state = initState, action: authReducerAT): authReduc
 export type authReducerAT =
   | ReturnType<typeof isLoggedInAC>
   | ReturnType<typeof MessageRecoverySentAC>
+  | ReturnType<typeof setNewPassTokenAC>
 
 //////   Actions  ///////////
 export const isLoggedInAC = (value: boolean) =>
   ({ type: 'auth/IS-PERSON-LOGGED-IN', value } as const)
 export const MessageRecoverySentAC = (email: string) =>
   ({ type: 'auth/IS-PASS_RECOVERY_MESSAGE-SENT', email } as const)
+export const setNewPassTokenAC = (token: string) =>
+  ({ type: 'auth/SET-NEW-PASSWORD-TOKEN', token } as const)
 
 type setAuthUserDataType = ReturnType<typeof setAuthUserData>
 export const setAuthUserData = (
@@ -81,6 +93,19 @@ link</a>
 
       if (res.data.success) {
         dispatch(MessageRecoverySentAC(email))
+      }
+    } catch (e) {
+      console.log(e)
+    }
+  }
+export const setNewPasswordTC =
+  (data: setNewPasswordDataType): AppThunkType =>
+  async dispatch => {
+    try {
+      const res = await authAPI.setNewPassword(data)
+
+      if (!res.data.error) {
+        dispatch(setNewPassTokenAC(data.resetPasswordToken))
       }
     } catch (e) {
       console.log(e)

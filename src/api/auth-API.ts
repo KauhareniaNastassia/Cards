@@ -43,8 +43,12 @@ export const authAPI = {
       data
     )
   },
-  setNewPassword() {
-    return instance.post('/auth/set-new-password', {})
+  // setNewPassword работает только на heroku  не забить пофиксить .env
+  setNewPassword(data: setNewPasswordDataType) {
+    return axios.post<setNewPasswordDataType, AxiosResponse<setNewPasswordResponseTye>>(
+      'https://neko-back.herokuapp.com/2.0/auth/set-new-password',
+      data
+    )
   },
   userBlock() {
     return instance.post('/auth/block', {})
@@ -120,4 +124,12 @@ type PasswordRecoveryResponseType = BedPasswordRecoveryResponseType & {
   html: boolean
   info: string
   success: boolean
+}
+export type setNewPasswordDataType = {
+  password: string
+  resetPasswordToken: string
+}
+type setNewPasswordResponseTye = {
+  info: string
+  error: string
 }

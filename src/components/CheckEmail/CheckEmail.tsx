@@ -8,7 +8,7 @@ import { useAppSelector } from '../../utils/hooks'
 
 import checkEmailLogo from './../../assets/picture/CheckEmail.png'
 
-export const CheckEmail = () => {
+const CheckEmail = () => {
   const emailRecovery = useAppSelector(store => store.auth.emailRecovery)
 
   if (!emailRecovery) {

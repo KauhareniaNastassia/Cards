@@ -2,14 +2,20 @@ import React from 'react'
 
 import { Button } from '@mui/material'
 import { useFormik } from 'formik'
-import { useParams } from 'react-router-dom'
+import { Navigate, useParams } from 'react-router-dom'
 
+import { setNewPasswordDataType } from '../../api/auth-API'
+import { PATH } from '../../app/App'
 import s from '../../assets/styles/FormsStyle.module.css'
 import InputPassword from '../../common/inputsFromMateUI/InputPassword'
+import { setNewPasswordTC } from '../../redux/auth-Reducer'
+import { useAppDispatch, useAppSelector } from '../../utils/hooks'
 import { validateUtil } from '../../utils/validate'
 
 export const CreateNewPassword = () => {
   const { token } = useParams()
+  const dispatch = useAppDispatch()
+  const success = useAppSelector(state => state.auth.token)
 
   const formik = useFormik({
     initialValues: {
@@ -17,9 +23,20 @@ export const CreateNewPassword = () => {
     },
     validate: validateUtil,
     onSubmit: values => {
-      alert(JSON.stringify(values, null, 2))
+      if (values.password && token) {
+        const data: setNewPasswordDataType = {
+          password: values.password,
+          resetPasswordToken: token,
+        }
+
+        dispatch(setNewPasswordTC(data))
+      }
     },
   })
+
+  if (success) {
+    return <Navigate to={PATH.login} />
+  }
 
   return (
     <section className={s.wrapp}>
