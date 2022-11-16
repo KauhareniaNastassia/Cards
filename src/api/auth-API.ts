@@ -34,7 +34,7 @@ export const authAPI = {
     )
   },
   logout() {
-    return instance.delete(`/auth/me`)
+    return instance.delete<{}, AxiosResponse<{ info: string }>>(`/auth/me`, {})
   },
   // passwordRecovery работает только на heroku  не забить пофиксить .env
   passwordRecovery(data: PasswordRecoveryDataType) {

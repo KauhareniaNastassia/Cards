@@ -7,7 +7,9 @@ import Badge from '@mui/material/Badge'
 
 import photoCamera from '../../../assets/picture/icons8-camera-48.png'
 import SuperButton from '../../../common/Button/SuperButton/SuperButton'
+import { logOutTC } from '../../../redux/auth-Reducer'
 import { UserType } from '../../../redux/profileReducer'
+import { useAppDispatch } from '../../../utils/hooks'
 import { EditableSpan } from '../../EditableSpan/EditableSpan'
 
 import s from './ProfileCard.module.css'
@@ -21,6 +23,11 @@ const ProfileCard = (props: ProfileType) => {
     height: 36,
     background: '#bdbdbd',
   }))
+  const dispatch = useAppDispatch()
+
+  const logOutHandler = () => {
+    dispatch(logOutTC())
+  }
 
   return (
     <>
@@ -49,7 +56,7 @@ const ProfileCard = (props: ProfileType) => {
           </Badge>
           <EditableSpan value={props.profile.name} onChange={() => {}} />
           <div className={s.email}>{props.profile.email}</div>
-          <SuperButton className={s.button}>
+          <SuperButton onClick={logOutHandler} className={s.button}>
             <LogoutIcon /> Log out
           </SuperButton>
         </div>

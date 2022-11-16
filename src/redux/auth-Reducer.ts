@@ -1,7 +1,12 @@
-import { authAPI, PasswordRecoveryDataType, RegistrationRequestDataType } from '../api/auth-API'
+import {
+  authAPI,
+  LogInRequestDataType,
+  PasswordRecoveryDataType,
+  RegistrationRequestDataType,
+} from '../api/auth-API'
 
 import { IsInitializedAC } from './app-Reducer'
-import { AppThunkType } from './store'
+import { AppDispatchType, AppThunkType } from './store'
 
 export type authReducerStateType = {
   isLoggedIn: boolean
@@ -86,3 +91,32 @@ link</a>
       console.log(e)
     }
   }
+
+export const loginTC =
+  (data: LogInRequestDataType): AppThunkType =>
+  async dispatch => {
+    try {
+      const res = await authAPI.logIn(data)
+
+      if (res.data._id) {
+        dispatch(isLoggedInAC(true))
+        /* dispatch(setUserProfile(res.data))*/
+      }
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+export const logOutTC = () => async (dispatch: AppDispatchType) => {
+  try {
+    const res = await authAPI.logout()
+
+    console.log(res)
+
+    if (res.data.info) {
+      dispatch(isLoggedInAC(false))
+    }
+  } catch (e) {
+    console.log(e)
+  }
+}
