@@ -5,7 +5,7 @@ import {
   setNewPasswordDataType,
 } from '../api/auth-API'
 
-import { IsInitializedAC } from './app-Reducer'
+import { IsInitializedAC, setAppStatusAC } from './app-Reducer'
 import { AppThunkType } from './store'
 
 export type authReducerStateType = {
@@ -63,14 +63,15 @@ export const RegisterMeTC =
   (values: RegistrationRequestDataType): AppThunkType =>
   async dispatch => {
     try {
-      //dispatch(loading)  для крутилки что идет запрос
+      dispatch(setAppStatusAC('loading'))
       const res = await authAPI.registration(values)
 
       if (res.data.addedUser._id) {
-        // dispatch(isLoggedInAC(true))
         dispatch(IsInitializedAC(true))
+        dispatch(setAppStatusAC('succeed'))
       }
     } catch (e) {
+      dispatch(setAppStatusAC('failed'))
       console.log(e)
     }
   }
@@ -87,27 +88,32 @@ link</a>
 </div>`,
     }
 
+    dispatch(setAppStatusAC('loading'))
     try {
-      //dispatch(loader)
       const res = await authAPI.passwordRecovery(data)
 
       if (res.data.success) {
         dispatch(MessageRecoverySentAC(email))
+        dispatch(setAppStatusAC('succeed'))
       }
     } catch (e) {
+      dispatch(setAppStatusAC('failed'))
       console.log(e)
     }
   }
 export const setNewPasswordTC =
   (data: setNewPasswordDataType): AppThunkType =>
   async dispatch => {
+    dispatch(setAppStatusAC('loading'))
     try {
       const res = await authAPI.setNewPassword(data)
 
       if (!res.data.error) {
         dispatch(setNewPassTokenAC(data.resetPasswordToken))
+        dispatch(setAppStatusAC('succeed'))
       }
     } catch (e) {
+      dispatch(setAppStatusAC('failed'))
       console.log(e)
     }
   }

@@ -2,6 +2,7 @@ import React from 'react'
 
 import './App.css'
 
+import { LinearProgress } from '@mui/material'
 import { Route, Routes } from 'react-router-dom'
 
 import CheckEmail from '../components/CheckEmail/CheckEmail'
@@ -14,6 +15,7 @@ import NavigationForUs from '../components/NavigationForUs/NavigationForUs'
 import { PasswordRecovery } from '../components/PasswordRecovery/PasswordRecovery'
 import Profile from '../components/Profile/Profile'
 import SignUp from '../components/SignUp/SignUp'
+import { useAppSelector } from '../utils/hooks'
 
 export const PATH = {
   home: '/',
@@ -27,10 +29,13 @@ export const PATH = {
 }
 
 function App() {
+  const loading = useAppSelector(state => state.app.status)
+
   return (
     <div className="App">
       <NavigationForUs />
       <Header />
+      {loading === 'loading' ? <LinearProgress /> : <div style={{ height: '4px' }} />}
       <Routes>
         <Route path={PATH.home} element={<Home />} />
         <Route path={PATH.login} element={<Login />} />

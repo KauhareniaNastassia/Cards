@@ -3,10 +3,10 @@ import { authAPI } from '../api/auth-API'
 import { isLoggedInAC } from './auth-Reducer'
 import { AppThunkType } from './store'
 
-export type RequestStatusType = 'idle' | 'loading' | 'succeed' | 'failed'
+export type AppStatusType = 'idle' | 'loading' | 'succeed' | 'failed'
 
 type appReducerStateType = {
-  status: RequestStatusType
+  status: AppStatusType
   error: null | string
   isInitialized: boolean
 }
@@ -18,17 +18,17 @@ const initialState: appReducerStateType = {
 }
 
 export const appReducer = (state = initialState, action: appReducerAT): appReducerStateType => {
-  // fix any
   switch (action.type) {
     case 'APP/IS-INITIALIZE':
       return { ...state, isInitialized: action.value }
-
+    case 'APP/SET-APP-STATUS':
+      return { ...state, status: action.status }
     default:
       return state
   }
 }
 
-export type appReducerAT = ReturnType<typeof IsInitializedAC>
+export type appReducerAT = ReturnType<typeof IsInitializedAC> | ReturnType<typeof setAppStatusAC>
 
 ////////    Actions   /////////
 export const IsInitializedAC = (value: boolean) => {
@@ -37,11 +37,17 @@ export const IsInitializedAC = (value: boolean) => {
     value,
   } as const
 }
-
+export const setAppStatusAC = (status: AppStatusType) => {
+  return {
+    type: 'APP/SET-APP-STATUS',
+    status,
+  } as const
+}
 ////////    Thunks   /////////
 export const initializeAppTC =
   (token: string): AppThunkType =>
   async dispatch => {
+    dispatch(setAppStatusAC('loading'))
     try {
       const res = await authAPI.me(token)
 
@@ -49,7 +55,9 @@ export const initializeAppTC =
         dispatch(isLoggedInAC(true))
         dispatch(IsInitializedAC(true))
       }
+      dispatch(setAppStatusAC('succeed'))
     } catch (e) {
+      dispatch(setAppStatusAC('failed'))
       console.log(e)
     }
   }

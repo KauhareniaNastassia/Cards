@@ -14,7 +14,7 @@ import { useAppDispatch, useAppSelector } from '../../utils/hooks'
 import { validateUtil } from '../../utils/validate'
 
 const SignUp = () => {
-  const isInitialized = useAppSelector(state => state.app.isInitialized)
+  // const isInitialized = useAppSelector(state => state.app.isInitialized)
   const dispatch = useAppDispatch()
 
   const formik = useFormik({
@@ -29,10 +29,6 @@ const SignUp = () => {
       formik.resetForm()
     },
   })
-
-  if (isInitialized) {
-    return <Navigate to={PATH.login} />
-  }
 
   return (
     <section className={s.wrapp}>
