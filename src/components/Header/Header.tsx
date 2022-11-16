@@ -1,8 +1,10 @@
 import React from 'react'
 
-import { Avatar, Button, Stack } from '@mui/material'
+import { Avatar, Stack } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 
+import { PATH } from '../../app/App'
 import incubatorLogo from '../../assets/picture/incubatorLogo.png'
 import { AppRootStateType } from '../../redux/store'
 
@@ -31,9 +33,7 @@ const Header = () => {
             </Stack>
           </div>
         ) : (
-          <Button variant="contained" style={{ borderRadius: '20px' }}>
-            Sign In
-          </Button>
+          <Link to={PATH.login}>Sign In</Link>
         )}
       </div>
     </div>

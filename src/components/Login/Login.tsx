@@ -5,16 +5,19 @@ import TextField from '@mui/material/TextField/TextField'
 import { useFormik } from 'formik'
 import { Link, Navigate } from 'react-router-dom'
 
+import { LogInRequestDataType } from '../../api/auth-API'
 import { PATH } from '../../app/App'
 import Checkbox from '../../common/Checkbox/Checkbox'
 import InputPassword from '../../common/inputsFromMateUI/InputPassword'
-import { useAppSelector } from '../../utils/hooks'
+import { loginTC } from '../../redux/auth-Reducer'
+import { useAppDispatch, useAppSelector } from '../../utils/hooks'
 import { validateUtil } from '../../utils/validate'
 
 import s from './Login.module.css'
 
 const Login = () => {
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
+  const dispatch = useAppDispatch()
 
   const formik = useFormik({
     initialValues: {
@@ -23,14 +26,15 @@ const Login = () => {
       rememberMe: false,
     },
     validate: validateUtil,
-    onSubmit: values => {
-      alert(JSON.stringify(values, null, 2))
+    onSubmit: (values: LogInRequestDataType) => {
+      dispatch(loginTC(values))
+      /* alert(JSON.stringify(values, null, 2))*/
       formik.resetForm()
     },
   })
 
   if (isLoggedIn) {
-    return <Navigate to={'/'} />
+    return <Navigate to={PATH.profile} />
   }
 
   return (
