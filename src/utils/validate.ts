@@ -1,6 +1,7 @@
 type validateType = {
   email?: string
   name?: string
+  rememberMe?: boolean
   password?: string
   confirmPassword?: string
 }

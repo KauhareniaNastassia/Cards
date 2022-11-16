@@ -2,14 +2,14 @@ import React from 'react'
 
 import './App.css'
 
-import { Navigate, Route, Routes } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 
 import CheckEmail from '../components/CheckEmail/CheckEmail'
 import { CreateNewPassword } from '../components/CreateNewPassword/CreateNewPassword'
 import Error404 from '../components/Error404/Error404'
 import Header from '../components/Header/Header'
 import Home from '../components/Home/Home'
-import { Login } from '../components/Login/Login'
+import Login from '../components/Login/Login'
 import NavigationForUs from '../components/NavigationForUs/NavigationForUs'
 import { PasswordRecovery } from '../components/PasswordRecovery/PasswordRecovery'
 import Profile from '../components/Profile/Profile'
