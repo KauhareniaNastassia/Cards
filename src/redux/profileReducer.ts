@@ -5,7 +5,7 @@ const initialState = {
   email: 'hohoho@gmail.com',
   name: 'Tatsiana',
   avatar:
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQI-SfCS7BGFuSKOXfVz_4UspTZDGuRJX42Rwpcopk&s',
+    'https://media.istockphoto.com/id/1223671392/vector/default-profile-picture-avatar-photo-placeholder-vector-illustration.jpg?s=612x612&w=0&k=20&c=s0aTdmT5aU6b8ot7VKm11DeID6NctRCpB755rA1BIP0=',
 }
 
 export type UserType = {
@@ -33,8 +33,8 @@ export const profileReducer = (
 //thunks
 
 //actions
-export const setUserProfile = (_id: string, email: string, name: string, avatar: string) => {
-  return { type: SET_USER_PROFILE, profile: { _id, email, name, avatar } } as const
+export const setUserProfile = (profile: UserType) => {
+  return { type: SET_USER_PROFILE, profile } as const
 }
 
 //types

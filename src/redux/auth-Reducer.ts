@@ -7,6 +7,7 @@ import {
 } from '../api/auth-API'
 
 import { IsInitializedAC, setAppStatusAC } from './app-Reducer'
+import { setUserProfile } from './profileReducer'
 import { AppDispatchType, AppThunkType } from './store'
 
 export type authReducerStateType = {
@@ -127,7 +128,8 @@ export const loginTC =
 
       if (res.data._id) {
         dispatch(isLoggedInAC(true))
-        /* dispatch(setUserProfile(res.data))*/
+        dispatch(setUserProfile(res.data))
+        console.log(res.data)
       }
     } catch (e) {
       dispatch(setAppStatusAC('failed'))

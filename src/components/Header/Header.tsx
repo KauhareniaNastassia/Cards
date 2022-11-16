@@ -7,12 +7,14 @@ import { Link } from 'react-router-dom'
 import { PATH } from '../../app/App'
 import incubatorLogo from '../../assets/picture/incubatorLogo.png'
 import { AppRootStateType } from '../../redux/store'
+import { useAppSelector } from '../../utils/hooks'
 
 import s from './Header.module.css'
 
 const Header = () => {
   const dispatch = useDispatch()
   const isLoggegIn = useSelector<AppRootStateType>(state => state.auth.isLoggedIn)
+  const profile = useAppSelector(state => state.profile)
 
   return (
     <div className={s.header}>
@@ -23,12 +25,16 @@ const Header = () => {
 
         {isLoggegIn ? (
           <div className={s.userInfo}>
-            <a className={s.userName}>userName</a>
+            <a className={s.userName}>{profile.name}</a>
             <Stack direction="row" spacing={2}>
               <Avatar
                 sx={{ width: 36, height: 36 }}
                 alt={'User Name'}
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScVWdpSX0xv-SPTJEGBorXQzdtwZuCh-XdyA&usqp=CAU"
+                src={
+                  profile.avatar === ''
+                    ? 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQI-SfCS7BGFuSKOXfVz_4UspTZDGuRJX42Rwpcopk&s'
+                    : profile.avatar
+                }
               />
             </Stack>
           </div>

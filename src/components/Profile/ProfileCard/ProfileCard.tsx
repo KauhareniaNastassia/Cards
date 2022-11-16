@@ -13,7 +13,7 @@ import { useAppDispatch } from '../../../utils/hooks'
 import { EditableSpan } from '../../EditableSpan/EditableSpan'
 
 import s from './ProfileCard.module.css'
-
+//--force
 export type ProfileType = {
   profile: UserType
 }
