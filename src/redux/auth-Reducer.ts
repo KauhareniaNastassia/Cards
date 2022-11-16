@@ -1,19 +1,12 @@
 import {
   authAPI,
+  LogInRequestDataType,
   PasswordRecoveryDataType,
   RegistrationRequestDataType,
   setNewPasswordDataType,
 } from '../api/auth-API'
-import {
-  authAPI,
-  LogInRequestDataType,
-  PasswordRecoveryDataType,
-  RegistrationRequestDataType,
-} from '../api/auth-API'
 
 import { IsInitializedAC, setAppStatusAC } from './app-Reducer'
-import { AppThunkType } from './store'
-import { IsInitializedAC } from './app-Reducer'
 import { AppDispatchType, AppThunkType } from './store'
 
 export type authReducerStateType = {
@@ -137,6 +130,7 @@ export const loginTC =
         /* dispatch(setUserProfile(res.data))*/
       }
     } catch (e) {
+      dispatch(setAppStatusAC('failed'))
       console.log(e)
     }
   }
