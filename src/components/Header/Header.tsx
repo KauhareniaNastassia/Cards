@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Avatar, Stack } from '@mui/material'
+import { Avatar, Button, Stack } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
@@ -36,7 +36,11 @@ const Header = () => {
             </Stack>
           </div>
         ) : (
-          <Link to={PATH.login}>Sign In</Link>
+          <Link to={PATH.login} className={s.signInButtonLink}>
+            <Button type="submit" variant="contained" style={{ borderRadius: '20px' }}>
+              Sign In
+            </Button>
+          </Link>
         )}
       </div>
     </div>

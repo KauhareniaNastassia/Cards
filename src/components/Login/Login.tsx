@@ -81,7 +81,8 @@ const Login = () => {
             Sign In
           </Button>
 
-          <span className={s.haveAnAccountBlock}>Already have an account?</span>
+          {/* eslint-disable-next-line react/no-unescaped-entities */}
+          <span className={s.haveAnAccountBlock}>You don't have an account?</span>
           <Link className={s.navigateToLink} to={PATH.registration}>
             SIGN UP
           </Link>
