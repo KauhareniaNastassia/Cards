@@ -5,6 +5,7 @@ import './App.css'
 import { CircularProgress, LinearProgress } from '@mui/material'
 import { Route, Routes } from 'react-router-dom'
 
+import NotificationBar from '../common/Notification/NotificationBar'
 import CheckEmail from '../components/CheckEmail/CheckEmail'
 import { CreateNewPassword } from '../components/CreateNewPassword/CreateNewPassword'
 import Error404 from '../components/Error404/Error404'
@@ -30,7 +31,6 @@ export const PATH = {
 }
 
 function App() {
-  const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
   const isInitialized = useAppSelector(state => state.app.isInitialized)
   const loading = useAppSelector(state => state.app.status)
   const dispatch = useAppDispatch()
@@ -63,6 +63,7 @@ function App() {
         <Route path={PATH.createNewPassword} element={<CreateNewPassword />} />
         <Route path={PATH.checkEmail} element={<CheckEmail />} />
       </Routes>
+      <NotificationBar />
     </div>
   )
 }

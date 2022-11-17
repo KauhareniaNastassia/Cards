@@ -8,13 +8,15 @@ export type AppStatusType = 'idle' | 'loading' | 'succeed' | 'failed'
 
 type appReducerStateType = {
   status: AppStatusType
-  error: null | string
+  errorMessage: null | string
   isInitialized: boolean
+  successMessage: string | null
 }
 
 const initialState: appReducerStateType = {
   status: 'idle',
-  error: null,
+  errorMessage: null,
+  successMessage: 'null',
   isInitialized: false,
 }
 
@@ -24,26 +26,39 @@ export const appReducer = (state = initialState, action: appReducerAT): appReduc
       return { ...state, isInitialized: action.value }
     case 'APP/SET-APP-STATUS':
       return { ...state, status: action.status }
+    case 'APP/SET-APP-ERROR-MESSAGE':
+      return { ...state, errorMessage: action.errorMessage }
+    case 'APP/SET-APP-SUCCESS-MESSAGE':
+      return { ...state, successMessage: action.successMessage }
     default:
       return state
   }
 }
 
-export type appReducerAT = ReturnType<typeof IsInitializedAC> | ReturnType<typeof setAppStatusAC>
+export type appReducerAT =
+  | ReturnType<typeof IsInitializedAC>
+  | ReturnType<typeof setAppStatusAC>
+  | ReturnType<typeof SetAppErrorAC>
+  | ReturnType<typeof SetAppSuccessAC>
 
 ////////    Actions   /////////
-export const IsInitializedAC = (value: boolean) => {
-  return {
-    type: 'APP/IS-INITIALIZE',
-    value,
-  } as const
-}
-export const setAppStatusAC = (status: AppStatusType) => {
-  return {
-    type: 'APP/SET-APP-STATUS',
-    status,
-  } as const
-}
+export const IsInitializedAC = (value: boolean) => ({
+  type: 'APP/IS-INITIALIZE' as const,
+  value,
+})
+export const setAppStatusAC = (status: AppStatusType) => ({
+  type: 'APP/SET-APP-STATUS' as const,
+  status,
+})
+
+export const SetAppErrorAC = (errorMessage: string | null) => ({
+  type: 'APP/SET-APP-ERROR-MESSAGE' as const,
+  errorMessage,
+})
+export const SetAppSuccessAC = (successMessage: string | null) => ({
+  type: 'APP/SET-APP-SUCCESS-MESSAGE' as const,
+  successMessage,
+})
 ////////    Thunks   /////////
 export const initializeAppTC = (): AppThunkType => async dispatch => {
   dispatch(setAppStatusAC('loading'))

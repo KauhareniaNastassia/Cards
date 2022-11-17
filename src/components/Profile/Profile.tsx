@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux'
 import { Navigate } from 'react-router-dom'
 
 import { PATH } from '../../app/App'
-import { initializeAppTC } from '../../redux/app-Reducer'
 import { AppRootStateType } from '../../redux/store'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks'
 
@@ -15,10 +14,6 @@ const Profile = () => {
   const profile = useAppSelector(state => state.profile)
 
   const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
-
-  useEffect(() => {
-    dispatch(initializeAppTC())
-  }, [])
 
   if (!isLoggedIn) {
     return <Navigate to={PATH.login} />
