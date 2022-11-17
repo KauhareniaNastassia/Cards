@@ -18,7 +18,6 @@ export const EditableSpan = React.memo(function (props: EditableSpanPropsType) {
   let [editMode, setEditMode] = useState(false)
   const [userName, setUserName] = useState(profile.name)
 
-  useEffect(() => {}, [profile.name])
   const activateEditMode = () => {
     setEditMode(true)
   }

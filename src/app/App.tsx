@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import './App.css'
 
@@ -15,7 +15,8 @@ import NavigationForUs from '../components/NavigationForUs/NavigationForUs'
 import { PasswordRecovery } from '../components/PasswordRecovery/PasswordRecovery'
 import Profile from '../components/Profile/Profile'
 import SignUp from '../components/SignUp/SignUp'
-import { useAppSelector } from '../utils/hooks'
+import { initializeAppTC } from '../redux/app-Reducer'
+import { useAppDispatch, useAppSelector } from '../utils/hooks'
 
 export const PATH = {
   home: '/',
@@ -30,6 +31,11 @@ export const PATH = {
 
 function App() {
   const loading = useAppSelector(state => state.app.status)
+  const dispatch = useAppDispatch()
+
+  // useEffect(() => {
+  //   dispatch(initializeAppTC(token))
+  // }, [])
 
   return (
     <div className="App">
