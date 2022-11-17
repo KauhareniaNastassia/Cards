@@ -5,7 +5,7 @@ import {
   RegistrationRequestDataType,
   setNewPasswordDataType,
 } from '../api/auth-API'
-import { HandleServerNetworkError } from '../utils/error-handler'
+import { handleServerNetworkError } from '../utils/error-handler'
 
 import { setAppStatusAC, SetAppSuccessAC } from './app-Reducer'
 import { setUserProfile } from './profileReducer'
@@ -75,8 +75,7 @@ export const RegisterMeTC =
         dispatch(SetAppSuccessAC('Registration is successful'))
       }
     } catch (e) {
-      dispatch(setAppStatusAC('failed'))
-      console.log(e)
+      handleServerNetworkError(e as { errorMessage: string }, dispatch)
     }
   }
 
@@ -102,8 +101,7 @@ link</a>
         dispatch(SetAppSuccessAC('Check your email to recover your password'))
       }
     } catch (e) {
-      dispatch(setAppStatusAC('failed'))
-      console.log(e)
+      handleServerNetworkError(e as { errorMessage: string }, dispatch)
     }
   }
 export const setNewPasswordTC =
@@ -119,8 +117,7 @@ export const setNewPasswordTC =
         dispatch(SetAppSuccessAC('Check your email to create new password'))
       }
     } catch (e) {
-      dispatch(setAppStatusAC('failed'))
-      console.log(e)
+      handleServerNetworkError(e as { errorMessage: string }, dispatch)
     }
   }
 
@@ -138,9 +135,7 @@ export const loginTC =
         dispatch(SetAppSuccessAC('Login is successful'))
       }
     } catch (e) {
-      dispatch(setAppStatusAC('failed'))
-      HandleServerNetworkError(e as { errorMessage: string }, dispatch)
-      /*console.log(e)*/
+      handleServerNetworkError(e as { errorMessage: string }, dispatch)
     }
   }
 
@@ -157,7 +152,6 @@ export const logOutTC = () => async (dispatch: AppDispatchType) => {
       dispatch(SetAppSuccessAC('Logout is successful'))
     }
   } catch (e) {
-    dispatch(setAppStatusAC('failed'))
-    console.log(e)
+    handleServerNetworkError(e as { errorMessage: string }, dispatch)
   }
 }

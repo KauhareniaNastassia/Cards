@@ -20,15 +20,16 @@
 import axios from 'axios'
 import { Dispatch } from 'redux'
 
-import { SetAppErrorAC } from '../redux/app-Reducer'
+import { SetAppErrorAC, setAppStatusAC } from '../redux/app-Reducer'
 
-export const HandleServerNetworkError = (
+export const handleServerNetworkError = (
   err: { errorMessage: string },
-  dispatch: Dispatch<ReturnType<typeof SetAppErrorAC>>
+  dispatch: Dispatch<ReturnType<typeof SetAppErrorAC> | ReturnType<typeof setAppStatusAC>>
 ) => {
   if (axios.isAxiosError(err)) {
     const error = err.response?.data ? (err.response.data as { error: string }).error : err.message
 
+    dispatch(setAppStatusAC('failed'))
     dispatch(SetAppErrorAC(error))
   }
 }

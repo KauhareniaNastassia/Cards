@@ -1,4 +1,5 @@
 import { authAPI } from '../api/auth-API'
+import { handleServerNetworkError } from '../utils/error-handler'
 
 import { setAppStatusAC, SetAppSuccessAC } from './app-Reducer'
 import { AppThunkType } from './store'
@@ -7,9 +8,9 @@ const SET_USER_PROFILE = 'SET-USER-PROFILE'
 const UPDATE_PROFILE = 'UPDATE-PROFILE'
 
 const initialState = {
-  _id: '111',
-  email: 'hohoho@gmail.com',
-  name: 'Tatsiana',
+  _id: '',
+  email: '',
+  name: '',
   avatar: '',
 }
 
@@ -37,17 +38,6 @@ export const profileReducer = (
       return state
   }
 }
-//thunks
-/*export const updateUserProfileTC = (name: string) => {
-  return (dispatch: Dispatch) => {
-    authAPI.updateProfile(name).then(res => {
-      if (res.data) {
-        dispatch(updateProfile(name))
-        dispatch(SetAppSuccessAC('User name successfully changed'))
-      }
-    })
-  }
-}*/
 
 export const updateUserProfileTC =
   (name: string): AppThunkType =>
@@ -62,8 +52,7 @@ export const updateUserProfileTC =
         dispatch(SetAppSuccessAC('User name successfully changed'))
       }
     } catch (e) {
-      dispatch(setAppStatusAC('failed'))
-      console.log(e)
+      handleServerNetworkError(e as { errorMessage: string }, dispatch)
     }
   }
 
