@@ -17,4 +17,18 @@
 // }
 // type ErrorUtilsDispatcType = Dispatch<ReturnType<typeof ChangeAppStatusAC> | ReturnType<typeof SetAppErrorAC>>
 
-export const ee = 3
+import axios from 'axios'
+import { Dispatch } from 'redux'
+
+import { SetAppErrorAC } from '../redux/app-Reducer'
+
+export const HandleServerNetworkError = (
+  err: { errorMessage: string },
+  dispatch: Dispatch<ReturnType<typeof SetAppErrorAC>>
+) => {
+  if (axios.isAxiosError(err)) {
+    const error = err.response?.data ? (err.response.data as { error: string }).error : err.message
+
+    dispatch(SetAppErrorAC(error))
+  }
+}

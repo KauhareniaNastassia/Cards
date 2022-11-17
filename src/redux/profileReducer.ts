@@ -1,6 +1,7 @@
-import { Dispatch } from 'redux'
-
 import { authAPI } from '../api/auth-API'
+
+import { setAppStatusAC, SetAppSuccessAC } from './app-Reducer'
+import { AppThunkType } from './store'
 
 const SET_USER_PROFILE = 'SET-USER-PROFILE'
 const UPDATE_PROFILE = 'UPDATE-PROFILE'
@@ -37,15 +38,34 @@ export const profileReducer = (
   }
 }
 //thunks
-export const updateUserProfileTC = (name: string) => {
+/*export const updateUserProfileTC = (name: string) => {
   return (dispatch: Dispatch) => {
     authAPI.updateProfile(name).then(res => {
       if (res.data) {
         dispatch(updateProfile(name))
+        dispatch(SetAppSuccessAC('User name successfully changed'))
       }
     })
   }
-}
+}*/
+
+export const updateUserProfileTC =
+  (name: string): AppThunkType =>
+  async dispatch => {
+    dispatch(setAppStatusAC('loading'))
+    try {
+      const res = await authAPI.updateProfile(name)
+
+      if (res.data) {
+        dispatch(setAppStatusAC('succeed'))
+        dispatch(updateProfile(name))
+        dispatch(SetAppSuccessAC('User name successfully changed'))
+      }
+    } catch (e) {
+      dispatch(setAppStatusAC('failed'))
+      console.log(e)
+    }
+  }
 
 //actions
 export const setUserProfile = (profile: UserType) => {

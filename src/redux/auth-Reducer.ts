@@ -5,8 +5,9 @@ import {
   RegistrationRequestDataType,
   setNewPasswordDataType,
 } from '../api/auth-API'
+import { HandleServerNetworkError } from '../utils/error-handler'
 
-import { setAppStatusAC } from './app-Reducer'
+import { setAppStatusAC, SetAppSuccessAC } from './app-Reducer'
 import { setUserProfile } from './profileReducer'
 import { AppDispatchType, AppThunkType } from './store'
 
@@ -71,6 +72,7 @@ export const RegisterMeTC =
       if (res.data.addedUser._id) {
         dispatch(isLoggedInAC(true))
         dispatch(setAppStatusAC('succeed'))
+        dispatch(SetAppSuccessAC('Registration is successful'))
       }
     } catch (e) {
       dispatch(setAppStatusAC('failed'))
@@ -97,6 +99,7 @@ link</a>
       if (res.data.success) {
         dispatch(MessageRecoverySentAC(email))
         dispatch(setAppStatusAC('succeed'))
+        dispatch(SetAppSuccessAC('Check your email to recover your password'))
       }
     } catch (e) {
       dispatch(setAppStatusAC('failed'))
@@ -113,6 +116,7 @@ export const setNewPasswordTC =
       if (!res.data.error) {
         dispatch(setNewPassTokenAC(data.resetPasswordToken))
         dispatch(setAppStatusAC('succeed'))
+        dispatch(SetAppSuccessAC('Check your email to create new password'))
       }
     } catch (e) {
       dispatch(setAppStatusAC('failed'))
@@ -130,12 +134,13 @@ export const loginTC =
       if (res.data._id) {
         dispatch(isLoggedInAC(true))
         dispatch(setUserProfile(res.data))
-        console.log(res.data)
         dispatch(setAppStatusAC('succeed'))
+        dispatch(SetAppSuccessAC('Login is successful'))
       }
     } catch (e) {
       dispatch(setAppStatusAC('failed'))
-      console.log(e)
+      HandleServerNetworkError(e as { errorMessage: string }, dispatch)
+      /*console.log(e)*/
     }
   }
 
@@ -149,6 +154,7 @@ export const logOutTC = () => async (dispatch: AppDispatchType) => {
     if (res.data.info) {
       dispatch(isLoggedInAC(false))
       dispatch(setAppStatusAC('succeed'))
+      dispatch(SetAppSuccessAC('Logout is successful'))
     }
   } catch (e) {
     dispatch(setAppStatusAC('failed'))

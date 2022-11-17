@@ -16,7 +16,7 @@ type appReducerStateType = {
 const initialState: appReducerStateType = {
   status: 'idle',
   errorMessage: null,
-  successMessage: 'null',
+  successMessage: null,
   isInitialized: false,
 }
 
@@ -72,6 +72,8 @@ export const initializeAppTC = (): AppThunkType => async dispatch => {
       dispatch(setUserProfile(res.data))
     }
     dispatch(setAppStatusAC('succeed'))
+    dispatch(SetAppSuccessAC('You are initialized'))
+    //нужно ли сообщение при успешной инициализации?
   } catch (e) {
     dispatch(IsInitializedAC(true))
     dispatch(setAppStatusAC('failed'))
