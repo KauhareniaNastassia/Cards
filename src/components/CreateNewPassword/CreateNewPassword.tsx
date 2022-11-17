@@ -16,6 +16,7 @@ export const CreateNewPassword = () => {
   const { token } = useParams()
   const dispatch = useAppDispatch()
   const success = useAppSelector(state => state.auth.token)
+  const loading = useAppSelector(state => state.app.status)
 
   const formik = useFormik({
     initialValues: {
@@ -55,6 +56,7 @@ export const CreateNewPassword = () => {
             Create new password and we will send you further instructions to email
           </span>
           <Button
+            disabled={loading === 'loading'}
             type="submit"
             variant="contained"
             style={{ borderRadius: '20px', textTransform: 'inherit' }}

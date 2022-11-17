@@ -6,7 +6,7 @@ import {
   setNewPasswordDataType,
 } from '../api/auth-API'
 
-import { IsInitializedAC, setAppStatusAC } from './app-Reducer'
+import { setAppStatusAC } from './app-Reducer'
 import { setUserProfile } from './profileReducer'
 import { AppDispatchType, AppThunkType } from './store'
 
@@ -69,7 +69,7 @@ export const RegisterMeTC =
       const res = await authAPI.registration(values)
 
       if (res.data.addedUser._id) {
-        dispatch(IsInitializedAC(true))
+        dispatch(isLoggedInAC(true))
         dispatch(setAppStatusAC('succeed'))
       }
     } catch (e) {
@@ -123,6 +123,7 @@ export const setNewPasswordTC =
 export const loginTC =
   (data: LogInRequestDataType): AppThunkType =>
   async dispatch => {
+    dispatch(setAppStatusAC('loading'))
     try {
       const res = await authAPI.logIn(data)
 
@@ -130,6 +131,7 @@ export const loginTC =
         dispatch(isLoggedInAC(true))
         dispatch(setUserProfile(res.data))
         console.log(res.data)
+        dispatch(setAppStatusAC('succeed'))
       }
     } catch (e) {
       dispatch(setAppStatusAC('failed'))
@@ -138,6 +140,7 @@ export const loginTC =
   }
 
 export const logOutTC = () => async (dispatch: AppDispatchType) => {
+  dispatch(setAppStatusAC('loading'))
   try {
     const res = await authAPI.logout()
 
@@ -145,8 +148,10 @@ export const logOutTC = () => async (dispatch: AppDispatchType) => {
 
     if (res.data.info) {
       dispatch(isLoggedInAC(false))
+      dispatch(setAppStatusAC('succeed'))
     }
   } catch (e) {
+    dispatch(setAppStatusAC('failed'))
     console.log(e)
   }
 }

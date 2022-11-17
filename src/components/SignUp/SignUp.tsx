@@ -14,7 +14,8 @@ import { useAppDispatch, useAppSelector } from '../../utils/hooks'
 import { validateUtil } from '../../utils/validate'
 
 const SignUp = () => {
-  // const isInitialized = useAppSelector(state => state.app.isInitialized)
+  const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
+  const loading = useAppSelector(state => state.app.status)
   const dispatch = useAppDispatch()
 
   const formik = useFormik({
@@ -29,6 +30,10 @@ const SignUp = () => {
       formik.resetForm()
     },
   })
+
+  if (isLoggedIn) {
+    return <Navigate to={PATH.login} />
+  }
 
   return (
     <section className={s.wrapp}>
@@ -58,7 +63,13 @@ const SignUp = () => {
           {formik.touched.confirmPassword && formik.errors.confirmPassword ? (
             <div style={{ color: 'red' }}>{formik.errors.confirmPassword}</div>
           ) : null}
-          <Button type="submit" variant="contained" style={{ borderRadius: '20px' }}>
+
+          <Button
+            disabled={loading === 'loading'}
+            type="submit"
+            variant="contained"
+            style={{ borderRadius: '20px' }}
+          >
             Sign Up
           </Button>
           <span className={s.text}>Already have an account?</span>

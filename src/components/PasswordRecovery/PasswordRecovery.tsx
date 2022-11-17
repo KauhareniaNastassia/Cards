@@ -13,6 +13,8 @@ import { validateUtil } from '../../utils/validate'
 
 export const PasswordRecovery = () => {
   const dispatch = useAppDispatch()
+
+  const loading = useAppSelector(state => state.app.status)
   const emailRecovery = useAppSelector(state => state.auth.emailRecovery)
 
   const formik = useFormik({
@@ -46,7 +48,12 @@ export const PasswordRecovery = () => {
           <span className={s.text}>
             Enter your email address and we will send you further instructions
           </span>
-          <Button type="submit" variant="contained" style={{ borderRadius: '20px' }}>
+          <Button
+            disabled={loading === 'loading'}
+            type="submit"
+            variant="contained"
+            style={{ borderRadius: '20px' }}
+          >
             Send Instructions
           </Button>
           <Button

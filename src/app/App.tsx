@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 
 import './App.css'
 
@@ -15,7 +15,6 @@ import NavigationForUs from '../components/NavigationForUs/NavigationForUs'
 import { PasswordRecovery } from '../components/PasswordRecovery/PasswordRecovery'
 import Profile from '../components/Profile/Profile'
 import SignUp from '../components/SignUp/SignUp'
-import { initializeAppTC } from '../redux/app-Reducer'
 import { useAppDispatch, useAppSelector } from '../utils/hooks'
 
 export const PATH = {

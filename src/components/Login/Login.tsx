@@ -17,6 +17,7 @@ import s from './Login.module.css'
 
 const Login = () => {
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
+  const loading = useAppSelector(state => state.app.status)
   const dispatch = useAppDispatch()
 
   const formik = useFormik({
@@ -28,7 +29,6 @@ const Login = () => {
     validate: validateUtil,
     onSubmit: (values: LogInRequestDataType) => {
       dispatch(loginTC(values))
-      /* alert(JSON.stringify(values, null, 2))*/
       formik.resetForm()
     },
   })
@@ -77,10 +77,14 @@ const Login = () => {
             </Link>
           </div>
 
-          <Button type="submit" variant="contained" style={{ borderRadius: '20px' }}>
+          <Button
+            disabled={loading === 'loading'}
+            type="submit"
+            variant="contained"
+            style={{ borderRadius: '20px' }}
+          >
             Sign In
           </Button>
-
           {/* eslint-disable-next-line react/no-unescaped-entities */}
           <span className={s.haveAnAccountBlock}>You don't have an account?</span>
           <Link className={s.navigateToLink} to={PATH.registration}>
