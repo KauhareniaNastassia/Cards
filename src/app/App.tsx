@@ -49,6 +49,7 @@ function App() {
         <Route path={PATH.profile} element={<Profile />} />
         <Route path={PATH.error404} element={<Error404 />} />
         <Route path={PATH.passwordRecovery} element={<PasswordRecovery />} />
+
         <Route path={PATH.createNewPassword} element={<CreateNewPassword />} />
         <Route path={PATH.checkEmail} element={<CheckEmail />} />
       </Routes>

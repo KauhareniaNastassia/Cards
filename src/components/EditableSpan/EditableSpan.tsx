@@ -14,9 +14,8 @@ type EditableSpanPropsType = {
 }
 export const EditableSpan = React.memo(function (props: EditableSpanPropsType) {
   const dispatch = useAppDispatch()
-  const profile = useAppSelector(state => state.profile)
   let [editMode, setEditMode] = useState(false)
-  const [userName, setUserName] = useState(profile.name)
+  const [userName, setUserName] = useState(props.value)
 
   const activateEditMode = () => {
     setEditMode(true)
@@ -45,7 +44,7 @@ export const EditableSpan = React.memo(function (props: EditableSpanPropsType) {
     </div>
   ) : (
     <div onDoubleClick={activateEditMode} className={s.userName}>
-      {profile.name}
+      {props.value}
       <EditIcon fontSize={'small'} />
     </div>
   )
