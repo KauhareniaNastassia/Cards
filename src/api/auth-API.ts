@@ -63,8 +63,11 @@ export type RegistrationRequestDataType = {
 }
 type RegistrationResponseType = {
   addedUser: ResponseUserType
-  error?: string
+  email: string
+  in: string
+  error: string
 }
+
 type ResponseUserType<D = {}> = {
   _id: string
   email: string
@@ -79,14 +82,7 @@ type ResponseUserType<D = {}> = {
   __v: number
   data: D
 }
-// export type registrationNegativeResponseType = {
-//   error: string
-//   in: string
-//   isEmailValid: boolean
-//   isPassValid: boolean
-//   emailRegExp: string
-//   passwordRegExp: string
-// }
+
 export type LogInRequestDataType = {
   email: string
   password: string

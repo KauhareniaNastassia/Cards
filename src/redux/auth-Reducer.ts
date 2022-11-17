@@ -1,3 +1,5 @@
+import axios, { AxiosError } from 'axios'
+
 import {
   authAPI,
   LogInRequestDataType,
@@ -7,7 +9,7 @@ import {
 } from '../api/auth-API'
 import { HandleServerNetworkError } from '../utils/error-handler'
 
-import { setAppStatusAC, SetAppSuccessAC } from './app-Reducer'
+import { SetAppErrorAC, setAppStatusAC, SetAppSuccessAC } from './app-Reducer'
 import { setUserProfile } from './profileReducer'
 import { AppDispatchType, AppThunkType } from './store'
 
@@ -69,14 +71,26 @@ export const RegisterMeTC =
       dispatch(setAppStatusAC('loading'))
       const res = await authAPI.registration(values)
 
+      console.log(res)
       if (res.data.addedUser._id) {
         dispatch(isLoggedInAC(true))
         dispatch(setAppStatusAC('succeed'))
         dispatch(SetAppSuccessAC('Registration is successful'))
       }
     } catch (e) {
-      dispatch(setAppStatusAC('failed'))
-      console.log(e)
+      const err = e as Error | AxiosError
+
+      if (axios.isAxiosError(err)) {
+        const error = err.response?.data
+          ? (err.response.data as { error: string }).error
+          : err.message
+
+        dispatch(SetAppErrorAC(error))
+        dispatch(setAppStatusAC('failed'))
+      } else {
+        dispatch(SetAppErrorAC(`Native error ${err.message}`))
+        dispatch(setAppStatusAC('failed'))
+      }
     }
   }
 

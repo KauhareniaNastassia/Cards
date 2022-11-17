@@ -23,12 +23,14 @@ const NotificationBar = () => {
       dispatch(SetAppErrorAC(null))
       dispatch(SetAppSuccessAC(null))
     }
+    dispatch(SetAppErrorAC(null))
+    dispatch(SetAppSuccessAC(null))
   }
 
   return (
     <div>
       {successMessage ? (
-        <Snackbar open={!!successMessage} autoHideDuration={6000} onClose={handleClose}>
+        <Snackbar open={!!successMessage} autoHideDuration={5000} onClose={handleClose}>
           <Alert onClose={handleClose} severity="success">
             {successMessage}
           </Alert>
@@ -37,7 +39,7 @@ const NotificationBar = () => {
         ''
       )}
       {errorMessage ? (
-        <Snackbar open={!!errorMessage} autoHideDuration={6000} onClose={handleClose}>
+        <Snackbar open={!!errorMessage} autoHideDuration={5000} onClose={handleClose}>
           <Alert onClose={handleClose} severity="error">
             {errorMessage}
           </Alert>

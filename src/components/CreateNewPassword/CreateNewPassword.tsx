@@ -17,6 +17,7 @@ export const CreateNewPassword = () => {
   const dispatch = useAppDispatch()
   const success = useAppSelector(state => state.auth.token)
   const loading = useAppSelector(state => state.app.status)
+  const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
 
   const formik = useFormik({
     initialValues: {
@@ -37,6 +38,9 @@ export const CreateNewPassword = () => {
 
   if (success) {
     return <Navigate to={PATH.login} />
+  }
+  if (isLoggedIn) {
+    return <Navigate to={PATH.profile} />
   }
 
   return (
