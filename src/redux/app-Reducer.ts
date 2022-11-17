@@ -58,6 +58,7 @@ export const initializeAppTC = (): AppThunkType => async dispatch => {
     }
     dispatch(setAppStatusAC('succeed'))
   } catch (e) {
+    dispatch(IsInitializedAC(true))
     dispatch(setAppStatusAC('failed'))
     console.log(e)
   }
