@@ -1,3 +1,5 @@
+import axios, { AxiosError } from 'axios'
+
 import {
   authAPI,
   LogInRequestDataType,
