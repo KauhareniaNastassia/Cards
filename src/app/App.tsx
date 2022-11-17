@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import './App.css'
 
-import { LinearProgress } from '@mui/material'
+import { CircularProgress, LinearProgress } from '@mui/material'
 import { Route, Routes } from 'react-router-dom'
 
 import CheckEmail from '../components/CheckEmail/CheckEmail'
@@ -15,6 +15,7 @@ import NavigationForUs from '../components/NavigationForUs/NavigationForUs'
 import { PasswordRecovery } from '../components/PasswordRecovery/PasswordRecovery'
 import Profile from '../components/Profile/Profile'
 import SignUp from '../components/SignUp/SignUp'
+import { initializeAppTC } from '../redux/app-Reducer'
 import { useAppDispatch, useAppSelector } from '../utils/hooks'
 
 export const PATH = {
@@ -30,15 +31,21 @@ export const PATH = {
 
 function App() {
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
+  const isInitialized = useAppSelector(state => state.app.isInitialized)
   const loading = useAppSelector(state => state.app.status)
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    if (!isLoggedIn) {
-      return
-    }
     dispatch(initializeAppTC())
   }, [])
+
+  if (!isInitialized) {
+    return (
+      <div style={{ position: 'fixed', top: '30%', textAlign: 'center', width: '100%' }}>
+        <CircularProgress />
+      </div>
+    )
+  }
 
   return (
     <div className="App">

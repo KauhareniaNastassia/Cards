@@ -1,6 +1,7 @@
 import { authAPI } from '../api/auth-API'
 
 import { isLoggedInAC } from './auth-Reducer'
+import { setUserProfile } from './profileReducer'
 import { AppThunkType } from './store'
 
 export type AppStatusType = 'idle' | 'loading' | 'succeed' | 'failed'
@@ -53,6 +54,7 @@ export const initializeAppTC = (): AppThunkType => async dispatch => {
     if (res.data._id) {
       dispatch(isLoggedInAC(true))
       dispatch(IsInitializedAC(true))
+      dispatch(setUserProfile(res.data))
     }
     dispatch(setAppStatusAC('succeed'))
   } catch (e) {

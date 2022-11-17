@@ -20,13 +20,13 @@ const Home = () => {
     dispatch(initializeAppTC())
   }, [])
 
-  // if (!isInitialized) {
-  //   return (
-  //     <div style={{ position: 'fixed', top: '30%', textAlign: 'center', width: '100%' }}>
-  //       <CircularProgress />
-  //     </div>
-  //   )
-  // }
+  if (!isInitialized) {
+    return (
+      <div style={{ position: 'fixed', top: '30%', textAlign: 'center', width: '100%' }}>
+        <CircularProgress />
+      </div>
+    )
+  }
   if (!isLoggedIn) {
     return <Navigate to={PATH.login} />
   }

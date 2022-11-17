@@ -16,9 +16,9 @@ const Profile = () => {
 
   const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
 
-  // useEffect(() => {
-  //   dispatch(initializeAppTC())
-  // }, [])
+  useEffect(() => {
+    dispatch(initializeAppTC())
+  }, [])
 
   if (!isLoggedIn) {
     return <Navigate to={PATH.login} />
