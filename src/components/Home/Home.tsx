@@ -16,9 +16,9 @@ const Home = () => {
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
   const isInitialized = useAppSelector(state => state.app.isInitialized)
 
-  // useEffect(() => {
-  //   dispatch(initializeAppTC(token))
-  // }, [])
+  useEffect(() => {
+    dispatch(initializeAppTC())
+  }, [])
 
   // if (!isInitialized) {
   //   return (

@@ -44,20 +44,19 @@ export const setAppStatusAC = (status: AppStatusType) => {
   } as const
 }
 ////////    Thunks   /////////
-export const initializeAppTC =
-  (token: string): AppThunkType =>
-  async dispatch => {
-    dispatch(setAppStatusAC('loading'))
-    try {
-      const res = await authAPI.me(token)
+export const initializeAppTC = (): AppThunkType => async dispatch => {
+  dispatch(setAppStatusAC('loading'))
+  try {
+    const res = await authAPI.me()
 
-      if (res.data.data._id) {
-        dispatch(isLoggedInAC(true))
-        dispatch(IsInitializedAC(true))
-      }
-      dispatch(setAppStatusAC('succeed'))
-    } catch (e) {
-      dispatch(setAppStatusAC('failed'))
-      console.log(e)
+    console.log(res)
+    if (res.data._id) {
+      dispatch(isLoggedInAC(true))
+      dispatch(IsInitializedAC(true))
     }
+    dispatch(setAppStatusAC('succeed'))
+  } catch (e) {
+    dispatch(setAppStatusAC('failed'))
+    console.log(e)
   }
+}

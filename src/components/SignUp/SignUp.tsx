@@ -3,6 +3,7 @@ import React from 'react'
 import { Button } from '@mui/material'
 import TextField from '@mui/material/TextField/TextField'
 import { useFormik } from 'formik'
+import { useSelector } from 'react-redux'
 import { Link, Navigate } from 'react-router-dom'
 
 import { RegistrationRequestDataType } from '../../api/auth-API'
@@ -10,11 +11,12 @@ import { PATH } from '../../app/App'
 import s from '../../assets/styles/FormsStyle.module.css'
 import InputPassword from '../../common/inputsFromMateUI/InputPassword'
 import { RegisterMeTC } from '../../redux/auth-Reducer'
+import { AppRootStateType } from '../../redux/store'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks'
 import { validateUtil } from '../../utils/validate'
 
 const SignUp = () => {
-  // const isInitialized = useAppSelector(state => state.app.isInitialized)
+  const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
   const dispatch = useAppDispatch()
 
   const formik = useFormik({
@@ -29,6 +31,10 @@ const SignUp = () => {
       formik.resetForm()
     },
   })
+
+  if (isLoggedIn) {
+    return <Navigate to={PATH.profile} />
+  }
 
   return (
     <section className={s.wrapp}>

@@ -4,7 +4,9 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import LogoutIcon from '@mui/icons-material/Logout'
 import { Avatar, styled } from '@mui/material'
 import Badge from '@mui/material/Badge'
+import { Link } from 'react-router-dom'
 
+import { PATH } from '../../../app/App'
 import photoCamera from '../../../assets/picture/icons8-camera-48.png'
 import SuperButton from '../../../common/Button/SuperButton/SuperButton'
 import { logOutTC } from '../../../redux/auth-Reducer'
@@ -22,13 +24,13 @@ export const customAvatar =
 
 const ProfileCard = (props: ProfileType) => {
   const profile = useAppSelector(state => state.profile)
+  const dispatch = useAppDispatch()
 
   const SmallAvatar = styled(Avatar)(({ theme }) => ({
     width: 36,
     height: 36,
     background: '#bdbdbd',
   }))
-  const dispatch = useAppDispatch()
 
   const logOutHandler = () => {
     dispatch(logOutTC())
@@ -37,9 +39,9 @@ const ProfileCard = (props: ProfileType) => {
   return (
     <>
       <div className={s.arrow}>
-        <a className={s.link} href="">
+        <Link to={PATH.home} className={s.link}>
           <ArrowBackIcon fontSize={'small'} /> Back to Packs List
-        </a>
+        </Link>
       </div>
       <div className={s.card}>
         <div className={s.container}>
