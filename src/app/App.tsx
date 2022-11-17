@@ -29,12 +29,16 @@ export const PATH = {
 }
 
 function App() {
+  const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
   const loading = useAppSelector(state => state.app.status)
   const dispatch = useAppDispatch()
 
-  // useEffect(() => {
-  //   dispatch(initializeAppTC(token))
-  // }, [])
+  useEffect(() => {
+    if (!isLoggedIn) {
+      return
+    }
+    dispatch(initializeAppTC())
+  }, [])
 
   return (
     <div className="App">

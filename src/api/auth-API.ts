@@ -18,8 +18,8 @@ export const authAPI = {
       values
     )
   },
-  me(token: string) {
-    return instance.post<AxiosResponse<ResponseUserType>>(`/auth/me?token=${token}`)
+  me() {
+    return instance.post<{}, AxiosResponse<ResponseUserType>>(`/auth/me`, {})
   },
   logIn(data: LogInRequestDataType) {
     return instance.post<LogInRequestDataType, AxiosResponse<LogInResponseUserDataType>>(

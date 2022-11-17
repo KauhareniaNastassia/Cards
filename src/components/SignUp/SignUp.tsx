@@ -32,7 +32,7 @@ const SignUp = () => {
   })
 
   if (isLoggedIn) {
-    return <Navigate to={PATH.login} />
+    return <Navigate to={PATH.profile} />
   }
 
   return (
