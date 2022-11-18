@@ -2,7 +2,7 @@ import React from 'react'
 
 import { Avatar, Button, Stack } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
 
 import { PATH } from '../../app/App'
 import incubatorLogo from '../../assets/picture/incubatorLogo.png'
@@ -13,7 +13,6 @@ import { customAvatar } from '../Profile/ProfileCard/ProfileCard'
 import s from './Header.module.css'
 
 const Header = () => {
-  const dispatch = useDispatch()
   const isLoggegIn = useSelector<AppRootStateType>(state => state.auth.isLoggedIn)
   const profile = useAppSelector(state => state.profile)
 

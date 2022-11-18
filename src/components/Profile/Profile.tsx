@@ -10,7 +10,6 @@ import { useAppDispatch, useAppSelector } from '../../utils/hooks'
 import ProfileCard from './ProfileCard/ProfileCard'
 
 const Profile = () => {
-  const dispatch = useAppDispatch()
   const profile = useAppSelector(state => state.profile)
 
   const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)

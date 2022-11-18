@@ -23,7 +23,6 @@ export const customAvatar =
   'https://media.istockphoto.com/id/1223671392/vector/default-profile-picture-avatar-photo-placeholder-vector-illustration.jpg?s=612x612&w=0&k=20&c=s0aTdmT5aU6b8ot7VKm11DeID6NctRCpB755rA1BIP0='
 
 const ProfileCard = (props: ProfileType) => {
-  const profile = useAppSelector(state => state.profile)
   const dispatch = useAppDispatch()
 
   const SmallAvatar = styled(Avatar)(({ theme }) => ({
@@ -54,11 +53,11 @@ const ProfileCard = (props: ProfileType) => {
             <Avatar
               sx={{ width: 96, height: 96 }}
               alt={'User Name'}
-              src={profile.avatar === '' ? customAvatar : profile.avatar}
+              src={props.profile.avatar === '' ? customAvatar : props.profile.avatar}
             />
           </Badge>
-          <EditableSpan value={profile.name} />
-          <div className={s.email}>{profile.email}</div>
+          <EditableSpan value={props.profile.name} />
+          <div className={s.email}>{props.profile.email}</div>
           <SuperButton onClick={logOutHandler} className={s.button}>
             <LogoutIcon /> Log out
           </SuperButton>
