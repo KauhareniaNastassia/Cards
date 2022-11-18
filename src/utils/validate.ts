@@ -31,11 +31,5 @@ export const validateUtil = (values: validateType) => {
     }
   }
 
-  // if (!values.firstName) {
-  //   errors.firstName = 'Required'
-  // } else if (values.firstName.length > 15) {
-  //   errors.firstName = 'Must be 15 characters or less'
-  // }
-
   return errors
 }

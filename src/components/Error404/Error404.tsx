@@ -2,7 +2,7 @@ import React from 'react'
 
 import style from './Error.module.css'
 
-const Error404 = () => {
+export const Error404 = () => {
   return (
     <div className={style.container}>
       <h1 className={style.title}>404: PAGE NOT FOUND</h1>
@@ -13,5 +13,3 @@ const Error404 = () => {
     </div>
   )
 }
-
-export default Error404

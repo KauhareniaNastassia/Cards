@@ -9,11 +9,11 @@ import { RegistrationRequestDataType } from '../../api/auth-API'
 import { PATH } from '../../app/App'
 import s from '../../assets/styles/FormsStyle.module.css'
 import InputPassword from '../../common/inputsFromMateUI/InputPassword'
-import { RegisterMeTC } from '../../redux/auth-Reducer'
+import { RegisterMeTC } from '../../redux/auth-reducer'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks'
 import { validateUtil } from '../../utils/validate'
 
-const SignUp = () => {
+export const SignUp = () => {
   const loading = useAppSelector(state => state.app.status)
   const isRegistrationSuccess = useAppSelector(state => state.auth.isRegistrationSuccess)
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
@@ -83,5 +83,3 @@ const SignUp = () => {
     </section>
   )
 }
-
-export default SignUp

@@ -4,7 +4,7 @@ import EditIcon from '@mui/icons-material/Edit'
 import { Button } from '@mui/material'
 import TextField from '@mui/material/TextField'
 
-import { updateUserProfileTC } from '../../redux/profileReducer'
+import { updateUserProfileTC } from '../../redux/profile-reducer'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks'
 
 import s from './EditableSpan.module.css'
@@ -12,7 +12,7 @@ import s from './EditableSpan.module.css'
 type EditableSpanPropsType = {
   value: string
 }
-export const EditableSpan = React.memo(function (props: EditableSpanPropsType) {
+export const EditableSpan = function (props: EditableSpanPropsType) {
   const dispatch = useAppDispatch()
   let [editMode, setEditMode] = useState(false)
   const [userName, setUserName] = useState(props.value)
@@ -43,9 +43,9 @@ export const EditableSpan = React.memo(function (props: EditableSpanPropsType) {
       </Button>
     </div>
   ) : (
-    <div onDoubleClick={activateEditMode} className={s.userName}>
+    <div onClick={activateEditMode} className={s.userName}>
       {props.value}
       <EditIcon fontSize={'small'} />
     </div>
   )
-})
+}

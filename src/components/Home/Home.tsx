@@ -10,7 +10,7 @@ import Checkbox from '../../common/Checkbox/Checkbox'
 import Input from '../../common/Input/Input'
 import { useAppSelector } from '../../utils/hooks'
 
-const Home = () => {
+export const Home = () => {
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
   const isInitialized = useAppSelector(state => state.app.isInitialized)
 
@@ -33,5 +33,3 @@ const Home = () => {
     </div>
   )
 }
-
-export default Home

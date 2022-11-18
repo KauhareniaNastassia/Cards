@@ -3,7 +3,7 @@ import React, { forwardRef, useState } from 'react'
 import MuiAlert, { AlertProps } from '@mui/material/Alert'
 import Snackbar from '@mui/material/Snackbar'
 
-import { SetAppErrorAC, SetAppSuccessAC } from '../../redux/app-Reducer'
+import { SetAppErrorAC, SetAppSuccessAC } from '../../redux/app-reducer'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks'
 
 const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(props, ref) {

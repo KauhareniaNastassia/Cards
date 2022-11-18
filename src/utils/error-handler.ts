@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { Dispatch } from 'redux'
 
-import { SetAppErrorAC, setAppStatusAC } from '../redux/app-Reducer'
+import { SetAppErrorAC, setAppStatusAC } from '../redux/app-reducer'
 
 export const handleServerNetworkError = (
   err: { errorMessage: string },
