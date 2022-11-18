@@ -16,6 +16,7 @@ import { validateUtil } from '../../utils/validate'
 const SignUp = () => {
   const loading = useAppSelector(state => state.app.status)
   const isRegistrationSuccess = useAppSelector(state => state.auth.isRegistrationSuccess)
+  const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
   const dispatch = useAppDispatch()
 
   const formik = useFormik({
@@ -33,6 +34,9 @@ const SignUp = () => {
 
   if (isRegistrationSuccess) {
     return <Navigate to={PATH.login} />
+  }
+  if (isLoggedIn) {
+    return <Navigate to={PATH.profile} />
   }
 
   return (

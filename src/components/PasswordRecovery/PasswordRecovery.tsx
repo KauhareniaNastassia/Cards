@@ -16,6 +16,7 @@ export const PasswordRecovery = () => {
 
   const loading = useAppSelector(state => state.app.status)
   const emailRecovery = useAppSelector(state => state.auth.emailRecovery)
+  const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
 
   const formik = useFormik({
     initialValues: {
@@ -31,6 +32,9 @@ export const PasswordRecovery = () => {
 
   if (emailRecovery) {
     return <Navigate to={PATH.checkEmail} />
+  }
+  if (isLoggedIn) {
+    return <Navigate to={PATH.profile} />
   }
 
   return (

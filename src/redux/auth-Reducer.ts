@@ -1,5 +1,3 @@
-import axios, { AxiosError } from 'axios'
-
 import {
   authAPI,
   LogInRequestDataType,
@@ -123,7 +121,7 @@ export const setNewPasswordTC =
       if (!res.data.error) {
         dispatch(setNewPassTokenAC(data.resetPasswordToken))
         dispatch(setAppStatusAC('succeed'))
-        dispatch(SetAppSuccessAC('Check your email to create new password'))
+        dispatch(SetAppSuccessAC('Your Password was successfully changed!'))
       }
     } catch (e) {
       handleServerNetworkError(e as { errorMessage: string }, dispatch)

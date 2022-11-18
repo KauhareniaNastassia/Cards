@@ -39,6 +39,9 @@ export const CreateNewPassword = () => {
   if (success) {
     return <Navigate to={PATH.login} />
   }
+  if (isLoggedIn) {
+    return <Navigate to={PATH.profile} />
+  }
 
   return (
     <section className={s.wrapp}>
