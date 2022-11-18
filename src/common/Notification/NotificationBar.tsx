@@ -29,23 +29,19 @@ const NotificationBar = () => {
 
   return (
     <div>
-      {successMessage ? (
+      {successMessage && (
         <Snackbar open={!!successMessage} autoHideDuration={5000} onClose={handleClose}>
           <Alert onClose={handleClose} severity="success">
             {successMessage}
           </Alert>
         </Snackbar>
-      ) : (
-        ''
       )}
-      {errorMessage ? (
+      {errorMessage && (
         <Snackbar open={!!errorMessage} autoHideDuration={5000} onClose={handleClose}>
           <Alert onClose={handleClose} severity="error">
             {errorMessage}
           </Alert>
         </Snackbar>
-      ) : (
-        ''
       )}
     </div>
   )

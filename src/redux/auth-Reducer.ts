@@ -17,12 +17,14 @@ export type authReducerStateType = {
   isLoggedIn: boolean
   emailRecovery: string
   token: string
+  isRegistrationSuccess: boolean
 }
 
 const initState: authReducerStateType = {
   isLoggedIn: false,
   emailRecovery: '',
   token: '',
+  isRegistrationSuccess: false,
 }
 
 export const authReducer = (state = initState, action: authReducerAT): authReducerStateType => {
@@ -33,6 +35,8 @@ export const authReducer = (state = initState, action: authReducerAT): authReduc
       return { ...state, emailRecovery: action.email }
     case 'auth/SET-NEW-PASSWORD-TOKEN':
       return { ...state, token: action.token }
+    case 'auth/SET-REGISTRATION-RESULT':
+      return { ...state, isRegistrationSuccess: action.value }
 
     default:
       return state
@@ -43,6 +47,7 @@ export type authReducerAT =
   | ReturnType<typeof isLoggedInAC>
   | ReturnType<typeof MessageRecoverySentAC>
   | ReturnType<typeof setNewPassTokenAC>
+  | ReturnType<typeof setRegistrationResultAC>
 
 //////   Actions  ///////////
 export const isLoggedInAC = (value: boolean) =>
@@ -51,6 +56,8 @@ export const MessageRecoverySentAC = (email: string) =>
   ({ type: 'auth/IS-PASS_RECOVERY_MESSAGE-SENT', email } as const)
 export const setNewPassTokenAC = (token: string) =>
   ({ type: 'auth/SET-NEW-PASSWORD-TOKEN', token } as const)
+export const setRegistrationResultAC = (value: boolean) =>
+  ({ type: 'auth/SET-REGISTRATION-RESULT', value } as const)
 
 type setAuthUserDataType = ReturnType<typeof setAuthUserData>
 export const setAuthUserData = (
@@ -72,7 +79,7 @@ export const RegisterMeTC =
       const res = await authAPI.registration(values)
 
       if (res.data.addedUser._id) {
-        dispatch(isLoggedInAC(true))
+        dispatch(setRegistrationResultAC(true))
         dispatch(setAppStatusAC('succeed'))
         dispatch(SetAppSuccessAC('Registration is successful'))
       }

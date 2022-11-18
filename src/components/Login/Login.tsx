@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 
 import { Button, FormControlLabel } from '@mui/material'
 import TextField from '@mui/material/TextField/TextField'
@@ -9,7 +9,6 @@ import { LogInRequestDataType } from '../../api/auth-API'
 import { PATH } from '../../app/App'
 import Checkbox from '../../common/Checkbox/Checkbox'
 import InputPassword from '../../common/inputsFromMateUI/InputPassword'
-import { initializeAppTC } from '../../redux/app-Reducer'
 import { loginTC } from '../../redux/auth-Reducer'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks'
 import { validateUtil } from '../../utils/validate'
@@ -20,10 +19,6 @@ const Login = () => {
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
   const loading = useAppSelector(state => state.app.status)
   const dispatch = useAppDispatch()
-
-  // useEffect(() => {
-  //   dispatch(initializeAppTC())
-  // }, [])
 
   const formik = useFormik({
     initialValues: {

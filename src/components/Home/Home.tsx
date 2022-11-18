@@ -8,17 +8,11 @@ import Button from '../../common/Button/Button'
 import css_btn from '../../common/Button/Button.module.css'
 import Checkbox from '../../common/Checkbox/Checkbox'
 import Input from '../../common/Input/Input'
-import { initializeAppTC } from '../../redux/app-Reducer'
-import { useAppDispatch, useAppSelector } from '../../utils/hooks'
+import { useAppSelector } from '../../utils/hooks'
 
 const Home = () => {
-  const dispatch = useAppDispatch()
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
   const isInitialized = useAppSelector(state => state.app.isInitialized)
-
-  useEffect(() => {
-    dispatch(initializeAppTC())
-  }, [])
 
   if (!isInitialized) {
     return (

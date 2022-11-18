@@ -14,8 +14,8 @@ import { useAppDispatch, useAppSelector } from '../../utils/hooks'
 import { validateUtil } from '../../utils/validate'
 
 const SignUp = () => {
-  const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
   const loading = useAppSelector(state => state.app.status)
+  const isRegistrationSuccess = useAppSelector(state => state.auth.isRegistrationSuccess)
   const dispatch = useAppDispatch()
 
   const formik = useFormik({
@@ -31,8 +31,8 @@ const SignUp = () => {
     },
   })
 
-  if (isLoggedIn) {
-    return <Navigate to={PATH.profile} />
+  if (isRegistrationSuccess) {
+    return <Navigate to={PATH.login} />
   }
 
   return (
