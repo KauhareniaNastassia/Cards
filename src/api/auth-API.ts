@@ -16,7 +16,7 @@ export const authAPI = {
     )
   },
   me() {
-    return instance.post<{}, AxiosResponse<ResponseUserType>>(`/auth/me`, {})
+    return instance.post<AxiosResponse<ResponseUserType>>(`/auth/me`)
   },
   logIn(data: LogInRequestDataType) {
     return instance.post<LogInRequestDataType, AxiosResponse<LogInResponseUserDataType>>(
@@ -30,40 +30,39 @@ export const authAPI = {
     })
   },
   logout() {
-    return instance.delete<{}, AxiosResponse<{ info: string }>>(`/auth/me`, {})
+    return instance.delete<AxiosResponse<{ info: string }>>(`/auth/me`)
   },
-  // passwordRecovery работает только на heroku  не забить пофиксить .env
   passwordRecovery(data: PasswordRecoveryDataType) {
     return axios.post<PasswordRecoveryDataType, AxiosResponse<PasswordRecoveryResponseType>>(
       'https://neko-back.herokuapp.com/2.0/auth/forgot',
       data
     )
   },
-  // setNewPassword работает только на heroku  не забить пофиксить .env
-  setNewPassword(data: setNewPasswordDataType) {
-    return axios.post<setNewPasswordDataType, AxiosResponse<setNewPasswordResponseTye>>(
+  setNewPassword(data: SetNewPasswordDataType) {
+    return axios.post<SetNewPasswordDataType, AxiosResponse<SetNewPasswordResponseTye>>(
       'https://neko-back.herokuapp.com/2.0/auth/set-new-password',
       data
     )
   },
   userBlock() {
-    return instance.post('/auth/block', {})
+    return instance.post('/auth/block')
   },
 }
 
-// Когда всьо заработает нужно розбить типи красиво с дженериками
-//////   Types    //////
+//types
 export type RegistrationRequestDataType = {
   email: string
   password: string
   confirmPassword?: string
 }
+
 type RegistrationResponseType = {
   addedUser: ResponseUserType
   email: string
   in: string
   error: string
 }
+
 type ResponseUserType<D = {}> = {
   _id: string
   email: string
@@ -100,26 +99,31 @@ export type LogInResponseUserDataType = {
   tokenDeathTime: number
   avatar: string
 }
+
 export type PasswordRecoveryDataType = {
   email: string
   message: string
 }
-export type BedPasswordRecoveryResponseType = {
+
+export type BadPasswordRecoveryResponseType = {
   error: string
   email: string
   in: string
 }
-type PasswordRecoveryResponseType = BedPasswordRecoveryResponseType & {
+
+type PasswordRecoveryResponseType = BadPasswordRecoveryResponseType & {
   answer: boolean
   html: boolean
   info: string
   success: boolean
 }
-export type setNewPasswordDataType = {
+
+export type SetNewPasswordDataType = {
   password: string
   resetPasswordToken: string
 }
-type setNewPasswordResponseTye = {
+
+type SetNewPasswordResponseTye = {
   info: string
   error: string
 }

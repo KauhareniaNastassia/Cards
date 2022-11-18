@@ -7,7 +7,7 @@ import { Link, Navigate } from 'react-router-dom'
 
 import { PATH } from '../../app/App'
 import s from '../../assets/styles/FormsStyle.module.css'
-import { PasswordRecoveryTC } from '../../redux/auth-Reducer'
+import { PasswordRecoveryTC } from '../../redux/auth-reducer'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks'
 import { validateUtil } from '../../utils/validate'
 

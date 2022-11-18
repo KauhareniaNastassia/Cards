@@ -4,11 +4,11 @@ import { Button } from '@mui/material'
 import { useFormik } from 'formik'
 import { Navigate, useParams } from 'react-router-dom'
 
-import { setNewPasswordDataType } from '../../api/auth-API'
+import { SetNewPasswordDataType } from '../../api/auth-API'
 import { PATH } from '../../app/App'
 import s from '../../assets/styles/FormsStyle.module.css'
 import InputPassword from '../../common/inputsFromMateUI/InputPassword'
-import { setNewPasswordTC } from '../../redux/auth-Reducer'
+import { setNewPasswordTC } from '../../redux/auth-reducer'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks'
 import { validateUtil } from '../../utils/validate'
 
@@ -26,7 +26,7 @@ export const CreateNewPassword = () => {
     validate: validateUtil,
     onSubmit: values => {
       if (values.password && token) {
-        const data: setNewPasswordDataType = {
+        const data: SetNewPasswordDataType = {
           password: values.password,
           resetPasswordToken: token,
         }

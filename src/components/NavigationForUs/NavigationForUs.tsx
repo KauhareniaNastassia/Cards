@@ -6,9 +6,9 @@ import { PATH } from '../../app/App'
 
 import s from './NavigationForUs.module.css'
 
-// чисто временно для нас, чтоб не вбивать путь руками
+//just for fast navigate
 
-const NavigationForUs = () => {
+export const NavigationForUs = () => {
   return (
     <nav className={s.wrapp}>
       <Link to={PATH.home}>Home</Link>
@@ -22,5 +22,3 @@ const NavigationForUs = () => {
     </nav>
   )
 }
-
-export default NavigationForUs

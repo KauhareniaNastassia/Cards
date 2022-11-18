@@ -8,12 +8,12 @@ import { PATH } from '../../app/App'
 import incubatorLogo from '../../assets/picture/incubatorLogo.png'
 import { AppRootStateType } from '../../redux/store'
 import { useAppSelector } from '../../utils/hooks'
-import { customAvatar } from '../Profile/ProfileCard/ProfileCard'
+import { customAvatar } from '../ProfileCard/ProfileCard'
 
 import s from './Header.module.css'
 
-const Header = () => {
-  const isLoggegIn = useSelector<AppRootStateType>(state => state.auth.isLoggedIn)
+export const Header = () => {
+  const isLoggegIn = useAppSelector(state => state.auth.isLoggedIn)
   const profile = useAppSelector(state => state.profile)
 
   return (
@@ -45,5 +45,3 @@ const Header = () => {
     </div>
   )
 }
-
-export default Header

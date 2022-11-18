@@ -9,13 +9,13 @@ import { LogInRequestDataType } from '../../api/auth-API'
 import { PATH } from '../../app/App'
 import Checkbox from '../../common/Checkbox/Checkbox'
 import InputPassword from '../../common/inputsFromMateUI/InputPassword'
-import { loginTC } from '../../redux/auth-Reducer'
+import { loginTC } from '../../redux/auth-reducer'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks'
 import { validateUtil } from '../../utils/validate'
 
 import s from './Login.module.css'
 
-const Login = () => {
+export const Login = () => {
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
   const loading = useAppSelector(state => state.app.status)
   const dispatch = useAppDispatch()
@@ -95,5 +95,3 @@ const Login = () => {
     </section>
   )
 }
-
-export default Login

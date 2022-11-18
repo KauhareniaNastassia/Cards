@@ -8,7 +8,7 @@ import { useAppSelector } from '../../utils/hooks'
 
 import checkEmailLogo from './../../assets/picture/CheckEmail.png'
 
-const CheckEmail = () => {
+export const CheckEmail = () => {
   const emailRecovery = useAppSelector(store => store.auth.emailRecovery)
 
   if (!emailRecovery) {
@@ -35,5 +35,3 @@ const CheckEmail = () => {
     </section>
   )
 }
-
-export default CheckEmail
