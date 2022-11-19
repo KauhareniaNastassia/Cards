@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Button } from '@mui/material'
+import { Button, FormHelperText } from '@mui/material'
 import { useFormik } from 'formik'
 import { Navigate, useParams } from 'react-router-dom'
 
@@ -54,9 +54,11 @@ export const CreateNewPassword = () => {
             error={!!(formik.touched.password && formik.errors.password)}
           />
           {formik.touched.password && formik.errors.password ? (
-            <div style={{ color: 'red' }}>{formik.errors.password}</div>
+            <FormHelperText sx={{ color: 'error.main', paddingLeft: '15px' }} id="">
+              {formik.errors.password}
+            </FormHelperText>
           ) : null}
-          <span style={{ opacity: '50%' }}>
+          <span style={{ opacity: '50%', margin: '15px 0px' }}>
             Create new password and we will send you further instructions to email
           </span>
           <Button

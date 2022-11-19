@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Button } from '@mui/material'
+import { Button, FormHelperText } from '@mui/material'
 import TextField from '@mui/material/TextField/TextField'
 import { useFormik } from 'formik'
 import { Link, Navigate } from 'react-router-dom'
@@ -57,7 +57,9 @@ export const SignUp = () => {
             error={!!(formik.touched.password && formik.errors.password)}
           />
           {formik.touched.password && formik.errors.password ? (
-            <div style={{ color: 'red' }}>{formik.errors.password}</div>
+            <FormHelperText sx={{ color: 'error.main', paddingLeft: '15px' }} id="">
+              {formik.errors.password}
+            </FormHelperText>
           ) : null}
           <InputPassword
             nameField={'Confirm Password'}
@@ -65,14 +67,16 @@ export const SignUp = () => {
             error={!!(formik.touched.confirmPassword && formik.errors.confirmPassword)}
           />
           {formik.touched.confirmPassword && formik.errors.confirmPassword ? (
-            <div style={{ color: 'red' }}>{formik.errors.confirmPassword}</div>
+            <FormHelperText sx={{ color: 'error.main', paddingLeft: '15px' }} id="">
+              {formik.errors.confirmPassword}
+            </FormHelperText>
           ) : null}
 
           <Button
             disabled={loading === 'loading'}
             type="submit"
             variant="contained"
-            style={{ borderRadius: '20px' }}
+            style={{ borderRadius: '20px', margin: '15px 0px' }}
           >
             Sign Up
           </Button>
