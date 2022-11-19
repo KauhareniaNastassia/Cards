@@ -1,19 +1,21 @@
 import React from 'react'
 
-import { Button, FormControlLabel } from '@mui/material'
+import { Button, Checkbox, FormControlLabel, FormHelperText } from '@mui/material'
 import TextField from '@mui/material/TextField/TextField'
 import { useFormik } from 'formik'
+import { Simulate } from 'react-dom/test-utils'
 import { Link, Navigate } from 'react-router-dom'
 
 import { LogInRequestDataType } from '../../api/auth-API'
 import { PATH } from '../../app/App'
-import Checkbox from '../../common/Checkbox/Checkbox'
 import InputPassword from '../../common/inputsFromMateUI/InputPassword'
 import { loginTC } from '../../redux/auth-reducer'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks'
 import { validateUtil } from '../../utils/validate'
 
 import s from './Login.module.css'
+
+import error = Simulate.error
 
 export const Login = () => {
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
@@ -43,6 +45,8 @@ export const Login = () => {
         <h2>Sign In</h2>
         <form className={s.formWrapp} onSubmit={formik.handleSubmit}>
           <TextField
+            margin="normal"
+            className={s.textField}
             label="Email"
             placeholder={'Email'}
             {...formik.getFieldProps('email')}
@@ -57,7 +61,9 @@ export const Login = () => {
             error={!!(formik.touched.password && formik.errors.password)}
           />
           {formik.touched.password && formik.errors.password ? (
-            <div style={{ color: 'red' }}>{formik.errors.password}</div>
+            <FormHelperText sx={{ color: 'error.main', paddingLeft: '15px' }} id="">
+              {formik.errors.password}
+            </FormHelperText>
           ) : null}
 
           <FormControlLabel

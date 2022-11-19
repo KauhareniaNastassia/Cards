@@ -1,45 +1,51 @@
 .wrapp {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
-  height: calc(100vh - 190px);
-  margin: 3% 0;
+    height: calc(100vh - 190px);
+    margin: 3% 0;
 
-  text-align: center;
+    text-align: center;
 }
+
 .inner {
-  padding: 20px;
+    padding: 20px;
 
-  border: 2px solid #f1f1f2;
-  border-radius: 20px;
+    border: 2px solid #f1f1f2;
+    border-radius: 20px;
 }
+
 .formWrapp {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 400px;
+    width: 300px;
+    margin: 0 auto;
+}
 
-  width: 300px;
-  margin: 0 auto;
+.text {
+    opacity: 0.6;
+    margin-bottom: 15px;
 }
-.text{
-  opacity: 0.6;
-}
+
 .button {
-  padding: 10px;
+    padding: 10px;
 
-  color: white;
-  text-decoration: none;
+    color: white;
+    text-decoration: none;
 
-  background-color: #1976D2;
-  border-radius: 20px
+    background-color: #1976D2;
+    border-radius: 20px
 }
+
 .button:hover {
-  background-color: dodgerblue;
+    background-color: dodgerblue;
 }
 
 @media only screen and (max-width: 330px) {
-  .formWrapp {
-    width: 250px;
-  }
+    .formWrapp {
+        width: 250px;
+    }
 }
