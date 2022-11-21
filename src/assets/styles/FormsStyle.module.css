@@ -19,8 +19,10 @@
 .formWrapp {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    gap: 10px;
+
     min-height: 400px;
+
     width: 300px;
     margin: 0 auto;
 }

@@ -1,15 +1,33 @@
-.wrapper {
-    display: flex;
-    min-width: 1100px;
-    justify-content: space-between;
-    margin: 0px 40px;
+
+.HeaderWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 20px;
+
+}
+.title {
+  font-size: 30px;
+  font-weight: bold;
 }
 
 .table {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    max-width: 1400px;
-    margin: 40px;
+  margin-bottom: 20px;
+}
 
+
+
+@media only screen and (max-width: 890px) {
+  .tableRow > td {
+    padding: 10px;
+  }
+  .nameColumn {
+    overflow: visible;
+
+    max-width: 40px;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 }

@@ -13,7 +13,7 @@ export const cardsAPI = {
   getPacks(page: number, pageCount: number) {
     return instance.get(`/cards/pack`, {
       params: {
-        page: 1,
+        page: 3,
         pageCount: 10,
       },
     })

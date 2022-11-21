@@ -1,4 +1,5 @@
 .wrapp {
+  overflow: hidden;
   display: flex;
   gap: 10px;
   justify-content: space-evenly;

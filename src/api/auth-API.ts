@@ -16,7 +16,7 @@ export const authAPI = {
     )
   },
   me() {
-    return instance.post<AxiosResponse<ResponseUserType>>(`/auth/me`)
+    return instance.post<ResponseUserType>(`/auth/me`)
   },
   logIn(data: LogInRequestDataType) {
     return instance.post<LogInRequestDataType, AxiosResponse<LogInResponseUserDataType>>(

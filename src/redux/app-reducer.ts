@@ -66,7 +66,7 @@ export const initializeAppTC = (): AppThunkType => async dispatch => {
 
     dispatch(isLoggedInAC(true))
     dispatch(IsInitializedAC(true))
-    dispatch(setUserProfile(res.data.data))
+    dispatch(setUserProfile(res.data))
     dispatch(setAppStatusAC('succeed'))
   } catch (e) {
     dispatch(IsInitializedAC(true))

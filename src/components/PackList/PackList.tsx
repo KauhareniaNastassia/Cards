@@ -19,7 +19,7 @@ import {
 } from '@mui/material'
 import moment from 'moment/moment'
 
-import { getPacksTC } from '../../redux/pack-reducer'
+import { addNewPackAC, getPacksTC } from '../../redux/pack-reducer'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks'
 
 import s from './PackList.module.css'
@@ -66,60 +66,71 @@ export const PackList = () => {
   }))
 
   return (
-    <div>
-      <div className={s.wrapper}>
-        <span style={{ fontSize: '25px', fontWeight: 'bold' }}>Pack list</span>
-        <Button type="submit" variant="contained" style={{ borderRadius: '20px' }}>
-          Add new Pack
-        </Button>
-      </div>
-      <TableContainer className={s.table} component={Paper}>
-        <Table sx={{ minWidth: 650, fontFamily: 'Montserrat' }} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <StyledTableCell>Name</StyledTableCell>
-              <StyledTableCell align="right">Cards</StyledTableCell>
-              <StyledTableCell align="right">Last updated</StyledTableCell>
-              <StyledTableCell align="right">Created by</StyledTableCell>
-              <StyledTableCell align="right">Actions</StyledTableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {packs.map(pack => (
-              <TableRow key={pack._id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                <StyledTableCellRow component="th" scope="row">
-                  {pack.name}
-                </StyledTableCellRow>
-                <StyledTableCellRow align="right">{pack.cardsCount}</StyledTableCellRow>
-                <StyledTableCellRow align="right">
-                  {moment(`${pack.updated}`).format('D.M.Y')}
-                </StyledTableCellRow>
-                <StyledTableCellRow align="right">{pack.user_name}</StyledTableCellRow>
-                <StyledTableCellRow align="right">
-                  <IconButton>
-                    <SchoolIcon></SchoolIcon>
-                  </IconButton>
-                  <IconButton>
-                    <EditIcon></EditIcon>
-                  </IconButton>
-                  <IconButton>
-                    <DeleteIcon></DeleteIcon>
-                  </IconButton>
-                </StyledTableCellRow>
+    <section>
+      <div className="container">
+        <div className={s.HeaderWrapper}>
+          <h2 className={s.title}>Pack list</h2>
+          <Button
+            variant="contained"
+            style={{ borderRadius: '20px' }}
+            onClick={() => {
+              addNewPackAC()
+            }}
+          >
+            Add new Pack
+          </Button>
+        </div>
+        <TableContainer className={s.table} component={Paper}>
+          <Table sx={{ minWidth: 650, fontFamily: 'Montserrat' }} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <StyledTableCell align="left">Name</StyledTableCell>
+                <StyledTableCell align="center">Cards</StyledTableCell>
+                <StyledTableCell align="center">Last updated</StyledTableCell>
+                <StyledTableCell align="center">Created by</StyledTableCell>
+                <StyledTableCell align="center">Actions</StyledTableCell>
               </TableRow>
-            ))}
-            <TablePagination
-              rowsPerPageOptions={[5, 10, 25]}
-              component="div"
-              count={maxPacksCount}
-              rowsPerPage={pageCount}
-              page={page}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-            />
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </div>
+            </TableHead>
+
+            <TableBody>
+              {packs.map(pack => (
+                <TableRow
+                  className={s.tableRow}
+                  key={pack._id}
+                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                >
+                  <StyledTableCellRow className={s.nameColumn}>{pack.name}</StyledTableCellRow>
+                  <StyledTableCellRow align="center">{pack.cardsCount}</StyledTableCellRow>
+                  <StyledTableCellRow align="center">
+                    {moment(`${pack.updated}`).format('D.M.Y')}
+                  </StyledTableCellRow>
+                  <StyledTableCellRow align="center">{pack.user_name}</StyledTableCellRow>
+                  <StyledTableCellRow align="center">
+                    <IconButton>
+                      <SchoolIcon></SchoolIcon>
+                    </IconButton>
+                    <IconButton>
+                      <EditIcon></EditIcon>
+                    </IconButton>
+                    <IconButton>
+                      <DeleteIcon></DeleteIcon>
+                    </IconButton>
+                  </StyledTableCellRow>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <TablePagination
+          rowsPerPageOptions={[5, 10, 25]}
+          component="div"
+          count={maxPacksCount}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
+      </div>
+    </section>
   )
 }

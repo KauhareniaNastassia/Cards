@@ -15,18 +15,14 @@ const initialState = {
       updated: '',
       deckCover: '',
     },
-  ],
-  cardPacksTotalCount: 0,
-  page: 0,
-  pageCount: 0,
+  ] as PackType[],
+  cardPacksTotalCount: 0 as number,
+  page: 0 as number,
+  pageCount: 5 as number,
 }
 
-type InitialStateType = {
-  cardPacks: PackType[]
-  cardPacksTotalCount: number
-  page: number
-  pageCount: number
-}
+type PackReducerStateType = typeof initialState
+
 export type PackType = {
   _id: string
   user_id: string
@@ -38,16 +34,34 @@ export type PackType = {
 }
 
 export const packReducer = (
-  state: InitialStateType = initialState,
+  state: PackReducerStateType = initialState,
   action: PackReducerAT
-): InitialStateType => {
+): PackReducerStateType => {
   switch (action.type) {
-    case 'SET-PACKS':
+    case 'PACKS/SET_PACKS':
       return { ...state, ...action.packs }
+    case 'PACKS/ADD_NEW_PACK':
+      // eslint-disable-next-line no-case-declarations
+      const newPack: PackType = {
+        _id: 'sds',
+        name: 'new pack',
+        user_name: 'nazar',
+        cardsCount: 0,
+        updated: '',
+        deckCover: '',
+        user_id: 'whewed',
+      }
+
+      return { ...state, cardPacks: [newPack, ...state.cardPacks] }
     default:
       return state
   }
 }
+
+//actions
+export const setPacksAC = (packs: PackType[]) => ({ type: 'PACKS/SET_PACKS' as const, packs })
+export const addNewPackAC = () => ({ type: 'PACKS/ADD_NEW_PACK' as const })
+
 //thunks
 export const getPacksTC = (page: number, pageCount: number): AppThunkType => {
   return (dispatch: Dispatch) => {
@@ -56,11 +70,6 @@ export const getPacksTC = (page: number, pageCount: number): AppThunkType => {
     })
   }
 }
-//actions
-export const setPacksAC = (packs: PackType[]) => {
-  return { type: 'SET-PACKS', packs } as const
-}
 
 //types
-export type PackReducerAT = SetPacksACType
-type SetPacksACType = ReturnType<typeof setPacksAC>
+export type PackReducerAT = ReturnType<typeof setPacksAC> | ReturnType<typeof addNewPackAC>
