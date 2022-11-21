@@ -1,7 +1,8 @@
 import { Dispatch } from 'redux'
 
-import { cardsAPI } from '../api/cards-API'
+import { addNewPackDataType, cardsAPI } from '../api/cards-API'
 
+import { setAppStatusAC } from './app-reducer'
 import { AppThunkType } from './store'
 
 const initialState = {
@@ -41,18 +42,7 @@ export const packReducer = (
     case 'PACKS/SET_PACKS':
       return { ...state, ...action.packs }
     case 'PACKS/ADD_NEW_PACK':
-      // eslint-disable-next-line no-case-declarations
-      const newPack: PackType = {
-        _id: 'sds',
-        name: 'new pack',
-        user_name: 'nazar',
-        cardsCount: 0,
-        updated: '',
-        deckCover: '',
-        user_id: 'whewed',
-      }
-
-      return { ...state, cardPacks: [newPack, ...state.cardPacks] }
+      return { ...state, cardPacks: [action.newPack, ...state.cardPacks] }
     default:
       return state
   }
@@ -60,7 +50,10 @@ export const packReducer = (
 
 //actions
 export const setPacksAC = (packs: PackType[]) => ({ type: 'PACKS/SET_PACKS' as const, packs })
-export const addNewPackAC = () => ({ type: 'PACKS/ADD_NEW_PACK' as const })
+export const addNewPackAC = (newPack: PackType) => ({
+  type: 'PACKS/ADD_NEW_PACK' as const,
+  newPack,
+})
 
 //thunks
 export const getPacksTC = (page: number, pageCount: number): AppThunkType => {
@@ -70,6 +63,45 @@ export const getPacksTC = (page: number, pageCount: number): AppThunkType => {
     })
   }
 }
+export const addNewPackTC =
+  (name?: string, deckCover?: string): AppThunkType =>
+  async dispatch => {
+    const newForPack: addNewPackDataType = { cardsPack: { name, deckCover } }
 
+    dispatch(setAppStatusAC('loading'))
+
+    try {
+      const res = await cardsAPI.addNewPack(newForPack)
+
+      const newPack: PackType = {
+        _id: res.data.newCardsPack._id,
+        user_name: res.data.newCardsPack.user_name,
+        user_id: res.data.newCardsPack.user_id,
+        updated: res.data.newCardsPack.updated,
+        name: res.data.newCardsPack.name,
+        cardsCount: res.data.newCardsPack.cardsCount,
+        deckCover: deckCover ? deckCover : '',
+      }
+
+      dispatch(addNewPackAC(newPack))
+      dispatch(setAppStatusAC('succeed'))
+    } catch (e) {
+      console.log(e)
+    }
+  }
+export const deletePackTC =
+  (packID: string): AppThunkType =>
+  async dispatch => {
+    dispatch(setAppStatusAC('loading'))
+    try {
+      const res = await cardsAPI.deletePack(packID)
+
+      console.log(res)
+      dispatch(getPacksTC(1, 10))
+      dispatch(setAppStatusAC('succeed'))
+    } catch (e) {
+      console.log(e)
+    }
+  }
 //types
 export type PackReducerAT = ReturnType<typeof setPacksAC> | ReturnType<typeof addNewPackAC>

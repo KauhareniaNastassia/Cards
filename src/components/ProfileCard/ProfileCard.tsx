@@ -44,7 +44,7 @@ export const ProfileCard = () => {
   return (
     <>
       <div className={s.arrow}>
-        <Link to={PATH.home} className={s.link}>
+        <Link to={PATH.packList} className={s.link}>
           <ArrowBackIcon fontSize={'small'} /> Back to Packs List
         </Link>
       </div>

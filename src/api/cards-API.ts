@@ -13,28 +13,22 @@ export const cardsAPI = {
   getPacks(page: number, pageCount: number) {
     return instance.get(`/cards/pack`, {
       params: {
-        page: 3,
+        page: 1,
         pageCount: 10,
       },
     })
   },
-  addPack(name: string, deckCover: string) {
-    return instance.post('/cards/pack', { name, deckCover })
+  addNewPack(data: addNewPackDataType) {
+    return instance.post<addNewPackDataType, AxiosResponse<addNewPackResponseType>>(
+      '/cards/pack',
+      data
+    )
+  },
+  deletePack(packID: string) {
+    return instance.delete<AxiosResponse<DeletePackResponseType>>(`/cards/pack?id=${packID}`)
   },
   getCards(cardsPackId: string) {
-    return instance.get<AxiosResponse<ResponseCardType>>(`/cards/card/${cardsPackId}`)
-  },
-  logout() {
-    return instance.delete(`/auth/me`)
-  },
-  passwordRecovery() {
-    return instance.post('/auth/forgot', {})
-  },
-  setNewPassword() {
-    return instance.post('/auth/set-new-password', {})
-  },
-  userBlock() {
-    return instance.post('/auth/block', {})
+    return instance.get<AxiosResponse<GetCardsResponseType>>(`/cards/card/${cardsPackId}`)
   },
 }
 type ResponsePackType = {
@@ -52,7 +46,7 @@ type ResponsePackType = {
   page: number
   pageCount: number
 }
-type ResponseCardType = {
+type GetCardsResponseType = {
   cards: [
     {
       answer: string
@@ -72,4 +66,38 @@ type ResponseCardType = {
   page: number
   pageCount: number
   packUserId: string
+}
+export type addNewPackDataType = {
+  cardsPack: {
+    name?: string
+    deckCover?: string
+    private?: boolean
+  }
+}
+export type addNewPackResponseType = {
+  newCardsPack: PackResponseType
+  token: string
+  tokenDeathTime: number
+}
+export type PackResponseType = {
+  _id: string
+  user_id: string
+  user_name: string
+  private: boolean
+  name: string
+  path: string
+  grade: number
+  shots: number
+  cardsCount: number
+  type: string
+  rating: number
+  created: string
+  updated: string
+  more_id: string
+  __v: number
+}
+export type DeletePackResponseType = {
+  deletedCardsPack: PackResponseType
+  token: string
+  tokenDeathTime: number
 }

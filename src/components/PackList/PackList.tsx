@@ -5,7 +5,6 @@ import EditIcon from '@mui/icons-material/Edit'
 import SchoolIcon from '@mui/icons-material/School'
 import {
   Button,
-  CircularProgress,
   IconButton,
   Paper,
   styled,
@@ -22,18 +21,18 @@ import moment from 'moment/moment'
 import { Navigate } from 'react-router-dom'
 
 import { PATH } from '../../app/App'
-import { addNewPackAC, getPacksTC } from '../../redux/pack-reducer'
+import { addNewPackTC, deletePackTC, getPacksTC } from '../../redux/pack-reducer'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks'
 
 import s from './PackList.module.css'
 
 export const PackList = () => {
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
-  const isInitialized = useAppSelector(state => state.app.isInitialized)
   const currentPage = useAppSelector(state => state.packs.page)
   const packs = useAppSelector(state => state.packs.cardPacks)
   const pageCount = useAppSelector(state => state.packs.pageCount)
   const maxPacksCount = useAppSelector(state => state.packs.cardPacksTotalCount)
+  const myID = useAppSelector(state => state.profile._id)
   const [rowsPerPage, setRowsPerPage] = useState(pageCount)
   const [page, setPage] = useState(currentPage)
   const dispatch = useAppDispatch()
@@ -80,7 +79,7 @@ export const PackList = () => {
             variant="contained"
             style={{ borderRadius: '20px' }}
             onClick={() => {
-              dispatch(addNewPackAC())
+              dispatch(addNewPackTC('nazar'))
             }}
           >
             Add new Pack
@@ -117,12 +116,16 @@ export const PackList = () => {
                     <IconButton>
                       <SchoolIcon></SchoolIcon>
                     </IconButton>
-                    <IconButton>
-                      <EditIcon></EditIcon>
-                    </IconButton>
-                    <IconButton>
-                      <DeleteIcon></DeleteIcon>
-                    </IconButton>
+                    {myID === pack.user_id && (
+                      <span>
+                        <IconButton>
+                          <EditIcon></EditIcon>
+                        </IconButton>
+                        <IconButton onClick={() => dispatch(deletePackTC(pack._id))}>
+                          <DeleteIcon></DeleteIcon>
+                        </IconButton>
+                      </span>
+                    )}
                   </StyledTableCellRow>
                 </TableRow>
               ))}
