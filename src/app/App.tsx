@@ -13,6 +13,7 @@ import { Header } from '../components/Header/Header'
 import { Home } from '../components/Home/Home'
 import { Login } from '../components/Login/Login'
 import { NavigationForUs } from '../components/NavigationForUs/NavigationForUs'
+import { PackList } from '../components/PackList/PackList'
 import { PasswordRecovery } from '../components/PasswordRecovery/PasswordRecovery'
 import ProfileCard from '../components/ProfileCard/ProfileCard'
 import { SignUp } from '../components/SignUp/SignUp'
@@ -28,6 +29,7 @@ export const PATH = {
   passwordRecovery: '/passwordRecovery',
   createNewPassword: '/createNewPassword/:token',
   checkEmail: '/checkEmail',
+  packList: '/packList',
 }
 
 function App() {
@@ -62,6 +64,7 @@ function App() {
 
         <Route path={PATH.createNewPassword} element={<CreateNewPassword />} />
         <Route path={PATH.checkEmail} element={<CheckEmail />} />
+        <Route path={PATH.packList} element={<PackList />} />
       </Routes>
       <NotificationBar />
     </div>
