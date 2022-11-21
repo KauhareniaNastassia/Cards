@@ -12,22 +12,33 @@
   font-weight: bold;
 }
 
-.table {
+.tableWrap {
   margin-bottom: 20px;
 }
 
 
 
 @media only screen and (max-width: 890px) {
+  .tableHead > th {
+    max-width: 30px;
+    padding: 5px;
+  }
   .tableRow > td {
-    padding: 10px;
+    padding: 0;
   }
   .nameColumn {
-    overflow: visible;
+    overflow: hidden;
 
-    max-width: 40px;
+    max-width: 120px;
 
     text-overflow: ellipsis;
     white-space: nowrap;
   }
+}
+
+@media only screen and (max-width: 707px) {
+  .lastUpdated {
+    display: none !important;
+  }
+
 }
