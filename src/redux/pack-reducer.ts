@@ -1,6 +1,6 @@
 import { Dispatch } from 'redux'
 
-import { addNewPackDataType, cardsAPI } from '../api/cards-API'
+import { addNewPackDataType, cardsAPI, UpdatePackDataType } from '../api/cards-API'
 
 import { setAppStatusAC } from './app-reducer'
 import { AppThunkType } from './store'
@@ -39,21 +39,31 @@ export const packReducer = (
   action: PackReducerAT
 ): PackReducerStateType => {
   switch (action.type) {
-    case 'PACKS/SET_PACKS':
+    case 'packs/SET_PACKS':
       return { ...state, ...action.packs }
-    case 'PACKS/ADD_NEW_PACK':
+    case 'packs/ADD_NEW_PACK':
       return { ...state, cardPacks: [action.newPack, ...state.cardPacks] }
+    case 'packs/UPDATE_PACK':
+      return {
+        ...state,
+        cardPacks: [
+          ...state.cardPacks.map(pack =>
+            pack._id === action.newPack._id ? { ...action.newPack } : pack
+          ),
+        ],
+      }
     default:
       return state
   }
 }
 
 //actions
-export const setPacksAC = (packs: PackType[]) => ({ type: 'PACKS/SET_PACKS' as const, packs })
+export const setPacksAC = (packs: PackType[]) => ({ type: 'packs/SET_PACKS' as const, packs })
 export const addNewPackAC = (newPack: PackType) => ({
-  type: 'PACKS/ADD_NEW_PACK' as const,
+  type: 'packs/ADD_NEW_PACK' as const,
   newPack,
 })
+export const updatePackAC = (newPack: PackType) => ({ type: 'packs/UPDATE_PACK' as const, newPack })
 
 //thunks
 export const getPacksTC = (page: number, pageCount: number): AppThunkType => {
@@ -96,12 +106,38 @@ export const deletePackTC =
     try {
       const res = await cardsAPI.deletePack(packID)
 
-      console.log(res)
       dispatch(getPacksTC(1, 10))
       dispatch(setAppStatusAC('succeed'))
     } catch (e) {
       console.log(e)
     }
   }
+export const updatePackTC =
+  (packID: string, newName: string): AppThunkType =>
+  async dispatch => {
+    const updatedForPack: UpdatePackDataType = { cardsPack: { _id: packID, name: newName } }
+
+    dispatch(setAppStatusAC('loading'))
+    try {
+      const res = await cardsAPI.updatePack(updatedForPack)
+      const updatedPack: PackType = {
+        _id: res.data.updatedCardsPack._id,
+        name: res.data.updatedCardsPack.name,
+        user_name: res.data.updatedCardsPack.user_name,
+        user_id: res.data.updatedCardsPack.user_id,
+        updated: res.data.updatedCardsPack.updated,
+        cardsCount: res.data.updatedCardsPack.cardsCount,
+        deckCover: res.data.updatedCardsPack.deckCover,
+      }
+
+      dispatch(updatePackAC(updatedPack))
+      dispatch(setAppStatusAC('succeed'))
+    } catch (e) {
+      console.log(e)
+    }
+  }
 //types
-export type PackReducerAT = ReturnType<typeof setPacksAC> | ReturnType<typeof addNewPackAC>
+export type PackReducerAT =
+  | ReturnType<typeof setPacksAC>
+  | ReturnType<typeof addNewPackAC>
+  | ReturnType<typeof updatePackAC>

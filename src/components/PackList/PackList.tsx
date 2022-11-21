@@ -21,7 +21,7 @@ import moment from 'moment/moment'
 import { Navigate } from 'react-router-dom'
 
 import { PATH } from '../../app/App'
-import { addNewPackTC, deletePackTC, getPacksTC } from '../../redux/pack-reducer'
+import { addNewPackTC, deletePackTC, getPacksTC, updatePackTC } from '../../redux/pack-reducer'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks'
 
 import s from './PackList.module.css'
@@ -118,7 +118,9 @@ export const PackList = () => {
                     </IconButton>
                     {myID === pack.user_id && (
                       <span>
-                        <IconButton>
+                        <IconButton
+                          onClick={() => dispatch(updatePackTC(pack._id, 'Updated Name'))}
+                        >
                           <EditIcon></EditIcon>
                         </IconButton>
                         <IconButton onClick={() => dispatch(deletePackTC(pack._id))}>

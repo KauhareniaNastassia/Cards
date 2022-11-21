@@ -27,6 +27,12 @@ export const cardsAPI = {
   deletePack(packID: string) {
     return instance.delete<AxiosResponse<DeletePackResponseType>>(`/cards/pack?id=${packID}`)
   },
+  updatePack(data: UpdatePackDataType) {
+    return instance.put<UpdatePackDataType, AxiosResponse<UpdatePackResponseType>>(
+      `/cards/pack`,
+      data
+    )
+  },
   getCards(cardsPackId: string) {
     return instance.get<AxiosResponse<GetCardsResponseType>>(`/cards/card/${cardsPackId}`)
   },
@@ -95,9 +101,21 @@ export type PackResponseType = {
   updated: string
   more_id: string
   __v: number
+  deckCover?: any
 }
 export type DeletePackResponseType = {
   deletedCardsPack: PackResponseType
+  token: string
+  tokenDeathTime: number
+}
+export type UpdatePackDataType = {
+  cardsPack: {
+    _id: string
+    name: string
+  }
+}
+export type UpdatePackResponseType = {
+  updatedCardsPack: PackResponseType
   token: string
   tokenDeathTime: number
 }
