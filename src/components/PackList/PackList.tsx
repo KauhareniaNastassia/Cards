@@ -18,7 +18,9 @@ import {
   TableRow,
 } from '@mui/material'
 import moment from 'moment/moment'
+import { Navigate } from 'react-router-dom'
 
+import { PATH } from '../../app/App'
 import { addNewPackAC, getPacksTC } from '../../redux/pack-reducer'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks'
 
@@ -39,6 +41,9 @@ export const PackList = () => {
     useEffect(() => {
       dispatch(getPacksTC(page, pageCount))
     }, [])
+  }
+  if (!isLoggedIn) {
+    return <Navigate to={PATH.login} />
   }
   const handleChangePage = (event: unknown, page: number) => {
     setPage(page)
@@ -74,19 +79,21 @@ export const PackList = () => {
             variant="contained"
             style={{ borderRadius: '20px' }}
             onClick={() => {
-              addNewPackAC()
+              dispatch(addNewPackAC())
             }}
           >
             Add new Pack
           </Button>
         </div>
         <TableContainer className={s.table} component={Paper}>
-          <Table sx={{ minWidth: 650, fontFamily: 'Montserrat' }} aria-label="simple table">
+          <Table sx={{ fontFamily: 'Montserrat' }} aria-label="simple table">
             <TableHead>
-              <TableRow>
+              <TableRow className={s.tableHead}>
                 <StyledTableCell align="left">Name</StyledTableCell>
                 <StyledTableCell align="center">Cards</StyledTableCell>
-                <StyledTableCell align="center">Last updated</StyledTableCell>
+                <StyledTableCell className={s.lastUpdated} align="center">
+                  Last updated
+                </StyledTableCell>
                 <StyledTableCell align="center">Created by</StyledTableCell>
                 <StyledTableCell align="center">Actions</StyledTableCell>
               </TableRow>
@@ -101,7 +108,7 @@ export const PackList = () => {
                 >
                   <StyledTableCellRow className={s.nameColumn}>{pack.name}</StyledTableCellRow>
                   <StyledTableCellRow align="center">{pack.cardsCount}</StyledTableCellRow>
-                  <StyledTableCellRow align="center">
+                  <StyledTableCellRow className={s.lastUpdated} align="center">
                     {moment(`${pack.updated}`).format('D.M.Y')}
                   </StyledTableCellRow>
                   <StyledTableCellRow align="center">{pack.user_name}</StyledTableCellRow>
