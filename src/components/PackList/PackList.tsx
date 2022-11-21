@@ -5,6 +5,7 @@ import EditIcon from '@mui/icons-material/Edit'
 import SchoolIcon from '@mui/icons-material/School'
 import {
   Button,
+  CircularProgress,
   IconButton,
   Paper,
   styled,
@@ -26,7 +27,7 @@ import s from './PackList.module.css'
 
 export const PackList = () => {
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
-
+  const isInitialized = useAppSelector(state => state.app.isInitialized)
   const currentPage = useAppSelector(state => state.packs.page)
   const packs = useAppSelector(state => state.packs.cardPacks)
   const pageCount = useAppSelector(state => state.packs.pageCount)

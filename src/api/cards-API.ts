@@ -21,8 +21,8 @@ export const cardsAPI = {
   addPack(name: string, deckCover: string) {
     return instance.post('/cards/pack', { name, deckCover })
   },
-  updateProfile() {
-    return instance.put(`/auth/me`)
+  getCards(cardsPackId: string) {
+    return instance.get<AxiosResponse<ResponseCardType>>(`/cards/card/${cardsPackId}`)
   },
   logout() {
     return instance.delete(`/auth/me`)
@@ -37,18 +37,39 @@ export const cardsAPI = {
     return instance.post('/auth/block', {})
   },
 }
-type ResponseType = {
+type ResponsePackType = {
   cardPacks: [
     {
       _id: string
       user_id: string
       user_name: string
       name: string
-      cardsCount: 25
+      cardsCount: number
       updated: string
     }
   ]
   cardPacksTotalCount: number
   page: number
   pageCount: number
+}
+type ResponseCardType = {
+  cards: [
+    {
+      answer: string
+      question: string
+      cardsPack_id: string
+      grade: number
+      shots: number
+      user_id: string
+      created: string
+      updated: string
+      _id: string
+    }
+  ]
+  cardsTotalCount: number
+  maxGrade: number
+  minGrade: number
+  page: number
+  pageCount: number
+  packUserId: string
 }

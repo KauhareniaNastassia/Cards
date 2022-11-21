@@ -20,6 +20,7 @@ export const NavigationForUs = () => {
       <Link to={PATH.registration}>registration</Link>
       <Link to={PATH.checkEmail}>checkEmail</Link>
       <Link to={PATH.packList}>packList</Link>
+      <Link to={PATH.pack}>pack</Link>
     </nav>
   )
 }

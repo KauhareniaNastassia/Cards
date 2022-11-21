@@ -13,6 +13,7 @@ import { Header } from '../components/Header/Header'
 import { Home } from '../components/Home/Home'
 import { Login } from '../components/Login/Login'
 import { NavigationForUs } from '../components/NavigationForUs/NavigationForUs'
+import { Pack } from '../components/PackList/Pack/Pack'
 import { PackList } from '../components/PackList/PackList'
 import { PasswordRecovery } from '../components/PasswordRecovery/PasswordRecovery'
 import ProfileCard from '../components/ProfileCard/ProfileCard'
@@ -30,6 +31,7 @@ export const PATH = {
   createNewPassword: '/createNewPassword/:token',
   checkEmail: '/checkEmail',
   packList: '/packList',
+  pack: '/pack',
 }
 
 function App() {
@@ -65,6 +67,7 @@ function App() {
         <Route path={PATH.createNewPassword} element={<CreateNewPassword />} />
         <Route path={PATH.checkEmail} element={<CheckEmail />} />
         <Route path={PATH.packList} element={<PackList />} />
+        <Route path={PATH.pack} element={<Pack />} />
       </Routes>
       <NotificationBar />
     </div>

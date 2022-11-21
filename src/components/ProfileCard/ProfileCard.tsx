@@ -21,7 +21,9 @@ export const customAvatar =
 
 export const ProfileCard = () => {
   const dispatch = useAppDispatch()
-  const profile = useAppSelector(state => state.profile)
+  const avatar = useAppSelector(state => state.profile.avatar)
+  const email = useAppSelector(state => state.profile.email)
+  const userName = useAppSelector(state => state.profile.name)
 
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
 
@@ -57,11 +59,11 @@ export const ProfileCard = () => {
             <Avatar
               sx={{ width: 96, height: 96 }}
               alt={'User Name'}
-              src={profile.avatar === '' ? customAvatar : profile.avatar}
+              src={avatar === '' ? customAvatar : avatar}
             />
           </Badge>
-          <EditableSpan value={profile.name} />
-          <div className={s.email}>{profile.email}</div>
+          <EditableSpan value={userName} />
+          <div className={s.email}>{email}</div>
           <SuperButton onClick={logOutHandler} className={s.button}>
             <LogoutIcon /> Log out
           </SuperButton>
