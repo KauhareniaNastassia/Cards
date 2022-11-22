@@ -9,26 +9,16 @@ export const cardsReducer = (
 ): InitialStateType => {
   switch (action.type) {
     case 'SET-CARDS':
-      return { ...state, [action.userId]: action.cards }
+      return { ...state, cards: action.cards }
     default:
       return state
   }
 }
 
 const initialState = {
-  cards: [
-    {
-      answer: '',
-      question: '',
-      cardsPack_id: '',
-      grade: 0,
-      shots: 0,
-      user_id: '',
-      updated: '',
-      _id: '',
-    },
-  ],
+  cards: [] as CardType[],
   cardsTotalCount: 0,
+  packName: '',
   maxGrade: 0,
   minGrade: 0,
   page: 0,
@@ -38,19 +28,19 @@ const initialState = {
 
 //thunks
 export const setCardsTC =
-  (userId: string): AppThunkType =>
+  (cardsPack_id: string): AppThunkType =>
   dispatch => {
     dispatch(setAppStatusAC('loading'))
-    cardsAPI.getCards(userId).then(res => {
-      const cards = res.data.data.cards
+    cardsAPI.getCards(cardsPack_id).then(res => {
+      const cards = res.data.cards
 
-      dispatch(setCardsAC(userId, cards))
+      dispatch(setCardsAC(cards))
       dispatch(setAppStatusAC('succeed'))
     })
   }
 //actions
-export const setCardsAC = (userId: string, cards: CardType[]) => {
-  return { type: 'SET-CARDS', userId, cards } as const
+export const setCardsAC = (cards: CardType[]) => {
+  return { type: 'SET-CARDS',  cards } as const
 }
 //types
 export type CardsReducerAT = SetCardsACType

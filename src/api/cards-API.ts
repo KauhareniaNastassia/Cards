@@ -13,13 +13,13 @@ export const cardsAPI = {
   getPacks(page: number, pageCount: number) {
     return instance.get(`/cards/pack`, {
       params: {
-        page: 1,
+        page: 11,
         pageCount: 10,
       },
     })
   },
-  addNewPack(data: addNewPackDataType) {
-    return instance.post<addNewPackDataType, AxiosResponse<addNewPackResponseType>>(
+  addNewPack(data: AddNewPackDataType) {
+    return instance.post<AddNewPackDataType, AxiosResponse<AddNewPackResponseType>>(
       '/cards/pack',
       data
     )
@@ -33,8 +33,8 @@ export const cardsAPI = {
       data
     )
   },
-  getCards(cardsPackId: string) {
-    return instance.get<AxiosResponse<GetCardsResponseType>>(`/cards/card/${cardsPackId}`)
+  getCards(cardsPack_id: string) {
+    return instance.get(`/cards/card?cardsPack_id=${cardsPack_id}`)
   },
 }
 type ResponsePackType = {
@@ -51,6 +51,7 @@ type ResponsePackType = {
   cardPacksTotalCount: number
   page: number
   pageCount: number
+ 
 }
 type GetCardsResponseType = {
   cards: [
@@ -72,15 +73,16 @@ type GetCardsResponseType = {
   page: number
   pageCount: number
   packUserId: string
+  packName: string
 }
-export type addNewPackDataType = {
+export type AddNewPackDataType = {
   cardsPack: {
     name?: string
     deckCover?: string
     private?: boolean
   }
 }
-export type addNewPackResponseType = {
+export type AddNewPackResponseType = {
   newCardsPack: PackResponseType
   token: string
   tokenDeathTime: number

@@ -1,6 +1,6 @@
 import { Dispatch } from 'redux'
 
-import { addNewPackDataType, cardsAPI, UpdatePackDataType } from '../api/cards-API'
+import { AddNewPackDataType, cardsAPI, UpdatePackDataType } from '../api/cards-API'
 
 import { setAppStatusAC } from './app-reducer'
 import { AppThunkType } from './store'
@@ -76,7 +76,7 @@ export const getPacksTC = (page: number, pageCount: number): AppThunkType => {
 export const addNewPackTC =
   (name?: string, deckCover?: string): AppThunkType =>
   async dispatch => {
-    const newForPack: addNewPackDataType = { cardsPack: { name, deckCover } }
+    const newForPack: AddNewPackDataType = { cardsPack: { name, deckCover } }
 
     dispatch(setAppStatusAC('loading'))
 
