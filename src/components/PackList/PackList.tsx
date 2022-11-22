@@ -18,15 +18,15 @@ import {
   TableRow,
 } from '@mui/material'
 import moment from 'moment/moment'
-import { Navigate, Route, Link } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
 
 import { PATH } from '../../app/App'
 import { setAppStatusAC } from '../../redux/app-reducer'
 import { setCardsTC } from '../../redux/cards-reducer'
 import { addNewPackTC, deletePackTC, getPacksTC, updatePackTC } from '../../redux/pack-reducer'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks'
+import { FilterBar } from '../FilterBar/FilterBar'
 
-import { Pack } from './Pack/Pack'
 import s from './PackList.module.css'
 
 export const PackList = () => {
@@ -88,6 +88,7 @@ export const PackList = () => {
             Add new Pack
           </Button>
         </div>
+        <FilterBar />
         <TableContainer className={s.table} component={Paper}>
           <Table sx={{ fontFamily: 'Montserrat' }} aria-label="simple table">
             <TableHead>
@@ -148,7 +149,7 @@ export const PackList = () => {
           </Table>
         </TableContainer>
         <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
+          rowsPerPageOptions={[5, 10, 25, 30]}
           component="div"
           count={maxPacksCount}
           rowsPerPage={rowsPerPage}
