@@ -1,5 +1,3 @@
-import { Dispatch } from 'redux'
-
 import { AddNewPackDataType, cardsAPI, PacksType, UpdatePackDataType } from '../api/cards-API'
 
 import { setAppStatusAC } from './app-reducer'
@@ -29,6 +27,8 @@ const initialState = {
   page: 0 as number,
   pageCount: 5 as number,
   showPackCards: 'all' as 'all' | 'my',
+  minCardsCount: 0 as number,
+  maxCardsCount: 100 as number,
 }
 
 type PackReducerStateType = typeof initialState
@@ -53,6 +53,10 @@ export const packReducer = (
       }
     case 'packs/SET_SHOW_PACKS_CARDS':
       return { ...state, showPackCards: action.value }
+    case 'packs/SET_MIN_CARDS_COUNT':
+      return { ...state, minCardsCount: action.value }
+    case 'packs/SET_MAX_CARDS_COUNT':
+      return { ...state, maxCardsCount: action.value }
     default:
       return state
   }
@@ -72,7 +76,14 @@ export const setShowPackCardsAC = (value: 'my' | 'all') => ({
   type: 'packs/SET_SHOW_PACKS_CARDS' as const,
   value,
 })
-
+export const setMinCardsCountAC = (value: number) => ({
+  type: 'packs/SET_MIN_CARDS_COUNT' as const,
+  value,
+})
+export const setMaxCardsCountAC = (value: number) => ({
+  type: 'packs/SET_MAX_CARDS_COUNT' as const,
+  value,
+})
 //thunks
 export const getPacksTC =
   (page: number, pageCount: number): AppThunkType =>
@@ -195,3 +206,5 @@ export type PackReducerAT =
   | ReturnType<typeof addNewPackAC>
   | ReturnType<typeof updatePackAC>
   | ReturnType<typeof setShowPackCardsAC>
+  | ReturnType<typeof setMinCardsCountAC>
+  | ReturnType<typeof setMaxCardsCountAC>
