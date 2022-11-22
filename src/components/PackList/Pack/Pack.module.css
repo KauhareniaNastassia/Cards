@@ -8,7 +8,13 @@
   color: black;
   text-decoration: none;
 }
+.table {
+  display: flex;
+  align-items: center;
 
+  max-width: 1100px;
+margin: 0 auto;
+}
 .arrow {
   display: flex;
   align-items: center;
@@ -24,9 +30,35 @@
   font-weight: bold;
 }
 .div {
-  text-align: center;
   margin: 40px auto;
+
+  text-align: center;
 }
 .span {
   opacity: 50%;
+}
+
+
+@media only screen and (max-width: 890px) {
+  .tableHead > th {
+    max-width: 30px;
+    padding: 5px;
+  }
+  .tableRow > td {
+    padding: 0;
+  }
+  .nameColumn {
+    overflow: hidden;
+
+    max-width: 120px;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+@media only screen and (max-width: 707px) {
+  .lastUpdated {
+    display: none !important;
+  }
 }

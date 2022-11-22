@@ -112,7 +112,6 @@ export const PackList = () => {
                   <StyledTableCellRow
                     onClick={() => {
                       dispatch(setCardsTC(pack._id))
-                      dispatch(setAppStatusAC('succeed'))
                     }}
                     className={s.nameColumn}
                   >

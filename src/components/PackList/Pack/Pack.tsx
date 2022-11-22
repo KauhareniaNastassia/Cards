@@ -22,14 +22,13 @@ import moment from 'moment'
 import { Link } from 'react-router-dom'
 
 import { PATH } from '../../../app/App'
-import { useAppDispatch, useAppSelector } from '../../../utils/hooks'
+import { useAppSelector } from '../../../utils/hooks'
 
 import s from './Pack.module.css'
 
 export const Pack = () => {
   const packName = useAppSelector(state => state.cards.packName)
   const cards = useAppSelector(state => state.cards.cards)
-  const dispatch = useAppDispatch()
 
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
