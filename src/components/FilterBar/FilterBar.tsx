@@ -1,7 +1,7 @@
 import { Button } from '@mui/material'
-import Slider from '@mui/material/Slider'
 
-import { setShowPackCardsAC, setShowPackCardsTC } from '../../redux/pack-reducer'
+import { SliderFromMaeUI } from '../../common/Slider/Slider'
+import { setShowPackCardsTC } from '../../redux/pack-reducer'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks'
 
 import s from './FilterBar.module.css'
@@ -9,6 +9,8 @@ import s from './FilterBar.module.css'
 export const FilterBar = () => {
   const showPackCards = useAppSelector(state => state.packs.showPackCards)
   const userID = useAppSelector(state => state.profile._id)
+  const minCardsCount = useAppSelector(state => state.packs.minCardsCount)
+  const maxCardsCount = useAppSelector(state => state.packs.maxCardsCount)
   const dispatch = useAppDispatch()
 
   return (
@@ -36,10 +38,10 @@ export const FilterBar = () => {
       </div>
       <div>
         <h3>Number of cards</h3>
-        <div>
-          <span>5</span>
-          <Slider />
-          <span>10</span>
+        <div className={s.sliderWrap}>
+          <span className={s.sliderNumbers}>{minCardsCount}</span>
+          <SliderFromMaeUI />
+          <span className={s.sliderNumbers}>{maxCardsCount}</span>
         </div>
       </div>
     </div>
