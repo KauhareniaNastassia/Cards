@@ -10,11 +10,12 @@ export const instance = axios.create({
 })
 
 export const cardsAPI = {
-  getPacks(page: number, pageCount: number) {
-    return instance.get(`/cards/pack`, {
+  getPacks(page: number, pageCount: number, userID?: string) {
+    return instance.get<GetPacksResponseType>(`/cards/pack`, {
       params: {
         page: 1,
         pageCount: 10,
+        user_id: userID,
       },
     })
   },
@@ -37,43 +38,35 @@ export const cardsAPI = {
     return instance.get(`/cards/card?cardsPack_id=${cardsPack_id}`)
   },
 }
-type ResponsePackType = {
-  cardPacks: [
-    {
-      _id: string
-      user_id: string
-      user_name: string
-      name: string
-      cardsCount: number
-      updated: string
-    }
-  ]
+
+export type GetPacksResponseType = {
+  cardPacks: PacksType[]
+  page: number
+  pageCount: number
   cardPacksTotalCount: number
-  page: number
-  pageCount: number
+  minCardsCount: number
+  maxCardsCount: number
+  token: string
+  tokenDeathTime: number
 }
-type GetCardsResponseType = {
-  cards: [
-    {
-      answer: string
-      question: string
-      cardsPack_id: string
-      grade: number
-      shots: number
-      user_id: string
-      created: string
-      updated: string
-      _id: string
-    }
-  ]
-  cardsTotalCount: number
-  maxGrade: number
-  minGrade: number
-  page: number
-  pageCount: number
-  packUserId: string
-  packName: string
+export type PacksType = {
+  _id: string
+  user_id: string
+  user_name: string
+  private: boolean
+  name: string
+  path: string
+  grade: number
+  shots: number
+  cardsCount: number
+  type: string
+  rating: number
+  created: string
+  updated: string
+  more_id: string
+  __v: number
 }
+
 export type AddNewPackDataType = {
   cardsPack: {
     name?: string
@@ -119,4 +112,32 @@ export type UpdatePackResponseType = {
   updatedCardsPack: PackResponseType
   token: string
   tokenDeathTime: number
+}
+
+export type ddddd = {
+  cardPacks: DddddCardPacks[]
+  page: number
+  pageCount: number
+  cardPacksTotalCount: number
+  minCardsCount: number
+  maxCardsCount: number
+  token: string
+  tokenDeathTime: number
+}
+export type DddddCardPacks = {
+  _id: string
+  user_id: string
+  user_name: string
+  private: boolean
+  name: string
+  path: string
+  grade: number
+  shots: number
+  cardsCount: number
+  type: string
+  rating: number
+  created: string
+  updated: string
+  more_id: string
+  __v: number
 }
