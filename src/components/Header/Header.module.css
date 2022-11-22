@@ -1,63 +1,61 @@
 .header {
-    box-shadow: 0 2px 10px rgba(109, 109, 109, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  box-shadow: 0 2px 10px rgba(109, 109, 109, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
 .headerWrapper {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
-    margin: 10px 0;
-
+  margin: 10px 0;
 }
 
 .userName {
-    cursor: pointer;
+  cursor: pointer;
 
-    margin-right: 20px;
-    padding-bottom: 3px;
+  margin-right: 20px;
+  padding-bottom: 3px;
 
-    color: #000000;
-    text-decoration: none;
+  color: #000000;
+  text-decoration: none;
 
-    border-bottom: 2px dashed #32557f;
+  border-bottom: 2px dashed #32557f;
 }
 
 .userInfo {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-    min-width: 100px;
-    padding: 5px 20px;
+  min-width: 100px;
+  padding: 5px 20px;
 
-    background-color: #ffffff;
-    border-radius: 20px;
+  background-color: #ffffff;
+  border-radius: 20px;
 }
 
 @media only screen and (max-width: 400px) {
-    .logo {
-        max-width: 150px;
-    }
+  .logo {
+    max-width: 150px;
+  }
 
-    .logo img {
-        width: 100%;
-        height: auto;
-    }
+  .logo img {
+    width: 100%;
+    height: auto;
+  }
 }
 
 @media only screen and (max-width: 330px) {
-    .logo {
-        max-width: 100px;
-    }
+  .logo {
+    max-width: 100px;
+  }
 
-    .logo img {
-        width: 100%;
-        height: auto;
-    }
+  .logo img {
+    width: 100%;
+    height: auto;
+  }
 }
 
 .signInButtonLink {
-    text-decoration: none;
+  text-decoration: none;
 }
-

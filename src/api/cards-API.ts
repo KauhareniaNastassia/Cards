@@ -51,7 +51,6 @@ type ResponsePackType = {
   cardPacksTotalCount: number
   page: number
   pageCount: number
- 
 }
 type GetCardsResponseType = {
   cards: [

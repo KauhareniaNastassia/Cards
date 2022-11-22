@@ -1,25 +1,25 @@
 .default {
-    cursor: pointer;
+  cursor: pointer;
 
-    display: inline-block;
+  display: inline-block;
 
-    padding: 10px;
+  padding: 10px;
 
-    font-family: Montseratt;
-    font-weight: bold;
-    color: #000000;
-    text-decoration: none;
-    text-transform: uppercase;
+  font-family: Montseratt;
+  font-weight: bold;
+  color: #000000;
+  text-decoration: none;
+  text-transform: uppercase;
 
-    background: #ffffff;
-    border: none;
-    border-radius: 30px;
+  background: #ffffff;
+  border: none;
+  border-radius: 30px;
 
-    transition: all 0.4s ease 0s;
+  transition: all 0.4s ease 0s;
 }
 
 .default:hover {
-    box-shadow: 0px 2px 10px rgba(109, 109, 109, 0.25), inset 0px 1px 0px rgba(255, 255, 255, 0.3);
+  box-shadow: 0px 2px 10px rgba(109, 109, 109, 0.25), inset 0px 1px 0px rgba(255, 255, 255, 0.3);
 
-    transition: all 0.4s ease 0s;
+  transition: all 0.4s ease 0s;
 }

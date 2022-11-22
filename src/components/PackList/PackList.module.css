@@ -1,11 +1,9 @@
-
 .HeaderWrapper {
   display: flex;
   align-items: center;
   justify-content: space-between;
 
   margin-bottom: 20px;
-
 }
 .title {
   font-size: 30px;
@@ -15,8 +13,6 @@
 .tableWrap {
   margin-bottom: 20px;
 }
-
-
 
 @media only screen and (max-width: 890px) {
   .tableHead > th {
@@ -40,5 +36,4 @@
   .lastUpdated {
     display: none !important;
   }
-
 }

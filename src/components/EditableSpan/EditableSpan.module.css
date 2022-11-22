@@ -1,16 +1,16 @@
 .input {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-    margin: 20px 0px;
+  margin: 20px 0px;
 }
 
 .userName {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 
-    margin: 20px 0px;
+  margin: 20px 0px;
 
-    font-size: larger;
+  font-size: larger;
 }

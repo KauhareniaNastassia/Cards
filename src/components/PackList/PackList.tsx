@@ -18,17 +18,16 @@ import {
   TableRow,
 } from '@mui/material'
 import moment from 'moment/moment'
-import { Navigate, Route } from 'react-router-dom'
+import { Navigate, Route, Link } from 'react-router-dom'
 
 import { PATH } from '../../app/App'
+import { setAppStatusAC } from '../../redux/app-reducer'
+import { setCardsTC } from '../../redux/cards-reducer'
 import { addNewPackTC, deletePackTC, getPacksTC, updatePackTC } from '../../redux/pack-reducer'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks'
 
-import s from './PackList.module.css'
-import { Link } from 'react-router-dom'
 import { Pack } from './Pack/Pack'
-import { setCardsTC } from '../../redux/cards-reducer'
-import { setAppStatusAC } from '../../redux/app-reducer'
+import s from './PackList.module.css'
 
 export const PackList = () => {
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
@@ -104,17 +103,23 @@ export const PackList = () => {
             </TableHead>
 
             <TableBody>
-              {
-                packs.map(pack => (
+              {packs.map(pack => (
                 <TableRow
                   className={s.tableRow}
                   key={pack._id}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
-                  <StyledTableCellRow onClick={()=>{
-                    dispatch(setCardsTC(pack._id))
-                    dispatch(setAppStatusAC('succeed'))
-                  }} className={s.nameColumn}><Link style={{textDecoration: "none", color: 'black'}} to={PATH.pack}>{pack.name}</Link></StyledTableCellRow>
+                  <StyledTableCellRow
+                    onClick={() => {
+                      dispatch(setCardsTC(pack._id))
+                      dispatch(setAppStatusAC('succeed'))
+                    }}
+                    className={s.nameColumn}
+                  >
+                    <Link style={{ textDecoration: 'none', color: 'black' }} to={PATH.pack}>
+                      {pack.name}
+                    </Link>
+                  </StyledTableCellRow>
                   <StyledTableCellRow align="center">{pack.cardsCount}</StyledTableCellRow>
                   <StyledTableCellRow className={s.lastUpdated} align="center">
                     {moment(`${pack.updated}`).format('D.M.Y')}

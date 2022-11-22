@@ -1,44 +1,44 @@
 .wrapper {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 
-    width: 240px;
-    margin-top: 20px;
-    padding-left: 30px;
+  width: 240px;
+  margin-top: 20px;
+  padding-left: 30px;
 }
 
 .homework_title {
-    padding-left: 40px;
+  padding-left: 40px;
 
-    font-family: LiSu;
-    font-size: 24px;
-    font-weight: bold;
-    font-style: italic;
-    color: #FB607F;
+  font-family: LiSu;
+  font-size: 24px;
+  font-weight: bold;
+  font-style: italic;
+  color: #fb607f;
 }
 
 .select {
-    width: 35px;
-    height: 30px;
-    margin-bottom: 10px;
+  width: 35px;
+  height: 30px;
+  margin-bottom: 10px;
 
-    font-family: LiSu;
-    font-size: 18px;
-    color: #003399;
+  font-family: LiSu;
+  font-size: 18px;
+  color: #003399;
 
-    background: #FFC0CB;
-    border: none;
+  background: #ffc0cb;
+  border: none;
 }
 
 .radio {
-    width: 15px;
-    height: 15px;
-    margin-bottom: 10px;
+  width: 15px;
+  height: 15px;
+  margin-bottom: 10px;
 
-    font-family: LiSu;
-    font-size: 18px;
-    color: #003399;
+  font-family: LiSu;
+  font-size: 18px;
+  color: #003399;
 
-    background: #FFC0CB;
-    border: none;
+  background: #ffc0cb;
+  border: none;
 }

@@ -40,7 +40,7 @@ export const setCardsTC =
   }
 //actions
 export const setCardsAC = (cards: CardType[]) => {
-  return { type: 'SET-CARDS',  cards } as const
+  return { type: 'SET-CARDS', cards } as const
 }
 //types
 export type CardsReducerAT = SetCardsACType
