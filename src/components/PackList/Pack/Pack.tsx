@@ -51,15 +51,21 @@ export const Pack = () => {
   return (
     <div>
       <div className={s.arrow}>
-        <Link to={PATH.home} className={s.link}>
+        <Link to={PATH.packList} className={s.link}>
           <ArrowBackIcon fontSize={'small'} /> Back to Packs List
         </Link>
       </div>
       <div className={s.packName}>{packName}</div>
       {cards.length === 0 ? (
-        <div>
-          <span className={s.span}>This pack is empty. Click add new card to fill this pack</span>
-          <Button>Add New Card</Button>
+        <div className={s.div}>
+          <div className={s.span}>This pack is empty. Click add new card to fill this pack</div>
+          <Button
+            type="submit"
+            variant="contained"
+            style={{ borderRadius: '20px', marginTop: '40px' }}
+          >
+            Add New Card
+          </Button>
         </div>
       ) : (
         <TableContainer className={s.table} component={Paper}>
