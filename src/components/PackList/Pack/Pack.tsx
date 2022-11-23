@@ -22,6 +22,7 @@ import moment from 'moment'
 import { Link } from 'react-router-dom'
 
 import { PATH } from '../../../app/App'
+import { addNewCardTC, deleteCardTC } from '../../../redux/cards-reducer'
 import { useAppDispatch, useAppSelector } from '../../../utils/hooks'
 
 import s from './Pack.module.css'
@@ -30,6 +31,7 @@ export const Pack = () => {
   const cards = useAppSelector(state => state.cards.cards)
   const packName = useAppSelector(state => state.cards.packName)
   const myID = useAppSelector(state => state.profile._id)
+  const cardsPack_id = useAppSelector(state => state.cards.cardsPack_id)
   // const page = useAppSelector(state => state.cards.page)
   const dispatch = useAppDispatch()
 
@@ -62,7 +64,7 @@ export const Pack = () => {
         <div className={s.div}>
           <div className={s.span}>This pack is empty. Click add new card to fill this pack</div>
           <Button
-            // onClick={() => dispatch(add)}
+            onClick={() => dispatch(addNewCardTC(cardsPack_id))}
             type="submit"
             variant="contained"
             style={{ borderRadius: '20px', marginTop: '40px' }}
@@ -101,7 +103,7 @@ export const Pack = () => {
                         <IconButton>
                           <EditIcon></EditIcon>
                         </IconButton>
-                        <IconButton>
+                        <IconButton onClick={() => dispatch(deleteCardTC(card._id))}>
                           <DeleteIcon></DeleteIcon>
                         </IconButton>
                       </span>

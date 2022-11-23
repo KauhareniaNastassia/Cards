@@ -27,7 +27,7 @@ import moment from 'moment/moment'
 import { Link, Navigate } from 'react-router-dom'
 
 import { PATH } from '../../app/App'
-import { setCardsTC } from '../../redux/cards-reducer'
+import { setCardsTC, setPackIdAC } from '../../redux/cards-reducer'
 import { addNewPackTC, deletePackTC, getPacksTC, updatePackTC } from '../../redux/pack-reducer'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks'
 import { FilterBar } from '../FilterBar/FilterBar'
@@ -119,6 +119,7 @@ export const PackList = () => {
                   <StyledTableCellRow
                     onClick={() => {
                       dispatch(setCardsTC(pack._id))
+                      dispatch(setPackIdAC(pack._id))
                     }}
                     className={s.nameColumn}
                   >
