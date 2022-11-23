@@ -10,12 +10,16 @@ export const instance = axios.create({
 })
 
 export const cardsAPI = {
-  getPacks(page: number, pageCount: number, userID?: string) {
+  getPacks(params: GetPacksParamsType) {
+    debugger
+
     return instance.get<GetPacksResponseType>(`/cards/pack`, {
       params: {
         page: 1,
         pageCount: 10,
-        user_id: userID,
+        user_id: params.user_id,
+        min: params.min,
+        max: params.max,
       },
     })
   },
@@ -38,7 +42,15 @@ export const cardsAPI = {
     return instance.get(`/cards/card?cardsPack_id=${cardsPack_id}`)
   },
 }
-
+export type GetPacksParamsType = {
+  page?: number
+  packName?: string
+  pageCount?: number
+  sortPacks?: string
+  user_id?: string
+  min?: number
+  max?: number
+}
 export type GetPacksResponseType = {
   cardPacks: PacksType[]
   page: number
