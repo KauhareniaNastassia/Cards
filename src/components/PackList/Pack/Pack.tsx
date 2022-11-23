@@ -22,7 +22,7 @@ import moment from 'moment'
 import { Link } from 'react-router-dom'
 
 import { PATH } from '../../../app/App'
-import { addNewCardTC, deleteCardTC } from '../../../redux/cards-reducer'
+import { addNewCardTC, deleteCardTC, updateCardTC } from '../../../redux/cards-reducer'
 import { useAppDispatch, useAppSelector } from '../../../utils/hooks'
 
 import s from './Pack.module.css'
@@ -100,7 +100,19 @@ export const Pack = () => {
                   <StyledTableCellRow align="right">
                     {myID === card.user_id && (
                       <span>
-                        <IconButton>
+                        <IconButton
+                          onClick={() =>
+                            dispatch(
+                              updateCardTC({
+                                card: {
+                                  _id: card._id,
+                                  answer: 'some new answer',
+                                  question: 'updated new Question',
+                                },
+                              })
+                            )
+                          }
+                        >
                           <EditIcon></EditIcon>
                         </IconButton>
                         <IconButton onClick={() => dispatch(deleteCardTC(card._id))}>

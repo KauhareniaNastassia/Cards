@@ -1,4 +1,4 @@
-import { CardPackType, cardsAPI } from '../api/cards-API'
+import { CardPackType, cardsAPI, UpdateCardDataType } from '../api/cards-API'
 
 import { setAppStatusAC } from './app-reducer'
 import { AppThunkType } from './store'
@@ -92,6 +92,20 @@ export const deleteCardTC =
       const res = await cardsAPI.deleteCard(cardID)
 
       dispatch(setCardsTC(res.data.deletedCard.cardsPack_id))
+      dispatch(setAppStatusAC('succeed'))
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+export const updateCardTC =
+  (card: UpdateCardDataType): AppThunkType =>
+  async dispatch => {
+    dispatch(setAppStatusAC('loading'))
+    try {
+      const res = await cardsAPI.updateCard({ ...card })
+
+      dispatch(setCardsTC(res.data.updatedCard.cardsPack_id))
       dispatch(setAppStatusAC('succeed'))
     } catch (e) {
       console.log(e)
