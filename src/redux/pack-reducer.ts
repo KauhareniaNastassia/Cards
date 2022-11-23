@@ -35,7 +35,7 @@ const initialState = {
   showPackCards: 'all' as 'all' | 'my',
   minCardsCount: 0 as number,
   maxCardsCount: 100 as number,
-  searchPackValue: 'nastya' as string,
+  searchPackValue: '' as string,
 }
 
 type PackReducerStateType = typeof initialState
@@ -114,7 +114,6 @@ export const getPacksTC =
   (params: GetPacksParamsType): AppThunkType =>
   async dispatch => {
     try {
-      debugger
       const res = await cardsAPI.getPacks({ ...params })
 
       dispatch(setPacksAC(res.data.cardPacks))

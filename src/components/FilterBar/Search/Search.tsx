@@ -1,10 +1,11 @@
-import {ChangeEvent, useCallback} from 'react'
+import { ChangeEvent, useCallback, useState } from 'react'
 
 import SearchIcon from '@mui/icons-material/Search'
-import {debounce, InputBase} from '@mui/material'
+import { debounce, InputBase } from '@mui/material'
 import { alpha, styled } from '@mui/material/styles'
-import {useAppDispatch, useAppSelector} from "../../../utils/hooks";
-import {getPacksTC} from "../../../redux/pack-reducer";
+
+import { getPacksTC, searchPacksByNameAC } from '../../../redux/pack-reducer'
+import { useAppDispatch, useAppSelector } from '../../../utils/hooks'
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -45,37 +46,46 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }))
 
-type SearchBarPropsType = {
-  value: string
-  /*searchValue: string | undefined
-  searchHandler: (value: string) => void*/
-}
-
-export const SearchBar = (props: SearchBarPropsType) => {
+export const SearchBar = () => {
   const searchValue = useAppSelector(state => state.packs.searchPackValue)
   const dispatch = useAppDispatch()
 
-  const onChangeSearchHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    /*props.searchHandler(e.currentTarget.value)*/
-  }
-
   /*const debouncedChangeHandler = useCallback(
-    debounce(() => dispatch(getPacksTC({  })), 1000),
+    debounce(() => dispatch(getPacksTC({ packName: searchValue })), 1000),
     [searchValue]
-  )*/
+  )
+
+  const searchValueText = (e: ChangeEvent<HTMLInputElement>) => {
+    debugger
+    dispatch(searchPacksByNameAC(e.currentTarget.value))
+  }*/
+
+  const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    console.log()
+    dispatch(searchPacksByNameAC(e.target.value))
+    debouncedChangeHandler()
+    /*dispatch(getPacksTC({ packName: searchValue }))*/
+  }
+  const debouncedChangeHandler = useCallback(
+    debounce(() => dispatch(getPacksTC({ packName: searchValue })), 2000),
+    []
+  )
 
   return (
-    <Search>
+    <div>
+      <input placeholder="Provide your text" value={searchValue} onChange={changeHandler} />
+    </div>
+    /*<Search>
       <SearchIconWrapper>
         <SearchIcon />
       </SearchIconWrapper>
       <StyledInputBase
         placeholder="Provide your text"
         inputProps={{ 'aria-label': 'search' }}
-        /*value={props.searchValue ? props.searchValue : ''}*/
-        value={props.value}
-        onChange={onChangeSearchHandler}
+        /!*value={props.searchValue ? props.searchValue : ''}*!/
+        value={searchValue}
+        onChange={debouncedChangeHandler}
       />
-    </Search>
+    </Search>*/
   )
 }
