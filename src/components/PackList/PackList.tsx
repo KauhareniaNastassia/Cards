@@ -118,7 +118,7 @@ export const PackList = () => {
                 >
                   <StyledTableCellRow
                     onClick={() => {
-                      dispatch(setCardsTC(pack._id, pack.name))
+                      dispatch(setCardsTC(pack._id))
                     }}
                     className={s.nameColumn}
                   >

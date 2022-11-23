@@ -36,14 +36,117 @@ export const cardsAPI = {
       data
     )
   },
-  getCards(cardsPack_id: string, packName: string) {
+  getCards(cardsPack_id: string) {
     return instance.get<GetCardsResponseType>(`/cards/card`, {
       params: {
         cardsPack_id: cardsPack_id,
-        packName: packName,
       },
     })
   },
+
+  addNewCard(data: AddNewCardDataType) {
+    return instance.post<AddNewCardResponseType>('/cards/card', data)
+  },
+  deleteCard(cardID: string) {
+    return instance.delete<DeleteCardResponseType>('/cards/card', {
+      params: {
+        id: cardID,
+      },
+    })
+  },
+  updateCard(data: UpdateCardDataType) {
+    return instance.put<UpdatedCardResponseType>('/cards/card', data)
+  },
+}
+export type UpdatedCardResponseType = {
+  updatedCard: UpdatedCardType
+  token: string
+  tokenDeathTime: number
+}
+export type UpdatedCardType = {
+  _id: string
+  cardsPack_id: string
+  user_id: string
+  answer: string
+  question: string
+  grade: number
+  shots: number
+  comments: string
+  type: string
+  rating: number
+  more_id: string
+  created: string
+  updated: string
+  __v: number
+  answerImg: string
+  answerVideo: string
+  questionImg: string
+  questionVideo: string
+}
+export type UpdateCardDataType = {
+  card: {
+    _id: string
+    answer?: string
+    question?: string
+    grade?: number
+    comments?: string
+    rating?: number
+  }
+}
+export type DeleteCardResponseType = {
+  deletedCard: DeletedCardType
+  token: string
+  tokenDeathTime: number
+}
+export type DeletedCardType = {
+  _id: string
+  cardsPack_id: string
+  user_id: string
+  answer: string
+  question: string
+  grade: number
+  shots: number
+  comments: string
+  type: string
+  rating: number
+  more_id: string
+  created: string
+  updated: string
+  __v: number
+}
+export type AddNewCardDataType = {
+  card: {
+    cardsPack_id: string
+    question?: string //"no question"
+    answer?: string //"no answer"
+    grade?: number // 0..5
+    shots?: number
+    answerImg?: string // "url or base 64"
+    questionImg?: string // "url or base 64"
+    questionVideo?: string // "url or base 64"
+    answerVideo?: string // "url or base 64"
+  }
+}
+export type AddNewCardResponseType = {
+  newCard: ResponseCardType
+  token: string
+  tokenDeathTime: number
+}
+export type ResponseCardType = {
+  _id: string
+  cardsPack_id: string
+  user_id: string
+  answer: string
+  question: string
+  grade: number
+  shots: number
+  comments: string
+  type: string
+  rating: number
+  more_id: string
+  created: string
+  updated: string
+  __v: number
 }
 export type GetPacksParamsType = {
   page?: number

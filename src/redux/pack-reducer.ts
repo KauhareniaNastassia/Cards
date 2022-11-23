@@ -101,6 +101,7 @@ export const setTotalPacksCountAC = (value: number) =>
     type: 'PACKS/SET_TOTAL_PACKS_COUNT',
     value,
   } as const)
+
 //thunks
 export const getPacksTC =
   (params: GetPacksParamsType): AppThunkType =>

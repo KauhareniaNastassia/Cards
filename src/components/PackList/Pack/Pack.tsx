@@ -22,7 +22,7 @@ import moment from 'moment'
 import { Link } from 'react-router-dom'
 
 import { PATH } from '../../../app/App'
-import { useAppSelector } from '../../../utils/hooks'
+import { useAppDispatch, useAppSelector } from '../../../utils/hooks'
 
 import s from './Pack.module.css'
 
@@ -30,7 +30,8 @@ export const Pack = () => {
   const cards = useAppSelector(state => state.cards.cards)
   const packName = useAppSelector(state => state.cards.packName)
   const myID = useAppSelector(state => state.profile._id)
-  const page = useAppSelector(state => state.cards.page)
+  // const page = useAppSelector(state => state.cards.page)
+  const dispatch = useAppDispatch()
 
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -42,7 +43,7 @@ export const Pack = () => {
     },
   }))
 
-  const StyledTableCellRow = styled(TableCell)(({ theme }) => ({
+  const StyledTableCellRow = styled(TableCell)(({}) => ({
     [`&.${tableCellClasses.body}`]: {
       fontFamily: 'Montseratt',
       fontSize: '15px',
@@ -61,6 +62,7 @@ export const Pack = () => {
         <div className={s.div}>
           <div className={s.span}>This pack is empty. Click add new card to fill this pack</div>
           <Button
+            // onClick={() => dispatch(add)}
             type="submit"
             variant="contained"
             style={{ borderRadius: '20px', marginTop: '40px' }}
