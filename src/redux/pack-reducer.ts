@@ -35,6 +35,7 @@ const initialState = {
   showPackCards: 'all' as 'all' | 'my',
   minCardsCount: 0 as number,
   maxCardsCount: 100 as number,
+  searchPackValue: '' as string,
 }
 
 type PackReducerStateType = typeof initialState
@@ -65,6 +66,8 @@ export const packReducer = (
       return { ...state, maxCardsCount: action.value }
     case 'PACKS/SET_TOTAL_PACKS_COUNT':
       return { ...state, cardPacksTotalCount: action.value }
+    case 'packs/SEARCH_PACKS':
+      return { ...state, searchPackValue: action.searchValue }
     default:
       return state
   }
@@ -96,6 +99,11 @@ export const setMaxCardsCountAC = (value: number) => ({
   type: 'PACKS/SET_MAX_CARDS_COUNT' as const,
   value,
 })
+export const searchPacksByNameAC = (searchValue: string) => ({
+  type: 'packs/SEARCH_PACKS' as const,
+  searchValue,
+})
+
 export const setTotalPacksCountAC = (value: number) =>
   ({
     type: 'PACKS/SET_TOTAL_PACKS_COUNT',
@@ -228,3 +236,4 @@ export type PackReducerAT =
   | ReturnType<typeof setMinCardsCountAC>
   | ReturnType<typeof setMaxCardsCountAC>
   | ReturnType<typeof setTotalPacksCountAC>
+  | ReturnType<typeof searchPacksByNameAC>
