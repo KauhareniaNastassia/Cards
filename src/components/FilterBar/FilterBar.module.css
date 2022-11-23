@@ -10,14 +10,9 @@
 h3 {
   margin: 0 0 10px 0;
 }
-.button {
-  width: 50px;
-
-  border-radius: 0;
-}
 .sliderWrap {
   display: flex;
-  gap: 5px;
+  gap: 15px;
   align-items: center;
 
   width: 300px;

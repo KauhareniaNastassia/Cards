@@ -43,7 +43,7 @@ export const PackList = () => {
 
   if (isLoggedIn) {
     useEffect(() => {
-      dispatch(getPacksTC(page, pageCount))
+      dispatch(getPacksTC({ page, pageCount }))
     }, [])
   }
   if (!isLoggedIn) {
@@ -52,7 +52,7 @@ export const PackList = () => {
   const handleChangePage = (event: unknown, page: number) => {
     console.log(page, pageCount)
     setPage(page)
-    dispatch(getPacksTC(page, pageCount))
+    dispatch(getPacksTC({ page, pageCount }))
   }
 
   const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {

@@ -1,4 +1,10 @@
-import { AddNewPackDataType, cardsAPI, PacksType, UpdatePackDataType } from '../api/cards-API'
+import {
+  AddNewPackDataType,
+  cardsAPI,
+  GetPacksParamsType,
+  PacksType,
+  UpdatePackDataType,
+} from '../api/cards-API'
 
 import { setAppStatusAC } from './app-reducer'
 import { AppThunkType } from './store'
@@ -97,10 +103,11 @@ export const setTotalPacksCountAC = (value: number) =>
   } as const)
 //thunks
 export const getPacksTC =
-  (page: number, pageCount: number): AppThunkType =>
+  (params: GetPacksParamsType): AppThunkType =>
   async dispatch => {
     try {
-      const res = await cardsAPI.getPacks(page, pageCount)
+      debugger
+      const res = await cardsAPI.getPacks({ ...params })
 
       dispatch(setPacksAC(res.data.cardPacks))
       dispatch(setTotalPacksCountAC(res.data.cardPacksTotalCount))
@@ -150,7 +157,7 @@ export const deletePackTC =
     try {
       const res = await cardsAPI.deletePack(packID)
 
-      dispatch(getPacksTC(1, 10))
+      dispatch(getPacksTC({ page: 1, pageCount: 10 }))
       dispatch(setAppStatusAC('succeed'))
     } catch (e) {
       console.log(e)
@@ -196,13 +203,13 @@ export const setShowPackCardsTC =
     dispatch(setAppStatusAC('loading'))
     try {
       if (userID) {
-        const res = await cardsAPI.getPacks(1, 10, userID)
+        const res = await cardsAPI.getPacks({ user_id: userID, page: 1, pageCount: 10 })
 
         dispatch(setPacksAC(res.data.cardPacks))
         dispatch(setShowPackCardsAC('my'))
         dispatch(setAppStatusAC('succeed'))
       } else {
-        const res = await cardsAPI.getPacks(1, 10)
+        const res = await cardsAPI.getPacks({ page: 1, pageCount: 10 })
 
         dispatch(setPacksAC(res.data.cardPacks))
         dispatch(setShowPackCardsAC('all'))
