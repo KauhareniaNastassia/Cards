@@ -29,6 +29,9 @@ const initialState = {
   page: 0 as number,
   pageCount: 5 as number,
   showPackCards: 'all' as 'all' | 'my',
+  minCardsCount: 0 as number,
+  maxCardsCount: 100 as number,
+  searchPackValue: 'nastya' as string,
 }
 
 type PackReducerStateType = typeof initialState
@@ -53,6 +56,8 @@ export const packReducer = (
       }
     case 'packs/SET_SHOW_PACKS_CARDS':
       return { ...state, showPackCards: action.value }
+    case 'packs/SEARCH_PACKS':
+      return { ...state, searchPackValue: action.searchValue }
     default:
       return state
   }
@@ -71,6 +76,10 @@ export const updatePackAC = (newPack: PacksType) => ({
 export const setShowPackCardsAC = (value: 'my' | 'all') => ({
   type: 'packs/SET_SHOW_PACKS_CARDS' as const,
   value,
+})
+export const searchPacksByNameAC = (searchValue: string) => ({
+  type: 'packs/SEARCH_PACKS' as const,
+  searchValue,
 })
 
 //thunks
@@ -195,3 +204,4 @@ export type PackReducerAT =
   | ReturnType<typeof addNewPackAC>
   | ReturnType<typeof updatePackAC>
   | ReturnType<typeof setShowPackCardsAC>
+  | ReturnType<typeof searchPacksByNameAC>

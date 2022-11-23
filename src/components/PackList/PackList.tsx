@@ -57,6 +57,7 @@ export const PackList = () => {
     setRowsPerPage(parseInt(event.target.value, 10))
     setPage(0)
   }
+
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
       backgroundColor: theme.palette.grey['200'],
