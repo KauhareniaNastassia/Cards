@@ -16,6 +16,14 @@
 .pagination {
   margin: 30px 0px;
 }
+.paginationWithSelect {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.show{
+  margin-left: 20px;
+}
 
 @media only screen and (max-width: 890px) {
   .tableHead > th {

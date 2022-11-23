@@ -106,7 +106,6 @@ export const getPacksTC =
   (params: GetPacksParamsType): AppThunkType =>
   async dispatch => {
     try {
-      debugger
       const res = await cardsAPI.getPacks({ ...params })
 
       dispatch(setPacksAC(res.data.cardPacks))
