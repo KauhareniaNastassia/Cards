@@ -15,14 +15,11 @@ export const cardsAPI = {
 
     return instance.get<GetPacksResponseType>(`/cards/pack`, {
       params: {
-        page: 1,
-        pageCount: 10,
+        page: params.page,
+        pageCount: params.pageCount,
         user_id: params.user_id,
         min: params.min,
         max: params.max,
-        page: page,
-        pageCount: pageCount,
-        user_id: userID,
       },
     })
   },
