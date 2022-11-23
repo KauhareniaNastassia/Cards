@@ -3,11 +3,11 @@ import React from 'react'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
-import SchoolIcon from '@mui/icons-material/School'
 import {
   Button,
   IconButton,
   Paper,
+  Rating,
   styled,
   Table,
   TableBody,
@@ -27,8 +27,9 @@ import { useAppSelector } from '../../../utils/hooks'
 import s from './Pack.module.css'
 
 export const Pack = () => {
-  const packName = useAppSelector(state => state.cards.packName)
   const cards = useAppSelector(state => state.cards.cards)
+  const packName = useAppSelector(state => state.cards.packName)
+  const myID = useAppSelector(state => state.profile._id)
 
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -88,17 +89,20 @@ export const Pack = () => {
                   <StyledTableCellRow align="right">
                     {moment(`${card.updated}`).format('D.M.Y')}
                   </StyledTableCellRow>
-                  <StyledTableCellRow align="right">{card.grade}</StyledTableCellRow>
                   <StyledTableCellRow align="right">
-                    <IconButton>
-                      <SchoolIcon></SchoolIcon>
-                    </IconButton>
-                    <IconButton>
-                      <EditIcon></EditIcon>
-                    </IconButton>
-                    <IconButton>
-                      <DeleteIcon></DeleteIcon>
-                    </IconButton>
+                    <Rating name="half-rating" defaultValue={card.grade} precision={0.1} />
+                  </StyledTableCellRow>
+                  <StyledTableCellRow align="right">
+                    {myID === card.user_id && (
+                      <span>
+                        <IconButton>
+                          <EditIcon></EditIcon>
+                        </IconButton>
+                        <IconButton>
+                          <DeleteIcon></DeleteIcon>
+                        </IconButton>
+                      </span>
+                    )}
                   </StyledTableCellRow>
                 </TableRow>
               ))}

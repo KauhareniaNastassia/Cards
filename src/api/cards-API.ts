@@ -10,12 +10,16 @@ export const instance = axios.create({
 })
 
 export const cardsAPI = {
-  getPacks(page: number, pageCount: number, userID?: string) {
+  getPacks(params: GetPacksParamsType) {
+    debugger
+
     return instance.get<GetPacksResponseType>(`/cards/pack`, {
       params: {
-        page: 1,
-        pageCount: 10,
-        user_id: userID,
+        page: params.page,
+        pageCount: params.pageCount,
+        user_id: params.user_id,
+        min: params.min,
+        max: params.max,
       },
     })
   },
@@ -34,11 +38,24 @@ export const cardsAPI = {
       data
     )
   },
-  getCards(cardsPack_id: string) {
-    return instance.get(`/cards/card?cardsPack_id=${cardsPack_id}`)
+  getCards(cardsPack_id: string, packName: string) {
+    return instance.get<GetCardsResponseType>(`/cards/card`, {
+      params: {
+        cardsPack_id: cardsPack_id,
+        packName: packName,
+      },
+    })
   },
 }
-
+export type GetPacksParamsType = {
+  page?: number
+  packName?: string
+  pageCount?: number
+  sortPacks?: string
+  user_id?: string
+  min?: number
+  max?: number
+}
 export type GetPacksResponseType = {
   cardPacks: PacksType[]
   page: number
@@ -114,30 +131,34 @@ export type UpdatePackResponseType = {
   tokenDeathTime: number
 }
 
-export type ddddd = {
-  cardPacks: DddddCardPacks[]
+export type GetCardsResponseType = {
+  cards: CardPackType[]
+  packUserId: string
+  packName: string
+  packPrivate: boolean
+  packCreated: string
+  packUpdated: string
   page: number
   pageCount: number
-  cardPacksTotalCount: number
-  minCardsCount: number
-  maxCardsCount: number
+  cardsTotalCount: number
+  minGrade: number
+  maxGrade: number
   token: string
   tokenDeathTime: number
 }
-export type DddddCardPacks = {
+export type CardPackType = {
   _id: string
+  cardsPack_id: string
   user_id: string
-  user_name: string
-  private: boolean
-  name: string
-  path: string
+  answer: string
+  question: string
   grade: number
   shots: number
-  cardsCount: number
+  comments: string
   type: string
   rating: number
+  more_id: string
   created: string
   updated: string
-  more_id: string
   __v: number
 }

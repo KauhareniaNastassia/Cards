@@ -15,6 +15,9 @@
   max-width: 1100px;
 margin: 0 auto;
 }
+.pagination {
+  margin: 20px 0px;
+}
 .arrow {
   display: flex;
   align-items: center;
