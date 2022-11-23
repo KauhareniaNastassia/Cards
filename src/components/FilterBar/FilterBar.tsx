@@ -1,6 +1,6 @@
 import { Button } from '@mui/material'
 
-import { SliderFromMaeUI } from '../../common/Slider/Slider'
+import { SliderFromMateUI } from '../../common/SliderFromMateUI/SliderFromMateUI'
 import { setShowPackCardsTC } from '../../redux/pack-reducer'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks'
 
@@ -22,14 +22,12 @@ export const FilterBar = () => {
       <div>
         <h3>Show packs cards</h3>
         <Button
-          className={s.button}
           onClick={() => dispatch(setShowPackCardsTC(userID))}
           variant={showPackCards === 'my' ? 'contained' : 'outlined'}
         >
           My
         </Button>
         <Button
-          className={s.button}
           onClick={() => dispatch(setShowPackCardsTC())}
           variant={showPackCards === 'all' ? 'contained' : 'outlined'}
         >
@@ -40,7 +38,7 @@ export const FilterBar = () => {
         <h3>Number of cards</h3>
         <div className={s.sliderWrap}>
           <span className={s.sliderNumbers}>{minCardsCount}</span>
-          <SliderFromMaeUI />
+          <SliderFromMateUI />
           <span className={s.sliderNumbers}>{maxCardsCount}</span>
         </div>
       </div>
