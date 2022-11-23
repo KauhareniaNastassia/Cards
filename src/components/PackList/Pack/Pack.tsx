@@ -30,6 +30,7 @@ export const Pack = () => {
   const cards = useAppSelector(state => state.cards.cards)
   const packName = useAppSelector(state => state.cards.packName)
   const myID = useAppSelector(state => state.profile._id)
+  const page = useAppSelector(state => state.cards.page)
 
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {

@@ -6,8 +6,12 @@ import SchoolIcon from '@mui/icons-material/School'
 import {
   Button,
   IconButton,
+  InputLabel,
+  MenuItem,
   Pagination,
   Paper,
+  Select,
+  SelectChangeEvent,
   styled,
   Table,
   TableBody,
@@ -18,6 +22,7 @@ import {
   TablePagination,
   TableRow,
 } from '@mui/material'
+import FormControl from '@mui/material/FormControl/FormControl'
 import moment from 'moment/moment'
 import { Link, Navigate } from 'react-router-dom'
 
@@ -31,12 +36,11 @@ import s from './PackList.module.css'
 
 export const PackList = () => {
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
-  const currentPage = useAppSelector(state => state.packs.page)
   const packs = useAppSelector(state => state.packs.cardPacks)
   const pageCount = useAppSelector(state => state.packs.pageCount)
   const cardPacksTotalCount = useAppSelector(state => state.packs.cardPacksTotalCount)
   const myID = useAppSelector(state => state.profile._id)
-  const [rowsPerPage, setRowsPerPage] = useState(pageCount)
+  const [pageClientCount, setPageCount] = useState(String(pageCount))
   const [page, setPage] = useState(1)
   const dispatch = useAppDispatch()
   const pagesCount = Math.ceil(cardPacksTotalCount / pageCount)
@@ -50,14 +54,13 @@ export const PackList = () => {
     return <Navigate to={PATH.login} />
   }
   const handleChangePage = (event: unknown, page: number) => {
-    console.log(page, pageCount)
     setPage(page)
     dispatch(getPacksTC({ page, pageCount }))
   }
 
-  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRowsPerPage(parseInt(event.target.value, 10))
-    setPage(page)
+  const handleChange = (event: SelectChangeEvent) => {
+    setPageCount(event.target.value as string)
+    dispatch(getPacksTC({ page, pageCount: Number(event.target.value) }))
   }
 
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -150,14 +153,25 @@ export const PackList = () => {
             </TableBody>
           </Table>
         </TableContainer>
-        <Pagination
-          className={s.pagination}
-          color="primary"
-          shape="rounded"
-          page={page}
-          onChange={handleChangePage}
-          count={pagesCount}
-        />
+        <div className={s.paginationWithSelect}>
+          <Pagination
+            className={s.pagination}
+            color="primary"
+            shape="rounded"
+            page={page}
+            onChange={handleChangePage}
+            count={pagesCount}
+          />
+          <span className={s.show}>Show</span>
+          <FormControl sx={{ m: 1, minWidth: 80 }}>
+            <Select value={pageClientCount} onChange={handleChange}>
+              <MenuItem value={5}>5</MenuItem>
+              <MenuItem value={10}>10</MenuItem>
+              <MenuItem value={20}>20</MenuItem>
+            </Select>
+          </FormControl>
+          <span>Cards per page</span>
+        </div>
       </div>
     </section>
   )
