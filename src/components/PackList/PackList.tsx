@@ -6,6 +6,7 @@ import SchoolIcon from '@mui/icons-material/School'
 import {
   Button,
   IconButton,
+  Pagination,
   Paper,
   styled,
   Table,
@@ -21,7 +22,6 @@ import moment from 'moment/moment'
 import { Link, Navigate } from 'react-router-dom'
 
 import { PATH } from '../../app/App'
-import { setAppStatusAC } from '../../redux/app-reducer'
 import { setCardsTC } from '../../redux/cards-reducer'
 import { addNewPackTC, deletePackTC, getPacksTC, updatePackTC } from '../../redux/pack-reducer'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks'
@@ -34,11 +34,12 @@ export const PackList = () => {
   const currentPage = useAppSelector(state => state.packs.page)
   const packs = useAppSelector(state => state.packs.cardPacks)
   const pageCount = useAppSelector(state => state.packs.pageCount)
-  const maxPacksCount = useAppSelector(state => state.packs.cardPacksTotalCount)
+  const cardPacksTotalCount = useAppSelector(state => state.packs.cardPacksTotalCount)
   const myID = useAppSelector(state => state.profile._id)
   const [rowsPerPage, setRowsPerPage] = useState(pageCount)
-  const [page, setPage] = useState(currentPage)
+  const [page, setPage] = useState(1)
   const dispatch = useAppDispatch()
+  const pagesCount = Math.ceil(cardPacksTotalCount / pageCount)
 
   if (isLoggedIn) {
     useEffect(() => {
@@ -49,13 +50,14 @@ export const PackList = () => {
     return <Navigate to={PATH.login} />
   }
   const handleChangePage = (event: unknown, page: number) => {
+    console.log(page, pageCount)
     setPage(page)
     dispatch(getPacksTC(page, pageCount))
   }
 
   const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
     setRowsPerPage(parseInt(event.target.value, 10))
-    setPage(0)
+    setPage(page)
   }
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -112,7 +114,7 @@ export const PackList = () => {
                 >
                   <StyledTableCellRow
                     onClick={() => {
-                      dispatch(setCardsTC(pack._id))
+                      dispatch(setCardsTC(pack._id, pack.name))
                     }}
                     className={s.nameColumn}
                   >
@@ -147,14 +149,13 @@ export const PackList = () => {
             </TableBody>
           </Table>
         </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 25, 30]}
-          component="div"
-          count={maxPacksCount}
-          rowsPerPage={rowsPerPage}
+        <Pagination
+          className={s.pagination}
+          color="primary"
+          shape="rounded"
           page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
+          onChange={handleChangePage}
+          count={pagesCount}
         />
       </div>
     </section>

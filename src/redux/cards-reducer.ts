@@ -1,4 +1,4 @@
-import { cardsAPI } from '../api/cards-API'
+import { CardPackType, cardsAPI } from '../api/cards-API'
 
 import { setAppStatusAC } from './app-reducer'
 import { AppThunkType } from './store'
@@ -9,50 +9,62 @@ export const cardsReducer = (
 ): InitialStateType => {
   switch (action.type) {
     case 'SET-CARDS':
-      return { ...state, cards: action.cards }
+      return { ...state, cards: [...action.cards], packName: action.packName }
     default:
       return state
   }
 }
 
 const initialState = {
-  cards: [] as CardType[],
-  cardsTotalCount: 0,
+  cards: [
+    {
+      _id: '',
+      cardsPack_id: '',
+      user_id: '',
+      answer: '',
+      question: '',
+      grade: 0,
+      shots: 0,
+      comments: '',
+      type: '',
+      rating: 0,
+      more_id: '',
+      created: '',
+      updated: '',
+      __v: 0,
+    },
+  ] as CardPackType[],
+  packUserId: '',
   packName: '',
-  maxGrade: 0,
-  minGrade: 0,
+  packPrivate: false,
+  packCreated: '',
+  packUpdated: '',
   page: 0,
   pageCount: 0,
-  packUserId: '',
+  cardsTotalCount: 0,
+  minGrade: 0,
+  maxGrade: 0,
+  token: '',
+  tokenDeathTime: 0,
 }
 
 //thunks
 export const setCardsTC =
-  (cardsPack_id: string): AppThunkType =>
+  (cardsPack_id: string, packName: string): AppThunkType =>
   dispatch => {
     dispatch(setAppStatusAC('loading'))
-    cardsAPI.getCards(cardsPack_id).then(res => {
+    cardsAPI.getCards(cardsPack_id, packName).then(res => {
       const cards = res.data.cards
 
-      dispatch(setCardsAC(cards))
+      dispatch(setCardsAC(cards, res.data.packName))
       dispatch(setAppStatusAC('succeed'))
     })
   }
 //actions
-export const setCardsAC = (cards: CardType[]) => {
-  return { type: 'SET-CARDS', cards } as const
+export const setCardsAC = (cards: CardPackType[], packName: string) => {
+  return { type: 'SET-CARDS', cards, packName } as const
 }
 //types
 export type CardsReducerAT = SetCardsACType
 type SetCardsACType = ReturnType<typeof setCardsAC>
 type InitialStateType = typeof initialState
-export type CardType = {
-  answer: string
-  question: string
-  cardsPack_id: string
-  grade: number
-  shots: number
-  user_id: string
-  updated: string
-  _id: string
-}

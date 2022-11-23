@@ -38,11 +38,11 @@ export const packReducer = (
   action: PackReducerAT
 ): PackReducerStateType => {
   switch (action.type) {
-    case 'packs/SET_PACKS':
+    case 'PACKS/SET_PACKS':
       return { ...state, cardPacks: [...action.packs] }
-    case 'packs/ADD_NEW_PACK':
+    case 'PACKS/ADD_NEW_PACK':
       return { ...state, cardPacks: [action.newPack, ...state.cardPacks] }
-    case 'packs/UPDATE_PACK':
+    case 'PACKS/UPDATE_PACK':
       return {
         ...state,
         cardPacks: [
@@ -51,39 +51,50 @@ export const packReducer = (
           ),
         ],
       }
-    case 'packs/SET_SHOW_PACKS_CARDS':
+    case 'PACKS/SET_SHOW_PACKS_CARDS':
       return { ...state, showPackCards: action.value }
-    case 'packs/SET_MIN_CARDS_COUNT':
+    case 'PACKS/SET_MIN_CARDS_COUNT':
       return { ...state, minCardsCount: action.value }
-    case 'packs/SET_MAX_CARDS_COUNT':
+    case 'PACKS/SET_MAX_CARDS_COUNT':
       return { ...state, maxCardsCount: action.value }
+    case 'PACKS/SET_TOTAL_PACKS_COUNT':
+      return { ...state, cardPacksTotalCount: action.value }
     default:
       return state
   }
 }
 
 //actions
-export const setPacksAC = (packs: PacksType[]) => ({ type: 'packs/SET_PACKS' as const, packs })
-export const addNewPackAC = (newPack: PacksType) => ({
-  type: 'packs/ADD_NEW_PACK' as const,
-  newPack,
-})
-export const updatePackAC = (newPack: PacksType) => ({
-  type: 'packs/UPDATE_PACK' as const,
-  newPack,
-})
-export const setShowPackCardsAC = (value: 'my' | 'all') => ({
-  type: 'packs/SET_SHOW_PACKS_CARDS' as const,
-  value,
-})
-export const setMinCardsCountAC = (value: number) => ({
-  type: 'packs/SET_MIN_CARDS_COUNT' as const,
-  value,
-})
+export const setPacksAC = (packs: PacksType[]) => ({ type: 'PACKS/SET_PACKS' as const, packs })
+export const addNewPackAC = (newPack: PacksType) =>
+  ({
+    type: 'PACKS/ADD_NEW_PACK',
+    newPack,
+  } as const)
+export const updatePackAC = (newPack: PacksType) =>
+  ({
+    type: 'PACKS/UPDATE_PACK',
+    newPack,
+  } as const)
+export const setShowPackCardsAC = (value: 'my' | 'all') =>
+  ({
+    type: 'PACKS/SET_SHOW_PACKS_CARDS',
+    value,
+  } as const)
+export const setMinCardsCountAC = (value: number) =>
+  ({
+    type: 'PACKS/SET_MIN_CARDS_COUNT',
+    value,
+  } as const)
 export const setMaxCardsCountAC = (value: number) => ({
-  type: 'packs/SET_MAX_CARDS_COUNT' as const,
+  type: 'PACKS/SET_MAX_CARDS_COUNT' as const,
   value,
 })
+export const setTotalPacksCountAC = (value: number) =>
+  ({
+    type: 'PACKS/SET_TOTAL_PACKS_COUNT',
+    value,
+  } as const)
 //thunks
 export const getPacksTC =
   (page: number, pageCount: number): AppThunkType =>
@@ -92,6 +103,7 @@ export const getPacksTC =
       const res = await cardsAPI.getPacks(page, pageCount)
 
       dispatch(setPacksAC(res.data.cardPacks))
+      dispatch(setTotalPacksCountAC(res.data.cardPacksTotalCount))
     } catch (e) {
       console.log(e)
     }
@@ -208,3 +220,4 @@ export type PackReducerAT =
   | ReturnType<typeof setShowPackCardsAC>
   | ReturnType<typeof setMinCardsCountAC>
   | ReturnType<typeof setMaxCardsCountAC>
+  | ReturnType<typeof setTotalPacksCountAC>
