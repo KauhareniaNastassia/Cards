@@ -135,7 +135,7 @@ export const PackList = () => {
                   </StyledTableCellRow>
                   <StyledTableCellRow align="center">{pack.user_name}</StyledTableCellRow>
                   <StyledTableCellRow align="center">
-                    <IconButton>
+                    <IconButton disabled={pack.cardsCount === 0}>
                       <SchoolIcon></SchoolIcon>
                     </IconButton>
                     {myID === pack.user_id && (

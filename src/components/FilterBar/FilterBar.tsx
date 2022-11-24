@@ -48,9 +48,9 @@ export const FilterBar = () => {
       <div>
         <h3>Number of cards</h3>
         <div className={s.sliderWrap}>
-          <span className={s.sliderNumbers}>{minCardsCount}</span>
+          <span className={s.sliderValues}>{minCardsCount}</span>
           <SliderFromMateUI />
-          <span className={s.sliderNumbers}>{maxCardsCount}</span>
+          <span className={s.sliderValues}>{maxCardsCount}</span>
         </div>
       </div>
     </div>
