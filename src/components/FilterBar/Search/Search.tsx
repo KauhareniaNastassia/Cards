@@ -43,14 +43,13 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }))
 
 export const SearchBar = () => {
-  const searchValue = useAppSelector(state => state.packs.searchPackValue)
   const dispatch = useAppDispatch()
 
   const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     console.log()
     dispatch(getPacksTC({ packName: e.target.value }))
   }
-  const debouncedChangeHandler = useCallback(debounce(changeHandler, 1000), [searchValue])
+  const debouncedChangeHandler = useCallback(debounce(changeHandler, 1000), [])
 
   return (
     <Search>
