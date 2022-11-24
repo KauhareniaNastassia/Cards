@@ -26,6 +26,7 @@ import { addNewCardTC, deleteCardTC, setCardsTC, updateCardTC } from '../../../r
 import { useAppDispatch, useAppSelector } from '../../../utils/hooks'
 
 import s from './Pack.module.css'
+import { SearchForCards } from './SettingsForCards/SearchForCards'
 
 export const Pack = () => {
   const cards = useAppSelector(state => state.cards.cards)
@@ -56,7 +57,7 @@ export const Pack = () => {
   }))
   const handleChangePage = (event: unknown, page: number) => {
     setPage(page)
-    dispatch(setCardsTC(cardsPack_id, page, pageCount))
+    dispatch(setCardsTC({ cardsPack_id, page, pageCount }))
   }
 
   return (
@@ -67,6 +68,7 @@ export const Pack = () => {
         </Link>
       </div>
       <div className={s.packName}>{packName}</div>
+
       {cards.length === 0 ? (
         <div className={s.div}>
           <div className={s.span}>This pack is empty. Click add new card to fill this pack</div>
@@ -80,65 +82,71 @@ export const Pack = () => {
           </Button>
         </div>
       ) : (
-        <TableContainer className={s.table} component={Paper}>
-          <Table sx={{ minWidth: 650, fontFamily: 'Montserrat' }} aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <StyledTableCell>Question</StyledTableCell>
-                <StyledTableCell align="right">Answer</StyledTableCell>
-                <StyledTableCell align="right">Last updated</StyledTableCell>
-                <StyledTableCell align="right">Grade</StyledTableCell>
-                <StyledTableCell align="right"></StyledTableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {cards.map(card => (
-                <TableRow key={card._id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                  <StyledTableCellRow component="th" scope="row">
-                    {card.question}
-                  </StyledTableCellRow>
-                  <StyledTableCellRow align="right">{card.answer}</StyledTableCellRow>
-                  <StyledTableCellRow align="right">
-                    {moment(`${card.updated}`).format('D.M.Y')}
-                  </StyledTableCellRow>
-                  <StyledTableCellRow align="right">
-                    <Rating name="half-rating" defaultValue={card.grade} precision={0.1} />
-                  </StyledTableCellRow>
-                  <StyledTableCellRow align="right">
-                    {myID === card.user_id && (
-                      <span>
-                        <IconButton
-                          onClick={() =>
-                            dispatch(
-                              updateCardTC(
-                                {
-                                  card: {
-                                    _id: card._id,
-                                    answer: 'some new answer',
-                                    question: 'updated new Question',
-                                  },
-                                },
-                                page,
-                                pageCount
-                              )
-                            )
-                          }
-                        >
-                          <EditIcon></EditIcon>
-                        </IconButton>
-                        <IconButton
-                          onClick={() => dispatch(deleteCardTC(card._id, page, pageCount))}
-                        >
-                          <DeleteIcon></DeleteIcon>
-                        </IconButton>
-                      </span>
-                    )}
-                  </StyledTableCellRow>
+        <div>
+          <SearchForCards />
+          <TableContainer className={s.table} component={Paper}>
+            <Table sx={{ minWidth: 650, fontFamily: 'Montserrat' }} aria-label="simple table">
+              <TableHead>
+                <TableRow>
+                  <StyledTableCell>Question</StyledTableCell>
+                  <StyledTableCell align="right">Answer</StyledTableCell>
+                  <StyledTableCell align="right">Last updated</StyledTableCell>
+                  <StyledTableCell align="right">Grade</StyledTableCell>
+                  <StyledTableCell align="right"></StyledTableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+              </TableHead>
+              <TableBody>
+                {cards.map(card => (
+                  <TableRow
+                    key={card._id}
+                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                  >
+                    <StyledTableCellRow component="th" scope="row">
+                      {card.question}
+                    </StyledTableCellRow>
+                    <StyledTableCellRow align="right">{card.answer}</StyledTableCellRow>
+                    <StyledTableCellRow align="right">
+                      {moment(`${card.updated}`).format('D.M.Y')}
+                    </StyledTableCellRow>
+                    <StyledTableCellRow align="right">
+                      <Rating name="half-rating" defaultValue={card.grade} precision={0.1} />
+                    </StyledTableCellRow>
+                    <StyledTableCellRow align="right">
+                      {myID === card.user_id && (
+                        <span>
+                          <IconButton
+                            onClick={() =>
+                              dispatch(
+                                updateCardTC(
+                                  {
+                                    card: {
+                                      _id: card._id,
+                                      answer: 'some new answer',
+                                      question: 'updated new Question',
+                                    },
+                                  },
+                                  page,
+                                  pageCount
+                                )
+                              )
+                            }
+                          >
+                            <EditIcon></EditIcon>
+                          </IconButton>
+                          <IconButton
+                            onClick={() => dispatch(deleteCardTC(card._id, page, pageCount))}
+                          >
+                            <DeleteIcon></DeleteIcon>
+                          </IconButton>
+                        </span>
+                      )}
+                    </StyledTableCellRow>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </div>
       )}
       <Pagination
         className={s.pagination}

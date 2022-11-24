@@ -90,7 +90,7 @@ export const PackList = () => {
             variant="contained"
             style={{ borderRadius: '20px' }}
             onClick={() => {
-              dispatch(addNewPackTC('nazar'))
+              dispatch(addNewPackTC(''))
             }}
           >
             Add new Pack
@@ -120,7 +120,13 @@ export const PackList = () => {
                 >
                   <StyledTableCellRow
                     onClick={() => {
-                      dispatch(setCardsTC(pack._id, cardsPage, cardsPageCount))
+                      dispatch(
+                        setCardsTC({
+                          cardsPack_id: pack._id,
+                          page: cardsPage,
+                          pageCount: cardsPageCount,
+                        })
+                      )
                       dispatch(setPackIdAC(pack._id))
                     }}
                     className={s.nameColumn}
