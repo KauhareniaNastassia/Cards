@@ -37,10 +37,12 @@ export const cardsAPI = {
       data
     )
   },
-  getCards(cardsPack_id: string) {
+  getCards(cardsPack_id: string, page: number, pageCount: number) {
     return instance.get<GetCardsResponseType>(`/cards/card`, {
       params: {
         cardsPack_id: cardsPack_id,
+        page: page,
+        pageCount: pageCount,
       },
     })
   },

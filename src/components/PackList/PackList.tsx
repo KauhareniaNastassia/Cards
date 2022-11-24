@@ -37,13 +37,15 @@ import s from './PackList.module.css'
 export const PackList = () => {
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
   const packs = useAppSelector(state => state.packs.cardPacks)
+  const cardsPage = useAppSelector(state => state.cards.page)
+  const cardsPageCount = useAppSelector(state => state.cards.pageCount)
   const pageCount = useAppSelector(state => state.packs.pageCount)
   const cardPacksTotalCount = useAppSelector(state => state.packs.cardPacksTotalCount)
   const myID = useAppSelector(state => state.profile._id)
   const [pageClientCount, setPageCount] = useState(String(pageCount))
   const [page, setPage] = useState(1)
   const dispatch = useAppDispatch()
-  const pagesCount = Math.ceil(cardPacksTotalCount / pageCount)
+  let pagesCount = Math.ceil(cardPacksTotalCount / pageCount)
 
   if (isLoggedIn) {
     useEffect(() => {
@@ -118,7 +120,7 @@ export const PackList = () => {
                 >
                   <StyledTableCellRow
                     onClick={() => {
-                      dispatch(setCardsTC(pack._id))
+                      dispatch(setCardsTC(pack._id, cardsPage, cardsPageCount))
                       dispatch(setPackIdAC(pack._id))
                     }}
                     className={s.nameColumn}

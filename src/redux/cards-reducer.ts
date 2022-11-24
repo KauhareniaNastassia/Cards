@@ -29,7 +29,7 @@ const initialState = {
   packUpdated: '',
   page: 0,
   pageCount: 0,
-  cardsTotalCount: 0,
+  cardsTotalCount: 0 as number,
   minGrade: 0,
   maxGrade: 0,
   cardsPack_id: '' as string,
@@ -44,6 +44,8 @@ export const cardsReducer = (
       return { ...state, cards: [...action.cards] }
     case 'CARDS/SET_PACK_ID':
       return { ...state, cardsPack_id: action.cardsPack_id }
+    case 'CARDS/SET_TOTAL_CARDS_COUNT':
+      return { ...state, cardsTotalCount: action.value }
     default:
       return state
   }
@@ -55,29 +57,35 @@ export const setCardsAC = (cards: CardPackType[]) => {
 }
 export const setPackIdAC = (cardsPack_id: string) =>
   ({ type: 'CARDS/SET_PACK_ID', cardsPack_id } as const)
+export const setTotalCardsCountAC = (value: number) =>
+  ({
+    type: 'CARDS/SET_TOTAL_CARDS_COUNT',
+    value,
+  } as const)
 //thunks
 export const setCardsTC =
-  (cardsPack_id: string): AppThunkType =>
+  (cardsPack_id: string, page: number, pageCount: number): AppThunkType =>
   async dispatch => {
     dispatch(setAppStatusAC('loading'))
     try {
-      const res = await cardsAPI.getCards(cardsPack_id)
+      const res = await cardsAPI.getCards(cardsPack_id, page, pageCount)
 
       dispatch(setCardsAC(res.data.cards))
       dispatch(setAppStatusAC('succeed'))
+      dispatch(setTotalCardsCountAC(res.data.cardsTotalCount))
     } catch (e) {
       console.log(e)
     }
   }
 
 export const addNewCardTC =
-  (cardsPack_id: string): AppThunkType =>
+  (cardsPack_id: string, page: number, pageCount: number): AppThunkType =>
   async dispatch => {
     dispatch(setAppStatusAC('loading'))
     try {
       const res = await cardsAPI.addNewCard({ card: { cardsPack_id } })
 
-      dispatch(setCardsTC(cardsPack_id))
+      dispatch(setCardsTC(cardsPack_id, page, pageCount))
       dispatch(setAppStatusAC('succeed'))
     } catch (e) {
       console.log(e)
@@ -85,13 +93,13 @@ export const addNewCardTC =
   }
 
 export const deleteCardTC =
-  (cardID: string): AppThunkType =>
+  (cardID: string, page: number, pageCount: number): AppThunkType =>
   async dispatch => {
     dispatch(setAppStatusAC('loading'))
     try {
       const res = await cardsAPI.deleteCard(cardID)
 
-      dispatch(setCardsTC(res.data.deletedCard.cardsPack_id))
+      dispatch(setCardsTC(res.data.deletedCard.cardsPack_id, page, pageCount))
       dispatch(setAppStatusAC('succeed'))
     } catch (e) {
       console.log(e)
@@ -99,19 +107,22 @@ export const deleteCardTC =
   }
 
 export const updateCardTC =
-  (card: UpdateCardDataType): AppThunkType =>
+  (card: UpdateCardDataType, page: number, pageCount: number): AppThunkType =>
   async dispatch => {
     dispatch(setAppStatusAC('loading'))
     try {
       const res = await cardsAPI.updateCard({ ...card })
 
-      dispatch(setCardsTC(res.data.updatedCard.cardsPack_id))
+      dispatch(setCardsTC(res.data.updatedCard.cardsPack_id, page, pageCount))
       dispatch(setAppStatusAC('succeed'))
     } catch (e) {
       console.log(e)
     }
   }
 //types
-export type CardsReducerAT = ReturnType<typeof setCardsAC> | ReturnType<typeof setPackIdAC>
+export type CardsReducerAT =
+  | ReturnType<typeof setCardsAC>
+  | ReturnType<typeof setPackIdAC>
+  | ReturnType<typeof setTotalCardsCountAC>
 
 type InitialStateType = typeof initialState

@@ -16,6 +16,9 @@
 margin: 0 auto;
 }
 .pagination {
+  display: flex;
+justify-content: center;
+
   margin: 20px 0px;
 }
 .arrow {

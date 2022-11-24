@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import DeleteIcon from '@mui/icons-material/Delete'
@@ -6,6 +6,7 @@ import EditIcon from '@mui/icons-material/Edit'
 import {
   Button,
   IconButton,
+  Pagination,
   Paper,
   Rating,
   styled,
@@ -15,14 +16,13 @@ import {
   tableCellClasses,
   TableContainer,
   TableHead,
-  TablePagination,
   TableRow,
 } from '@mui/material'
 import moment from 'moment'
 import { Link } from 'react-router-dom'
 
 import { PATH } from '../../../app/App'
-import { addNewCardTC, deleteCardTC, updateCardTC } from '../../../redux/cards-reducer'
+import { addNewCardTC, deleteCardTC, setCardsTC, updateCardTC } from '../../../redux/cards-reducer'
 import { useAppDispatch, useAppSelector } from '../../../utils/hooks'
 
 import s from './Pack.module.css'
@@ -32,7 +32,10 @@ export const Pack = () => {
   const packName = useAppSelector(state => state.cards.packName)
   const myID = useAppSelector(state => state.profile._id)
   const cardsPack_id = useAppSelector(state => state.cards.cardsPack_id)
-  // const page = useAppSelector(state => state.cards.page)
+  const [page, setPage] = useState(1)
+  const pageCount = useAppSelector(state => state.cards.pageCount)
+  const cardsTotalCount = useAppSelector(state => state.cards.cardsTotalCount)
+  const pagesCount = Math.ceil(cardsTotalCount / pageCount)
   const dispatch = useAppDispatch()
 
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -51,6 +54,10 @@ export const Pack = () => {
       fontSize: '15px',
     },
   }))
+  const handleChangePage = (event: unknown, page: number) => {
+    setPage(page)
+    dispatch(setCardsTC(cardsPack_id, page, pageCount))
+  }
 
   return (
     <div>
@@ -64,7 +71,7 @@ export const Pack = () => {
         <div className={s.div}>
           <div className={s.span}>This pack is empty. Click add new card to fill this pack</div>
           <Button
-            onClick={() => dispatch(addNewCardTC(cardsPack_id))}
+            onClick={() => dispatch(addNewCardTC(cardsPack_id, page, pageCount))}
             type="submit"
             variant="contained"
             style={{ borderRadius: '20px', marginTop: '40px' }}
@@ -103,19 +110,25 @@ export const Pack = () => {
                         <IconButton
                           onClick={() =>
                             dispatch(
-                              updateCardTC({
-                                card: {
-                                  _id: card._id,
-                                  answer: 'some new answer',
-                                  question: 'updated new Question',
+                              updateCardTC(
+                                {
+                                  card: {
+                                    _id: card._id,
+                                    answer: 'some new answer',
+                                    question: 'updated new Question',
+                                  },
                                 },
-                              })
+                                page,
+                                pageCount
+                              )
                             )
                           }
                         >
                           <EditIcon></EditIcon>
                         </IconButton>
-                        <IconButton onClick={() => dispatch(deleteCardTC(card._id))}>
+                        <IconButton
+                          onClick={() => dispatch(deleteCardTC(card._id, page, pageCount))}
+                        >
                           <DeleteIcon></DeleteIcon>
                         </IconButton>
                       </span>
@@ -123,19 +136,18 @@ export const Pack = () => {
                   </StyledTableCellRow>
                 </TableRow>
               ))}
-              <TablePagination
-                rowsPerPageOptions={[5, 10, 25]}
-                component="div"
-                count={300}
-                rowsPerPage={20}
-                page={10}
-                onPageChange={() => {}}
-                onRowsPerPageChange={() => {}}
-              />
             </TableBody>
           </Table>
         </TableContainer>
       )}
+      <Pagination
+        className={s.pagination}
+        color="primary"
+        shape="rounded"
+        page={page}
+        onChange={handleChangePage}
+        count={pagesCount}
+      />
     </div>
   )
 }
