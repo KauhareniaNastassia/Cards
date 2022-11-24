@@ -41,7 +41,7 @@ export const cardsReducer = (
 ): InitialStateType => {
   switch (action.type) {
     case 'CARDS/SET-CARDS':
-      return { ...state, cards: [...action.cards] }
+      return { ...state, cards: action.cards, packName: action.packName }
     case 'CARDS/SET_PACK_ID':
       return { ...state, cardsPack_id: action.cardsPack_id }
     case 'CARDS/SET_TOTAL_CARDS_COUNT':
@@ -52,8 +52,8 @@ export const cardsReducer = (
 }
 
 //actions
-export const setCardsAC = (cards: CardPackType[]) => {
-  return { type: 'CARDS/SET-CARDS', cards } as const
+export const setCardsAC = (cards: CardPackType[], packName: string) => {
+  return { type: 'CARDS/SET-CARDS', cards, packName } as const
 }
 export const setPackIdAC = (cardsPack_id: string) =>
   ({ type: 'CARDS/SET_PACK_ID', cardsPack_id } as const)
@@ -70,7 +70,7 @@ export const setCardsTC =
     try {
       const res = await cardsAPI.getCards({ ...params })
 
-      dispatch(setCardsAC(res.data.cards))
+      dispatch(setCardsAC(res.data.cards, res.data.packName))
       dispatch(setAppStatusAC('succeed'))
       dispatch(setTotalCardsCountAC(res.data.cardsTotalCount))
     } catch (e) {

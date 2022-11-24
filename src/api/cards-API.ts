@@ -18,7 +18,6 @@ export const cardsAPI = {
         user_id: params.user_id,
         min: params.min,
         max: params.max,
-        packName: params.packName,
       },
     })
   },
