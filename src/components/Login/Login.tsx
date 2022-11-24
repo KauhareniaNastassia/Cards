@@ -87,7 +87,7 @@ export const Login = () => {
             disabled={loading === 'loading'}
             type="submit"
             variant="contained"
-            style={{ borderRadius: '20px' }}
+            style={{ borderRadius: '20px', margin: '15px 0px' }}
           >
             Sign In
           </Button>
