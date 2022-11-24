@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { Button } from '@mui/material'
 
 import { SliderFromMateUI } from '../../common/SliderFromMateUI/SliderFromMateUI'
-import { searchPacksByNameAC, setShowPackCardsTC } from '../../redux/pack-reducer'
+import { setShowPackCardsTC } from '../../redux/pack-reducer'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks'
 
 import s from './FilterBar.module.css'
@@ -15,14 +15,6 @@ export const FilterBar = () => {
   const minCardsCount = useAppSelector(state => state.packs.minCardsCount)
   const maxCardsCount = useAppSelector(state => state.packs.maxCardsCount)
   const dispatch = useAppDispatch()
-  const searchValue = useAppSelector(state => state.packs.searchPackValue)
-
-  const [packName, setPackName] = useState<string>(searchValue)
-
-  const searchValueTextHandler = (valueSearch: string) => {
-    /*setPackName(valueSearch)*/
-    dispatch(searchPacksByNameAC(valueSearch))
-  }
 
   return (
     <div className={s.wrapper}>

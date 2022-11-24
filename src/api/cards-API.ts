@@ -37,12 +37,13 @@ export const cardsAPI = {
       data
     )
   },
-  getCards(cardsPack_id: string, page: number, pageCount: number) {
+  getCards(params: GetCardsParamsType) {
     return instance.get<GetCardsResponseType>(`/cards/card`, {
       params: {
-        cardsPack_id: cardsPack_id,
-        page: page,
-        pageCount: pageCount,
+        cardsPack_id: params.cardsPack_id,
+        page: params.page,
+        pageCount: params.pageCount,
+        cardQuestion: params.cardQuestion,
       },
     })
   },
@@ -159,6 +160,13 @@ export type GetPacksParamsType = {
   user_id?: string
   min?: number
   max?: number
+}
+export type GetCardsParamsType = {
+  packName?: string
+  page?: number
+  cardsPack_id?: string
+  pageCount?: number
+  cardQuestion?: string
 }
 export type GetPacksResponseType = {
   cardPacks: PacksType[]
