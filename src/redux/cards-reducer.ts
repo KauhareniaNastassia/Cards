@@ -1,4 +1,4 @@
-import { CardPackType, cardsAPI, UpdateCardDataType } from '../api/cards-API'
+import { CardPackType, cardsAPI, GetCardsParamsType, UpdateCardDataType } from '../api/cards-API'
 
 import { setAppStatusAC } from './app-reducer'
 import { AppThunkType } from './store'
@@ -64,11 +64,11 @@ export const setTotalCardsCountAC = (value: number) =>
   } as const)
 //thunks
 export const setCardsTC =
-  (cardsPack_id: string, page: number, pageCount: number): AppThunkType =>
+  (params: GetCardsParamsType): AppThunkType =>
   async dispatch => {
     dispatch(setAppStatusAC('loading'))
     try {
-      const res = await cardsAPI.getCards(cardsPack_id, page, pageCount)
+      const res = await cardsAPI.getCards({ ...params })
 
       dispatch(setCardsAC(res.data.cards))
       dispatch(setAppStatusAC('succeed'))
@@ -85,7 +85,7 @@ export const addNewCardTC =
     try {
       const res = await cardsAPI.addNewCard({ card: { cardsPack_id } })
 
-      dispatch(setCardsTC(cardsPack_id, page, pageCount))
+      dispatch(setCardsTC({ cardsPack_id, page, pageCount }))
       dispatch(setAppStatusAC('succeed'))
     } catch (e) {
       console.log(e)
@@ -99,7 +99,7 @@ export const deleteCardTC =
     try {
       const res = await cardsAPI.deleteCard(cardID)
 
-      dispatch(setCardsTC(res.data.deletedCard.cardsPack_id, page, pageCount))
+      dispatch(setCardsTC({ cardsPack_id: res.data.deletedCard.cardsPack_id, page, pageCount }))
       dispatch(setAppStatusAC('succeed'))
     } catch (e) {
       console.log(e)
@@ -113,7 +113,7 @@ export const updateCardTC =
     try {
       const res = await cardsAPI.updateCard({ ...card })
 
-      dispatch(setCardsTC(res.data.updatedCard.cardsPack_id, page, pageCount))
+      dispatch(setCardsTC({ cardsPack_id: res.data.updatedCard.cardsPack_id, page, pageCount }))
       dispatch(setAppStatusAC('succeed'))
     } catch (e) {
       console.log(e)
