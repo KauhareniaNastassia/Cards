@@ -41,7 +41,7 @@ export const PackList = () => {
   const cardsPageCount = useAppSelector(state => state.cards.pageCount)
   const pageCount = useAppSelector(state => state.packs.pageCount)
   const cardPacksTotalCount = useAppSelector(state => state.packs.cardPacksTotalCount)
-  const myID = useAppSelector(state => state.profile._id)
+  const user_id = useAppSelector(state => state.profile._id)
   const [pageClientCount, setPageCount] = useState(String(pageCount))
   const [page, setPage] = useState(1)
   const dispatch = useAppDispatch()
@@ -49,20 +49,20 @@ export const PackList = () => {
 
   if (isLoggedIn) {
     useEffect(() => {
-      dispatch(getPacksTC({ page, pageCount }))
-    }, [])
+      dispatch(getPacksTC())
+    }, [page, pageCount, user_id])
   }
   if (!isLoggedIn) {
     return <Navigate to={PATH.login} />
   }
   const handleChangePage = (event: unknown, page: number) => {
     setPage(page)
-    dispatch(getPacksTC({ page, pageCount }))
+    dispatch(getPacksTC())
   }
 
   const handleChange = (event: SelectChangeEvent) => {
     setPageCount(event.target.value as string)
-    dispatch(getPacksTC({ page, pageCount: Number(event.target.value) }))
+    dispatch(getPacksTC())
   }
 
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -146,7 +146,7 @@ export const PackList = () => {
                     <IconButton disabled={pack.cardsCount === 0}>
                       <SchoolIcon></SchoolIcon>
                     </IconButton>
-                    {myID === pack.user_id && (
+                    {user_id === pack.user_id && (
                       <span>
                         <IconButton
                           onClick={() => dispatch(updatePackTC(pack._id, 'Updated Name'))}

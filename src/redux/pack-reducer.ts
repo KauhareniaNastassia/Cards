@@ -35,6 +35,14 @@ const initialState = {
   showPackCards: 'all' as 'all' | 'my',
   minCardsCount: 0 as number,
   maxCardsCount: 100 as number,
+  params: {
+    page: '1',
+    pageCount: '5',
+    min: '0',
+    max: '0',
+    userID: '',
+    packName: '',
+  } as ParamsUrlType,
 }
 
 type PackReducerStateType = typeof initialState
@@ -72,12 +80,26 @@ export const packReducer = (
         maxCardsCount: 100,
         showPackCards: 'all',
       }
+    case 'PACKS/UPDATE_URL_PARAMS':
+      return { ...state, params: action.params }
     default:
       return state
   }
 }
 
+export type ParamsUrlType = {
+  page?: string | null
+  pageCount?: string | null
+  min?: string | null
+  max?: string | null
+  user_id?: string | null
+  packName?: string | null
+}
 //actions
+export const updateUrlParamsAC = (params: ParamsUrlType) => ({
+  type: 'PACKS/UPDATE_URL_PARAMS' as const,
+  params,
+})
 export const setPacksAC = (packs: PacksType[]) => ({ type: 'PACKS/SET_PACKS' as const, packs })
 export const addNewPackAC = (newPack: PacksType) =>
   ({
@@ -113,20 +135,20 @@ export const clearFiltersAC = () => ({
 })
 
 //thunks
-export const getPacksTC =
-  (params: GetPacksParamsType): AppThunkType =>
-  async dispatch => {
-    dispatch(setAppStatusAC('loading'))
-    try {
-      const res = await cardsAPI.getPacks({ ...params })
+export const getPacksTC = (): AppThunkType => async (dispatch, getState) => {
+  const params = getState().packs.params
 
-      dispatch(setPacksAC(res.data.cardPacks))
-      dispatch(setTotalPacksCountAC(res.data.cardPacksTotalCount))
-      dispatch(setAppStatusAC('succeed'))
-    } catch (e) {
-      console.log(e)
-    }
+  dispatch(setAppStatusAC('loading'))
+  try {
+    const res = await cardsAPI.getPacks({ ...params })
+
+    dispatch(setPacksAC(res.data.cardPacks))
+    dispatch(setTotalPacksCountAC(res.data.cardPacksTotalCount))
+    dispatch(setAppStatusAC('succeed'))
+  } catch (e) {
+    console.log(e)
   }
+}
 export const addNewPackTC =
   (name?: string, deckCover?: string): AppThunkType =>
   async dispatch => {
@@ -169,7 +191,7 @@ export const deletePackTC =
     try {
       const res = await cardsAPI.deletePack(packID)
 
-      dispatch(getPacksTC({ page: 1, pageCount: 10 }))
+      dispatch(getPacksTC())
       dispatch(setAppStatusAC('succeed'))
     } catch (e) {
       console.log(e)
@@ -211,17 +233,19 @@ export const updatePackTC =
 
 export const setShowPackCardsTC =
   (userID?: string): AppThunkType =>
-  async dispatch => {
+  async (dispatch, getState) => {
     dispatch(setAppStatusAC('loading'))
+    const params = getState().packs.params
+
     try {
       if (userID) {
-        const res = await cardsAPI.getPacks({ user_id: userID, page: 1, pageCount: 10 })
+        const res = await cardsAPI.getPacks({ ...params })
 
         dispatch(setPacksAC(res.data.cardPacks))
         dispatch(setShowPackCardsAC('my'))
         dispatch(setAppStatusAC('succeed'))
       } else {
-        const res = await cardsAPI.getPacks({ page: 1, pageCount: 10 })
+        const res = await cardsAPI.getPacks({ ...params })
 
         dispatch(setPacksAC(res.data.cardPacks))
         dispatch(setShowPackCardsAC('all'))
@@ -241,3 +265,4 @@ export type PackReducerAT =
   | ReturnType<typeof setMaxCardsCountAC>
   | ReturnType<typeof setTotalPacksCountAC>
   | ReturnType<typeof clearFiltersAC>
+  | ReturnType<typeof updateUrlParamsAC>

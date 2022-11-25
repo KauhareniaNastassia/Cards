@@ -46,8 +46,7 @@ export const SearchBar = () => {
   const dispatch = useAppDispatch()
 
   const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log()
-    dispatch(getPacksTC({ packName: e.target.value }))
+    dispatch(getPacksTC())
   }
   const debouncedChangeHandler = useCallback(debounce(changeHandler, 1000), [])
 

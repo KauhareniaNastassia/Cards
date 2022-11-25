@@ -29,7 +29,7 @@ export const SliderFromMateUI = () => {
   }
 
   const debouncedChangeHandler = useCallback(
-    debounce(() => dispatch(getPacksTC({ min: minCardsCount, max: maxCardsCount })), 1000),
+    debounce(() => dispatch(getPacksTC()), 1000),
     [sliderValue]
   )
 
