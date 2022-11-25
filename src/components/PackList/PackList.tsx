@@ -1,12 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
-import DeleteIcon from '@mui/icons-material/Delete'
-import EditIcon from '@mui/icons-material/Edit'
-import SchoolIcon from '@mui/icons-material/School'
 import {
   Button,
-  IconButton,
-  InputLabel,
   MenuItem,
   Pagination,
   Paper,
@@ -19,29 +14,24 @@ import {
   tableCellClasses,
   TableContainer,
   TableHead,
-  TablePagination,
   TableRow,
 } from '@mui/material'
 import FormControl from '@mui/material/FormControl/FormControl'
-import moment from 'moment/moment'
-import { Link, Navigate } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
 
 import { PATH } from '../../app/App'
-import { setCardsTC, setPackIdAC } from '../../redux/cards-reducer'
-import { addNewPackTC, deletePackTC, getPacksTC, updatePackTC } from '../../redux/pack-reducer'
+import { addNewPackTC, getPacksTC } from '../../redux/pack-reducer'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks'
 import { FilterBar } from '../FilterBar/FilterBar'
 
+import { Pack } from './Pack/Pack'
 import s from './PackList.module.css'
 
 export const PackList = () => {
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
   const packs = useAppSelector(state => state.packs.cardPacks)
-  const cardsPage = useAppSelector(state => state.cards.page)
-  const cardsPageCount = useAppSelector(state => state.cards.pageCount)
   const pageCount = useAppSelector(state => state.packs.pageCount)
   const cardPacksTotalCount = useAppSelector(state => state.packs.cardPacksTotalCount)
-  const myID = useAppSelector(state => state.profile._id)
   const [pageClientCount, setPageCount] = useState(String(pageCount))
   const [page, setPage] = useState(1)
   const dispatch = useAppDispatch()
@@ -71,12 +61,6 @@ export const PackList = () => {
       color: theme.palette.common.black,
       fontFamily: 'Montseratt',
       fontWeight: 'bold',
-      fontSize: '15px',
-    },
-  }))
-  const StyledTableCellRow = styled(TableCell)(({ theme }) => ({
-    [`&.${tableCellClasses.body}`]: {
-      fontFamily: 'Montseratt',
       fontSize: '15px',
     },
   }))
@@ -113,53 +97,15 @@ export const PackList = () => {
 
             <TableBody>
               {packs.map(pack => (
-                <TableRow
-                  className={s.tableRow}
+                <Pack
                   key={pack._id}
-                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                >
-                  <StyledTableCellRow
-                    onClick={() => {
-                      dispatch(
-                        setCardsTC({
-                          cardsPack_id: pack._id,
-                          page: cardsPage,
-                          pageCount: cardsPageCount,
-                          packName: pack.name,
-                        })
-                      )
-                      console.log(pack.name)
-                      dispatch(setPackIdAC(pack._id))
-                    }}
-                    className={s.nameColumn}
-                  >
-                    <Link style={{ textDecoration: 'none', color: 'black' }} to={PATH.pack}>
-                      {pack.name}
-                    </Link>
-                  </StyledTableCellRow>
-                  <StyledTableCellRow align="center">{pack.cardsCount}</StyledTableCellRow>
-                  <StyledTableCellRow className={s.lastUpdated} align="center">
-                    {moment(`${pack.updated}`).format('D.M.Y')}
-                  </StyledTableCellRow>
-                  <StyledTableCellRow align="center">{pack.user_name}</StyledTableCellRow>
-                  <StyledTableCellRow align="center">
-                    <IconButton>
-                      <SchoolIcon></SchoolIcon>
-                    </IconButton>
-                    {myID === pack.user_id && (
-                      <span>
-                        <IconButton
-                          onClick={() => dispatch(updatePackTC(pack._id, 'Updated Name'))}
-                        >
-                          <EditIcon></EditIcon>
-                        </IconButton>
-                        <IconButton onClick={() => dispatch(deletePackTC(pack._id))}>
-                          <DeleteIcon></DeleteIcon>
-                        </IconButton>
-                      </span>
-                    )}
-                  </StyledTableCellRow>
-                </TableRow>
+                  _id={pack._id}
+                  name={pack.name}
+                  user_name={pack.user_name}
+                  user_id={pack.user_id}
+                  cardsCount={pack.cardsCount}
+                  updated={pack.updated}
+                />
               ))}
             </TableBody>
           </Table>

@@ -1,161 +1,74 @@
-import React, { useState } from 'react'
+import React, { useEffect } from 'react'
 
-import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
-import {
-  Button,
-  IconButton,
-  Pagination,
-  Paper,
-  Rating,
-  styled,
-  Table,
-  TableBody,
-  TableCell,
-  tableCellClasses,
-  TableContainer,
-  TableHead,
-  TableRow,
-} from '@mui/material'
+import SchoolIcon from '@mui/icons-material/School'
+import { IconButton, styled, TableCell, tableCellClasses, TableRow } from '@mui/material'
 import moment from 'moment'
 import { Link } from 'react-router-dom'
 
+import { PacksType } from '../../../api/cards-API'
 import { PATH } from '../../../app/App'
-import { addNewCardTC, deleteCardTC, setCardsTC, updateCardTC } from '../../../redux/cards-reducer'
+import { setCardsTC, setPackIdAC } from '../../../redux/cards-reducer'
+import { deletePackTC, updatePackTC } from '../../../redux/pack-reducer'
 import { useAppDispatch, useAppSelector } from '../../../utils/hooks'
+import s from '../PackList.module.css'
 
-import s from './Pack.module.css'
-import { SearchForCards } from './SettingsForCards/SearchForCards'
-
-export const Pack = () => {
-  const cards = useAppSelector(state => state.cards.cards)
-  const packName = useAppSelector(state => state.cards.packName)
-  const myID = useAppSelector(state => state.profile._id)
-  const cardsPack_id = useAppSelector(state => state.cards.cardsPack_id)
-  const [page, setPage] = useState(1)
+export const Pack = (props: PacksType) => {
+  const page = useAppSelector(state => state.cards.page)
   const pageCount = useAppSelector(state => state.cards.pageCount)
-  const cardsTotalCount = useAppSelector(state => state.cards.cardsTotalCount)
-  const pagesCount = Math.ceil(cardsTotalCount / pageCount)
-  const dispatch = useAppDispatch()
+  const onClickSetPack = () => {
+    dispatch(
+      setCardsTC({
+        cardsPack_id: props._id,
+        page: page,
+        pageCount: pageCount,
+        packName: props.name,
+      })
+    )
+    dispatch(setPackIdAC(props._id))
+  }
 
-  const StyledTableCell = styled(TableCell)(({ theme }) => ({
-    [`&.${tableCellClasses.head}`]: {
-      backgroundColor: theme.palette.grey['200'],
-      color: theme.palette.common.black,
-      fontFamily: 'Montseratt',
-      fontWeight: 'bold',
-      fontSize: '15px',
-    },
-  }))
-
-  const StyledTableCellRow = styled(TableCell)(({}) => ({
+  const StyledTableCellRow = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.body}`]: {
       fontFamily: 'Montseratt',
       fontSize: '15px',
     },
   }))
-  const handleChangePage = (event: unknown, page: number) => {
-    setPage(page)
-    dispatch(setCardsTC({ cardsPack_id, page, pageCount }))
-  }
+  const dispatch = useAppDispatch()
+  const myID = useAppSelector(state => state.profile._id)
 
   return (
-    <div>
-      <div className={s.arrow}>
-        <Link to={PATH.packList} className={s.link}>
-          <ArrowBackIcon fontSize={'small'} /> Back to Packs List
+    <TableRow
+      className={s.tableRow}
+      key={props._id}
+      sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+    >
+      <StyledTableCellRow onClick={onClickSetPack} className={s.nameColumn}>
+        <Link style={{ textDecoration: 'none', color: 'black' }} to={PATH.pack}>
+          {props.name}
         </Link>
-      </div>
-      <div className={s.packName}>{packName}</div>
-
-      {cards.length === 0 ? (
-        <div className={s.div}>
-          <div className={s.span}>This pack is empty. Click add new card to fill this pack</div>
-          <Button
-            onClick={() => dispatch(addNewCardTC(cardsPack_id, page, pageCount))}
-            type="submit"
-            variant="contained"
-            style={{ borderRadius: '20px', marginTop: '40px' }}
-          >
-            Add New Card
-          </Button>
-        </div>
-      ) : (
-        <div>
-          <SearchForCards />
-          <TableContainer className={s.table} component={Paper}>
-            <Table sx={{ minWidth: 650, fontFamily: 'Montserrat' }} aria-label="simple table">
-              <TableHead>
-                <TableRow>
-                  <StyledTableCell>Question</StyledTableCell>
-                  <StyledTableCell align="right">Answer</StyledTableCell>
-                  <StyledTableCell align="right">Last updated</StyledTableCell>
-                  <StyledTableCell align="right">Grade</StyledTableCell>
-                  <StyledTableCell align="right"></StyledTableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {cards.map(card => (
-                  <TableRow
-                    key={card._id}
-                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                  >
-                    <StyledTableCellRow component="th" scope="row">
-                      {card.question}
-                    </StyledTableCellRow>
-                    <StyledTableCellRow align="right">{card.answer}</StyledTableCellRow>
-                    <StyledTableCellRow align="right">
-                      {moment(`${card.updated}`).format('D.M.Y')}
-                    </StyledTableCellRow>
-                    <StyledTableCellRow align="right">
-                      <Rating name="half-rating" defaultValue={card.grade} precision={0.1} />
-                    </StyledTableCellRow>
-                    <StyledTableCellRow align="right">
-                      {myID === card.user_id && (
-                        <span>
-                          <IconButton
-                            onClick={() =>
-                              dispatch(
-                                updateCardTC(
-                                  {
-                                    card: {
-                                      _id: card._id,
-                                      answer: 'some new answer',
-                                      question: 'updated new Question',
-                                    },
-                                  },
-                                  page,
-                                  pageCount
-                                )
-                              )
-                            }
-                          >
-                            <EditIcon></EditIcon>
-                          </IconButton>
-                          <IconButton
-                            onClick={() => dispatch(deleteCardTC(card._id, page, pageCount))}
-                          >
-                            <DeleteIcon></DeleteIcon>
-                          </IconButton>
-                        </span>
-                      )}
-                    </StyledTableCellRow>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </div>
-      )}
-      <Pagination
-        className={s.pagination}
-        color="primary"
-        shape="rounded"
-        page={page}
-        onChange={handleChangePage}
-        count={pagesCount}
-      />
-    </div>
+      </StyledTableCellRow>
+      <StyledTableCellRow align="center">{props.cardsCount}</StyledTableCellRow>
+      <StyledTableCellRow className={s.lastUpdated} align="center">
+        {moment(`${props.updated}`).format('D.M.Y')}
+      </StyledTableCellRow>
+      <StyledTableCellRow align="center">{props.user_name}</StyledTableCellRow>
+      <StyledTableCellRow align="center">
+        <IconButton>
+          <SchoolIcon></SchoolIcon>
+        </IconButton>
+        {myID === props.user_id && (
+          <span>
+            <IconButton onClick={() => dispatch(updatePackTC(props._id, 'Updated Name'))}>
+              <EditIcon></EditIcon>
+            </IconButton>
+            <IconButton onClick={() => dispatch(deletePackTC(props._id))}>
+              <DeleteIcon></DeleteIcon>
+            </IconButton>
+          </span>
+        )}
+      </StyledTableCellRow>
+    </TableRow>
   )
 }

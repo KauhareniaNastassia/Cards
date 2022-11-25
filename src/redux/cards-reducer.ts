@@ -40,27 +40,27 @@ export const cardsReducer = (
   action: CardsReducerAT
 ): InitialStateType => {
   switch (action.type) {
-    case 'CARDS/SET-CARDS':
+    case 'CARDS/SET_CARDS':
       return { ...state, cards: action.cards, packName: action.packName }
     case 'CARDS/SET_PACK_ID':
       return { ...state, cardsPack_id: action.cardsPack_id }
     case 'CARDS/SET_TOTAL_CARDS_COUNT':
-      return { ...state, cardsTotalCount: action.value }
+      return { ...state, cardsTotalCount: action.cardsTotalCount }
     default:
       return state
   }
 }
 
 //actions
-export const setCardsAC = (cards: CardPackType[], packName: string) => {
-  return { type: 'CARDS/SET-CARDS', cards, packName } as const
+export const setCardsAC = (cards: CardPackType[], packName: string, page: number) => {
+  return { type: 'CARDS/SET_CARDS', cards, packName, page } as const
 }
 export const setPackIdAC = (cardsPack_id: string) =>
   ({ type: 'CARDS/SET_PACK_ID', cardsPack_id } as const)
-export const setTotalCardsCountAC = (value: number) =>
+export const setTotalCardsCountAC = (cardsTotalCount: number) =>
   ({
     type: 'CARDS/SET_TOTAL_CARDS_COUNT',
-    value,
+    cardsTotalCount,
   } as const)
 //thunks
 export const setCardsTC =
@@ -70,7 +70,7 @@ export const setCardsTC =
     try {
       const res = await cardsAPI.getCards({ ...params })
 
-      dispatch(setCardsAC(res.data.cards, res.data.packName))
+      dispatch(setCardsAC(res.data.cards, res.data.packName, res.data.page))
       dispatch(setAppStatusAC('succeed'))
       dispatch(setTotalCardsCountAC(res.data.cardsTotalCount))
     } catch (e) {

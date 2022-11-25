@@ -4,8 +4,8 @@ import SearchIcon from '@mui/icons-material/Search'
 import { Button, debounce, InputBase } from '@mui/material'
 import { alpha, styled } from '@mui/material/styles'
 
-import { addNewCardTC, setCardsTC } from '../../../../redux/cards-reducer'
-import { useAppDispatch, useAppSelector } from '../../../../utils/hooks'
+import { addNewCardTC, setCardsTC } from '../../../redux/cards-reducer'
+import { useAppDispatch, useAppSelector } from '../../../utils/hooks'
 
 import s from './SearchForCards.module.css'
 

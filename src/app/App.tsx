@@ -6,6 +6,7 @@ import { CircularProgress, LinearProgress } from '@mui/material'
 import { Route, Routes } from 'react-router-dom'
 
 import NotificationBar from '../common/Notification/NotificationBar'
+import { CardsList } from '../components/CardsList/CardsList'
 import { CheckEmail } from '../components/CheckEmail/CheckEmail'
 import { CreateNewPassword } from '../components/CreateNewPassword/CreateNewPassword'
 import { Error404 } from '../components/Error404/Error404'
@@ -13,10 +14,9 @@ import { Header } from '../components/Header/Header'
 import { Home } from '../components/Home/Home'
 import { Login } from '../components/Login/Login'
 import { NavigationForUs } from '../components/NavigationForUs/NavigationForUs'
-import { Pack } from '../components/PackList/Pack/Pack'
 import { PackList } from '../components/PackList/PackList'
 import { PasswordRecovery } from '../components/PasswordRecovery/PasswordRecovery'
-import ProfileCard from '../components/ProfileCard/ProfileCard'
+import { ProfileCard } from '../components/ProfileCard/ProfileCard'
 import { SignUp } from '../components/SignUp/SignUp'
 import { initializeAppTC } from '../redux/app-reducer'
 import { useAppDispatch, useAppSelector } from '../utils/hooks'
@@ -67,7 +67,7 @@ function App() {
         <Route path={PATH.createNewPassword} element={<CreateNewPassword />} />
         <Route path={PATH.checkEmail} element={<CheckEmail />} />
         <Route path={PATH.packList} element={<PackList />} />
-        <Route path={PATH.pack} element={<Pack />} />
+        <Route path={PATH.pack} element={<CardsList />} />
       </Routes>
       <NotificationBar />
     </div>
