@@ -125,8 +125,10 @@ export const PackList = () => {
                           cardsPack_id: pack._id,
                           page: cardsPage,
                           pageCount: cardsPageCount,
+                          packName: pack.name,
                         })
                       )
+                      console.log(pack.name)
                       dispatch(setPackIdAC(pack._id))
                     }}
                     className={s.nameColumn}

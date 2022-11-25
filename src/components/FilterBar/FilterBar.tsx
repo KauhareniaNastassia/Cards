@@ -1,9 +1,10 @@
 import { useState } from 'react'
 
-import { Button } from '@mui/material'
+import FilterAltOffOutlinedIcon from '@mui/icons-material/FilterAltOffOutlined'
+import { Button, IconButton } from '@mui/material'
 
 import { SliderFromMateUI } from '../../common/SliderFromMateUI/SliderFromMateUI'
-import { setShowPackCardsTC } from '../../redux/pack-reducer'
+import { clearFiltersAC, getPacksTC, setShowPackCardsTC } from '../../redux/pack-reducer'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks'
 
 import s from './FilterBar.module.css'
@@ -14,7 +15,14 @@ export const FilterBar = () => {
   const userID = useAppSelector(state => state.profile._id)
   const minCardsCount = useAppSelector(state => state.packs.minCardsCount)
   const maxCardsCount = useAppSelector(state => state.packs.maxCardsCount)
+  const pageCount = useAppSelector(state => state.packs.pageCount)
+  const page = useAppSelector(state => state.packs.page)
   const dispatch = useAppDispatch()
+
+  const onClickClearFiltersHandler = () => {
+    dispatch(getPacksTC({ page, pageCount }))
+    dispatch(clearFiltersAC())
+  }
 
   return (
     <div className={s.wrapper}>
@@ -44,6 +52,11 @@ export const FilterBar = () => {
           <SliderFromMateUI />
           <span className={s.sliderValues}>{maxCardsCount}</span>
         </div>
+      </div>
+      <div className={s.clearFilters}>
+        <IconButton onClick={onClickClearFiltersHandler}>
+          <FilterAltOffOutlinedIcon sx={{ height: '25px', width: '25px' }} />
+        </IconButton>
       </div>
     </div>
   )
