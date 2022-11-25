@@ -25,11 +25,5 @@ export const Home = () => {
     return <Navigate to={PATH.login} />
   }
 
-  return (
-    <div>
-      <Input />
-      <Checkbox />
-      <Button className={css_btn.btn}>press me</Button>
-    </div>
-  )
+  return <Navigate to={PATH.packList} />
 }
