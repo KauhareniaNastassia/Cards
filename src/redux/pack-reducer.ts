@@ -88,12 +88,12 @@ export const packReducer = (
 }
 
 export type ParamsUrlType = {
-  page?: string | null
-  pageCount?: string | null
-  min?: string | null
-  max?: string | null
-  user_id?: string | null
-  packName?: string | null
+  page?: string
+  pageCount?: string
+  min?: string
+  max?: string
+  user_id?: string
+  packName?: string
 }
 //actions
 export const updateUrlParamsAC = (params: ParamsUrlType) => ({

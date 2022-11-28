@@ -6,12 +6,8 @@ import SchoolIcon from '@mui/icons-material/School'
 import {
   Button,
   IconButton,
-  InputLabel,
-  MenuItem,
   Pagination,
   Paper,
-  Select,
-  SelectChangeEvent,
   styled,
   Table,
   TableBody,
@@ -19,67 +15,135 @@ import {
   tableCellClasses,
   TableContainer,
   TableHead,
-  TablePagination,
   TableRow,
 } from '@mui/material'
 import FormControl from '@mui/material/FormControl/FormControl'
 import moment from 'moment/moment'
-import { Link, Navigate } from 'react-router-dom'
+import { Link, Navigate, useSearchParams } from 'react-router-dom'
 
 import { PATH } from '../../app/App'
-import { setCardsTC, setPackIdAC } from '../../redux/cards-reducer'
-import { addNewPackTC, deletePackTC, getPacksTC, updatePackTC } from '../../redux/pack-reducer'
+import {
+  addNewPackTC,
+  deletePackTC,
+  getPacksTC,
+  setShowPackCardsAC,
+  updatePackTC,
+  updateUrlParamsAC,
+} from '../../redux/pack-reducer'
+import { filterQueryParams } from '../../utils/filterParams'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks'
 import { FilterBar } from '../FilterBar/FilterBar'
 
 import s from './PackList.module.css'
 
-export const PackList = () => {
-  const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
-  const packs = useAppSelector(state => state.packs.cardPacks)
-  const cardsPage = useAppSelector(state => state.cards.page)
-  const cardsPageCount = useAppSelector(state => state.cards.pageCount)
-  const pageCount = useAppSelector(state => state.packs.pageCount)
-  const cardPacksTotalCount = useAppSelector(state => state.packs.cardPacksTotalCount)
-  const user_id = useAppSelector(state => state.profile._id)
-  const [pageClientCount, setPageCount] = useState(String(pageCount))
-  const [page, setPage] = useState(1)
-  const dispatch = useAppDispatch()
-  let pagesCount = Math.ceil(cardPacksTotalCount / pageCount)
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  [`&.${tableCellClasses.head}`]: {
+    backgroundColor: theme.palette.grey['200'],
+    color: theme.palette.common.black,
+    fontFamily: 'Montseratt',
+    fontWeight: 'bold',
+    fontSize: '15px',
+  },
+}))
+const StyledTableCellRow = styled(TableCell)(({ theme }) => ({
+  [`&.${tableCellClasses.body}`]: {
+    fontFamily: 'Montseratt',
+    fontSize: '15px',
+  },
+}))
 
-  if (isLoggedIn) {
-    useEffect(() => {
-      dispatch(getPacksTC())
-    }, [page, pageCount, user_id])
+export const PackList = () => {
+  const dispatch = useAppDispatch()
+  const packs = useAppSelector(state => state.packs.cardPacks)
+  const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
+  const user_id = useAppSelector(state => state.profile._id)
+  const paramsSearchState = useAppSelector(state => state.packs.params)
+
+  const [searchParams, setSearchParams] = useSearchParams()
+  const pageURL = searchParams.get('page') ? searchParams.get('page') + '' : '1'
+  const pageCountURL = searchParams.get('pageCount') ? searchParams.get('pageCount') + '' : '5'
+  const packNameURL = searchParams.get('packName') ? searchParams.get('packName') + '' : ''
+  const userIDURL = searchParams.get('userID') ? searchParams.get('userID') + '' : ''
+  const minRangeURL = searchParams.get('min') ? searchParams.get('min') + '' : ''
+  const maxRangeURL = searchParams.get('max') ? searchParams.get('max') + '' : ''
+
+  const [packName, setPackName] = useState<string>(packNameURL ? packNameURL : '')
+
+  const urlParamsFilter = filterQueryParams({
+    page: pageURL,
+    pageCount: pageCountURL,
+    packName: packNameURL,
+    userID: userIDURL,
+    min: minRangeURL,
+    max: maxRangeURL,
+  })
+
+  // const cardsPage = useAppSelector(state => state.cards.page)
+  // const cardsPageCount = useAppSelector(state => state.cards.pageCount)
+  // const pageCount = useAppSelector(state => state.packs.pageCount)
+  // const cardPacksTotalCount = useAppSelector(state => state.packs.cardPacksTotalCount)
+  // const [pageClientCount, setPageCount] = useState(String(pageCount))
+  // const [page, setPage] = useState(1)
+  // let pagesCount = Math.ceil(cardPacksTotalCount / pageCount)
+  //
+  // if (isLoggedIn) {
+  //   useEffect(() => {
+  //     dispatch(getPacksTC())
+  //   }, [page, pageCount, user_id])
+  // }
+  // const handleChangePage = (event: unknown, page: number) => {
+  //   setPage(page)
+  //   dispatch(getPacksTC())
+  // }
+  //
+  // const handleChange = (event: SelectChangeEvent) => {
+  //   setPageCount(event.target.value as string)
+  //   dispatch(getPacksTC())
+  // }
+  useEffect(() => {
+    dispatch(updateUrlParamsAC({ ...urlParamsFilter }))
+    dispatch(getPacksTC())
+  }, [])
+
+  const onClickButtonMyHandler = () => {
+    dispatch(setShowPackCardsAC('my'))
+    dispatch(updateUrlParamsAC({}))
+    user_id &&
+      setSearchParams({
+        ...filterQueryParams({
+          ...paramsSearchState,
+          userID: user_id,
+          page: '1',
+          pageCount: '5',
+          min: '',
+          max: '',
+          packName,
+        }),
+      })
   }
+  const onClickButtonAllHandler = () => {
+    dispatch(setShowPackCardsAC('all'))
+    dispatch(updateUrlParamsAC({ ...paramsSearchState, user_id: '', page: '1', pageCount: '5' }))
+    setSearchParams({
+      ...filterQueryParams({
+        ...paramsSearchState,
+        user_id: '',
+        page: '1',
+        pageCount: '5',
+        packName,
+      }),
+    })
+  }
+  const onChangeCommittedRangeHandler = (min: string, max: string) => {
+    dispatch(updateUrlParamsAC({ ...paramsSearchState, min, max, user_id: userIDURL }))
+    setSearchParams({
+      ...filterQueryParams({ ...paramsSearchState, min, max, user_id: userIDURL, packName }),
+    })
+  }
+
   if (!isLoggedIn) {
     return <Navigate to={PATH.login} />
   }
-  const handleChangePage = (event: unknown, page: number) => {
-    setPage(page)
-    dispatch(getPacksTC())
-  }
-
-  const handleChange = (event: SelectChangeEvent) => {
-    setPageCount(event.target.value as string)
-    dispatch(getPacksTC())
-  }
-
-  const StyledTableCell = styled(TableCell)(({ theme }) => ({
-    [`&.${tableCellClasses.head}`]: {
-      backgroundColor: theme.palette.grey['200'],
-      color: theme.palette.common.black,
-      fontFamily: 'Montseratt',
-      fontWeight: 'bold',
-      fontSize: '15px',
-    },
-  }))
-  const StyledTableCellRow = styled(TableCell)(({ theme }) => ({
-    [`&.${tableCellClasses.body}`]: {
-      fontFamily: 'Montseratt',
-      fontSize: '15px',
-    },
-  }))
 
   return (
     <section>
@@ -96,7 +160,17 @@ export const PackList = () => {
             Add new Pack
           </Button>
         </div>
-        <FilterBar />
+        <FilterBar
+          onClickButtonMy={onClickButtonMyHandler}
+          onClickButtonAll={onClickButtonAllHandler}
+          onChangeCommittedRange={onChangeCommittedRangeHandler}
+          // setResetFilter={setResetFilterHandler}
+          valueSearch={packName}
+          // searchValueText={searchValueTextHandler}
+          minRangeURL={minRangeURL}
+          maxRangeURL={maxRangeURL}
+          urlUserID={userIDURL}
+        />
         <TableContainer className={s.table} component={Paper}>
           <Table sx={{ fontFamily: 'Montserrat' }} aria-label="simple table">
             <TableHead>
@@ -119,18 +193,17 @@ export const PackList = () => {
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
                   <StyledTableCellRow
-                    onClick={() => {
-                      dispatch(
-                        setCardsTC({
-                          cardsPack_id: pack._id,
-                          page: cardsPage,
-                          pageCount: cardsPageCount,
-                          packName: pack.name,
-                        })
-                      )
-                      console.log(pack.name)
-                      dispatch(setPackIdAC(pack._id))
-                    }}
+                    // onClick={() => {
+                    //   dispatch(
+                    //     setCardsTC({
+                    //       cardsPack_id: pack._id,
+                    //       page: cardsPage,
+                    //       pageCount: cardsPageCount,
+                    //       packName: pack.name,
+                    //     })
+                    //   )
+                    //   dispatch(setPackIdAC(pack._id))
+                    //}}
                     className={s.nameColumn}
                   >
                     <Link style={{ textDecoration: 'none', color: 'black' }} to={PATH.pack}>
@@ -169,17 +242,17 @@ export const PackList = () => {
             className={s.pagination}
             color="primary"
             shape="rounded"
-            page={page}
-            onChange={handleChangePage}
-            count={pagesCount}
+            // page={page}
+            // onChange={handleChangePage}
+            // count={pagesCount}
           />
           <span className={s.show}>Show</span>
           <FormControl sx={{ m: 1, minWidth: 80 }}>
-            <Select value={pageClientCount} onChange={handleChange}>
-              <MenuItem value={5}>5</MenuItem>
-              <MenuItem value={10}>10</MenuItem>
-              <MenuItem value={20}>20</MenuItem>
-            </Select>
+            {/*<Select value={pageClientCount} onChange={handleChange}>*/}
+            {/*  <MenuItem value={5}>5</MenuItem>*/}
+            {/*  <MenuItem value={10}>10</MenuItem>*/}
+            {/*  <MenuItem value={20}>20</MenuItem>*/}
+            {/*</Select>*/}
           </FormControl>
           <span>Cards per page</span>
         </div>
