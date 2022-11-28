@@ -10,25 +10,7 @@ import { setAppStatusAC } from './app-reducer'
 import { AppThunkType } from './store'
 
 const initialState = {
-  cardPacks: [
-    {
-      _id: '',
-      user_id: '',
-      user_name: '',
-      private: false,
-      name: '',
-      path: '',
-      grade: 0,
-      shots: 0,
-      cardsCount: 0,
-      type: '',
-      rating: 0,
-      created: '',
-      updated: '',
-      more_id: '',
-      __v: 0,
-    },
-  ] as PacksType[],
+  cardPacks: [] as PacksType[],
   cardPacksTotalCount: 0 as number,
   page: 0 as number,
   pageCount: 5 as number,
@@ -40,7 +22,7 @@ const initialState = {
     pageCount: '5',
     min: '0',
     max: '0',
-    userID: '',
+    user_id: '',
     packName: '',
   } as ParamsUrlType,
 }
@@ -81,7 +63,7 @@ export const packReducer = (
         showPackCards: 'all',
       }
     case 'PACKS/UPDATE_URL_PARAMS':
-      return { ...state, params: action.params }
+      return { ...state, params: { ...action.params } }
     default:
       return state
   }

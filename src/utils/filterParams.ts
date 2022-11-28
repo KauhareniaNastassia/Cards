@@ -1,4 +1,4 @@
-export const filterQueryParams = (searchParams: Record<string, string>) => {
+export const filterAllParams = (searchParams: Record<string, string>) => {
   const params: Record<string, string> = searchParams
 
   for (let el in params) {

@@ -30,8 +30,9 @@ import {
   updatePackTC,
   updateUrlParamsAC,
 } from '../../redux/pack-reducer'
-import { filterQueryParams } from '../../utils/filterParams'
+import { filterAllParams } from '../../utils/filterParams'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks'
+import { useDebounce } from '../../utils/useDebounce'
 import { FilterBar } from '../FilterBar/FilterBar'
 
 import s from './PackList.module.css'
@@ -60,20 +61,23 @@ export const PackList = () => {
   const paramsSearchState = useAppSelector(state => state.packs.params)
 
   const [searchParams, setSearchParams] = useSearchParams()
+
   const pageURL = searchParams.get('page') ? searchParams.get('page') + '' : '1'
   const pageCountURL = searchParams.get('pageCount') ? searchParams.get('pageCount') + '' : '5'
   const packNameURL = searchParams.get('packName') ? searchParams.get('packName') + '' : ''
-  const userIDURL = searchParams.get('userID') ? searchParams.get('userID') + '' : ''
+  const userIDURL = searchParams.get('user_id') ? searchParams.get('user_id') + '' : ''
   const minRangeURL = searchParams.get('min') ? searchParams.get('min') + '' : ''
   const maxRangeURL = searchParams.get('max') ? searchParams.get('max') + '' : ''
 
   const [packName, setPackName] = useState<string>(packNameURL ? packNameURL : '')
 
-  const urlParamsFilter = filterQueryParams({
+  const debouncedValue = useDebounce<string>(packName, 500)
+
+  const urlParamsFilter = filterAllParams({
     page: pageURL,
     pageCount: pageCountURL,
     packName: packNameURL,
-    userID: userIDURL,
+    user_id: userIDURL,
     min: minRangeURL,
     max: maxRangeURL,
   })
@@ -86,11 +90,6 @@ export const PackList = () => {
   // const [page, setPage] = useState(1)
   // let pagesCount = Math.ceil(cardPacksTotalCount / pageCount)
   //
-  // if (isLoggedIn) {
-  //   useEffect(() => {
-  //     dispatch(getPacksTC())
-  //   }, [page, pageCount, user_id])
-  // }
   // const handleChangePage = (event: unknown, page: number) => {
   //   setPage(page)
   //   dispatch(getPacksTC())
@@ -100,46 +99,61 @@ export const PackList = () => {
   //   setPageCount(event.target.value as string)
   //   dispatch(getPacksTC())
   // }
-  useEffect(() => {
-    dispatch(updateUrlParamsAC({ ...urlParamsFilter }))
-    dispatch(getPacksTC())
-  }, [])
 
   const onClickButtonMyHandler = () => {
-    dispatch(setShowPackCardsAC('my'))
-    dispatch(updateUrlParamsAC({}))
-    user_id &&
-      setSearchParams({
-        ...filterQueryParams({
-          ...paramsSearchState,
-          userID: user_id,
-          page: '1',
-          pageCount: '5',
-          min: '',
-          max: '',
-          packName,
-        }),
-      })
-  }
-  const onClickButtonAllHandler = () => {
-    dispatch(setShowPackCardsAC('all'))
-    dispatch(updateUrlParamsAC({ ...paramsSearchState, user_id: '', page: '1', pageCount: '5' }))
-    setSearchParams({
-      ...filterQueryParams({
+    const urlParams = {
+      ...filterAllParams({
         ...paramsSearchState,
-        user_id: '',
-        page: '1',
-        pageCount: '5',
+        user_id,
+        page: pageURL,
+        pageCount: pageCountURL,
+        min: minRangeURL,
+        max: maxRangeURL,
         packName,
       }),
-    })
+    }
+
+    dispatch(setShowPackCardsAC('my'))
+    dispatch(updateUrlParamsAC({ ...urlParams }))
+
+    setSearchParams({ ...urlParams })
   }
+
+  const onClickButtonAllHandler = () => {
+    const urlParams = {
+      ...filterAllParams({
+        ...paramsSearchState,
+        user_id: '',
+        page: pageURL,
+        pageCount: pageCountURL,
+        min: minRangeURL,
+        max: maxRangeURL,
+        packName,
+      }),
+    }
+
+    dispatch(setShowPackCardsAC('all'))
+    dispatch(updateUrlParamsAC({ ...urlParams }))
+    setSearchParams({ ...urlParams })
+  }
+
   const onChangeCommittedRangeHandler = (min: string, max: string) => {
     dispatch(updateUrlParamsAC({ ...paramsSearchState, min, max, user_id: userIDURL }))
     setSearchParams({
-      ...filterQueryParams({ ...paramsSearchState, min, max, user_id: userIDURL, packName }),
+      ...filterAllParams({ ...paramsSearchState, min, max, user_id: userIDURL, packName }),
     })
   }
+
+  useEffect(() => {
+    if (JSON.stringify(paramsSearchState) !== JSON.stringify(urlParamsFilter))
+      dispatch(updateUrlParamsAC({ ...urlParamsFilter }))
+  }, [dispatch, urlParamsFilter])
+
+  useEffect(() => {
+    if (JSON.stringify(paramsSearchState) === JSON.stringify(urlParamsFilter)) {
+      dispatch(getPacksTC())
+    }
+  }, [dispatch, paramsSearchState])
 
   if (!isLoggedIn) {
     return <Navigate to={PATH.login} />
@@ -153,9 +167,7 @@ export const PackList = () => {
           <Button
             variant="contained"
             style={{ borderRadius: '20px' }}
-            onClick={() => {
-              dispatch(addNewPackTC(''))
-            }}
+            onClick={() => dispatch(addNewPackTC(''))}
           >
             Add new Pack
           </Button>
