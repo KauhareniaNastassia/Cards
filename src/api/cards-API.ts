@@ -1,5 +1,7 @@
 import axios, { AxiosResponse } from 'axios'
 
+import { ParamsUrlType } from '../redux/pack-reducer'
+
 export const instance = axios.create({
   // baseURL: process.env.REACT_APP_BACK_URL || 'http://localhost:7542/2.0/',
   baseURL:
@@ -10,7 +12,7 @@ export const instance = axios.create({
 })
 
 export const cardsAPI = {
-  getPacks(params: GetPacksParamsType) {
+  getPacks(params: ParamsUrlType) {
     return instance.get<GetPacksResponseType>(`/cards/pack`, {
       params: {
         page: params.page,
@@ -18,6 +20,7 @@ export const cardsAPI = {
         user_id: params.user_id,
         min: params.min,
         max: params.max,
+        packName: params.packName,
       },
     })
   },

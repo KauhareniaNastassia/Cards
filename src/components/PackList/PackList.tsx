@@ -2,11 +2,10 @@ import React, { useEffect, useState } from 'react'
 
 import {
   Button,
+  IconButton,
   MenuItem,
   Pagination,
   Paper,
-  Select,
-  SelectChangeEvent,
   styled,
   Table,
   TableBody,
@@ -22,58 +21,143 @@ import { Navigate } from 'react-router-dom'
 import { PATH } from '../../app/App'
 import { AddPackModal } from '../../common/Modals/PackModals/AddPackModal'
 import { addNewPackTC, getPacksTC } from '../../redux/pack-reducer'
+import {
+  addNewPackTC,
+  deletePackTC,
+  getPacksTC,
+  setShowPackCardsAC,
+  updatePackTC,
+  updateUrlParamsAC,
+} from '../../redux/pack-reducer'
+import { filterAllParams } from '../../utils/filterParams'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks'
+import { useDebounce } from '../../utils/useDebounce'
 import { FilterBar } from '../FilterBar/FilterBar'
 
 import { Pack } from './Pack/Pack'
 import s from './PackList.module.css'
 
-export const PackList = () => {
-  const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
-  const packs = useAppSelector(state => state.packs.cardPacks)
-  const pageCount = useAppSelector(state => state.packs.pageCount)
-  const cardPacksTotalCount = useAppSelector(state => state.packs.cardPacksTotalCount)
-  const [pageClientCount, setPageCount] = useState(String(pageCount))
-  const [page, setPage] = useState(1)
-  const dispatch = useAppDispatch()
-  let pagesCount = Math.ceil(cardPacksTotalCount / pageCount)
-  const [openAddModal, setOpenAddModal] = useState(false)
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  [`&.${tableCellClasses.head}`]: {
+    backgroundColor: theme.palette.grey['200'],
+    color: theme.palette.common.black,
+    fontFamily: 'Montseratt',
+    fontWeight: 'bold',
+    fontSize: '15px',
+  },
+}))
+const StyledTableCellRow = styled(TableCell)(({ theme }) => ({
+  [`&.${tableCellClasses.body}`]: {
+    fontFamily: 'Montseratt',
+    fontSize: '15px',
+  },
+}))
 
-  if (isLoggedIn) {
-    useEffect(() => {
-      dispatch(getPacksTC({ page, pageCount }))
-    }, [])
+export const PackList = () => {
+  const dispatch = useAppDispatch()
+  const packs = useAppSelector(state => state.packs.cardPacks)
+  const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
+  const user_id = useAppSelector(state => state.profile._id)
+  const paramsSearchState = useAppSelector(state => state.packs.params)
+
+  const [searchParams, setSearchParams] = useSearchParams()
+
+  const pageURL = searchParams.get('page') ? searchParams.get('page') + '' : '1'
+  const pageCountURL = searchParams.get('pageCount') ? searchParams.get('pageCount') + '' : '5'
+  const packNameURL = searchParams.get('packName') ? searchParams.get('packName') + '' : ''
+  const userIDURL = searchParams.get('user_id') ? searchParams.get('user_id') + '' : ''
+  const minRangeURL = searchParams.get('min') ? searchParams.get('min') + '' : ''
+  const maxRangeURL = searchParams.get('max') ? searchParams.get('max') + '' : ''
+
+  const [packName, setPackName] = useState<string>(packNameURL ? packNameURL : '')
+
+  const debouncedValue = useDebounce<string>(packName, 500)
+
+  const urlParamsFilter = filterAllParams({
+    page: pageURL,
+    pageCount: pageCountURL,
+    packName: packNameURL,
+    user_id: userIDURL,
+    min: minRangeURL,
+    max: maxRangeURL,
+  })
+
+  // const cardsPage = useAppSelector(state => state.cards.page)
+  // const cardsPageCount = useAppSelector(state => state.cards.pageCount)
+  // const pageCount = useAppSelector(state => state.packs.pageCount)
+  // const cardPacksTotalCount = useAppSelector(state => state.packs.cardPacksTotalCount)
+  // const [pageClientCount, setPageCount] = useState(String(pageCount))
+  // const [page, setPage] = useState(1)
+  // let pagesCount = Math.ceil(cardPacksTotalCount / pageCount)
+  //
+  // const handleChangePage = (event: unknown, page: number) => {
+  //   setPage(page)
+  //   dispatch(getPacksTC())
+  // }
+  //
+  // const handleChange = (event: SelectChangeEvent) => {
+  //   setPageCount(event.target.value as string)
+  //   dispatch(getPacksTC())
+  // }
+
+  const onClickButtonMyHandler = () => {
+    const urlParams = {
+      ...filterAllParams({
+        ...paramsSearchState,
+        user_id,
+        page: pageURL,
+        pageCount: pageCountURL,
+        min: minRangeURL,
+        max: maxRangeURL,
+        packName,
+      }),
+    }
+
+    dispatch(setShowPackCardsAC('my'))
+    dispatch(updateUrlParamsAC({ ...urlParams }))
+
+    setSearchParams({ ...urlParams })
   }
+
+  const onClickButtonAllHandler = () => {
+    const urlParams = {
+      ...filterAllParams({
+        ...paramsSearchState,
+        user_id: '',
+        page: pageURL,
+        pageCount: pageCountURL,
+        min: minRangeURL,
+        max: maxRangeURL,
+        packName,
+      }),
+    }
+
+    dispatch(setShowPackCardsAC('all'))
+    dispatch(updateUrlParamsAC({ ...urlParams }))
+    setSearchParams({ ...urlParams })
+  }
+
+  const onChangeCommittedRangeHandler = (min: string, max: string) => {
+    dispatch(updateUrlParamsAC({ ...paramsSearchState, min, max, user_id: userIDURL }))
+    setSearchParams({
+      ...filterAllParams({ ...paramsSearchState, min, max, user_id: userIDURL, packName }),
+    })
+  }
+
+  useEffect(() => {
+    if (JSON.stringify(paramsSearchState) !== JSON.stringify(urlParamsFilter))
+      dispatch(updateUrlParamsAC({ ...urlParamsFilter }))
+  }, [dispatch, urlParamsFilter])
+
+  useEffect(() => {
+    if (JSON.stringify(paramsSearchState) === JSON.stringify(urlParamsFilter)) {
+      dispatch(getPacksTC())
+    }
+  }, [dispatch, paramsSearchState])
+
   if (!isLoggedIn) {
     return <Navigate to={PATH.login} />
   }
-  const handleChangePage = (event: unknown, page: number) => {
-    setPage(page)
-    dispatch(getPacksTC({ page, pageCount }))
-  }
-
-  const handleChange = (event: SelectChangeEvent) => {
-    setPageCount(event.target.value as string)
-    dispatch(getPacksTC({ page, pageCount: Number(event.target.value) }))
-  }
-
-  const addButtonClickHandler = (event: React.MouseEvent<HTMLElement>) => {
-    setOpenAddModal(true)
-  }
-
-  const addPack = (name: string) => {
-    dispatch(addNewPackTC(name))
-  }
-
-  const StyledTableCell = styled(TableCell)(({ theme }) => ({
-    [`&.${tableCellClasses.head}`]: {
-      backgroundColor: theme.palette.grey['200'],
-      color: theme.palette.common.black,
-      fontFamily: 'Montseratt',
-      fontWeight: 'bold',
-      fontSize: '15px',
-    },
-  }))
 
   return (
     <section>
@@ -95,6 +179,17 @@ export const PackList = () => {
           addItem={addPack}
         />
         <FilterBar />
+        <FilterBar
+          onClickButtonMy={onClickButtonMyHandler}
+          onClickButtonAll={onClickButtonAllHandler}
+          onChangeCommittedRange={onChangeCommittedRangeHandler}
+          // setResetFilter={setResetFilterHandler}
+          valueSearch={packName}
+          // searchValueText={searchValueTextHandler}
+          minRangeURL={minRangeURL}
+          maxRangeURL={maxRangeURL}
+          urlUserID={userIDURL}
+        />
         <TableContainer className={s.table} component={Paper}>
           <Table sx={{ fontFamily: 'Montserrat' }} aria-label="simple table">
             <TableHead>
@@ -113,6 +208,7 @@ export const PackList = () => {
               {packs.map(pack => (
                 <Pack
                   key={pack._id}
+                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                   _id={pack._id}
                   name={pack.name}
                   user_name={pack.user_name}
@@ -129,17 +225,17 @@ export const PackList = () => {
             className={s.pagination}
             color="primary"
             shape="rounded"
-            page={page}
-            onChange={handleChangePage}
-            count={pagesCount}
+            // page={page}
+            // onChange={handleChangePage}
+            // count={pagesCount}
           />
           <span className={s.show}>Show</span>
           <FormControl sx={{ m: 1, minWidth: 80 }}>
-            <Select value={pageClientCount} onChange={handleChange}>
-              <MenuItem value={5}>5</MenuItem>
-              <MenuItem value={10}>10</MenuItem>
-              <MenuItem value={20}>20</MenuItem>
-            </Select>
+            {/*<Select value={pageClientCount} onChange={handleChange}>*/}
+            {/*  <MenuItem value={5}>5</MenuItem>*/}
+            {/*  <MenuItem value={10}>10</MenuItem>*/}
+            {/*  <MenuItem value={20}>20</MenuItem>*/}
+            {/*</Select>*/}
           </FormControl>
           <span>Cards per page</span>
         </div>
