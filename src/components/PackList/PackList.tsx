@@ -82,24 +82,6 @@ export const PackList = () => {
     max: maxRangeURL,
   })
 
-  // const cardsPage = useAppSelector(state => state.cards.page)
-  // const cardsPageCount = useAppSelector(state => state.cards.pageCount)
-  // const pageCount = useAppSelector(state => state.packs.pageCount)
-  // const cardPacksTotalCount = useAppSelector(state => state.packs.cardPacksTotalCount)
-  // const [pageClientCount, setPageCount] = useState(String(pageCount))
-  // const [page, setPage] = useState(1)
-  // let pagesCount = Math.ceil(cardPacksTotalCount / pageCount)
-  //
-  // const handleChangePage = (event: unknown, page: number) => {
-  //   setPage(page)
-  //   dispatch(getPacksTC())
-  // }
-  //
-  // const handleChange = (event: SelectChangeEvent) => {
-  //   setPageCount(event.target.value as string)
-  //   dispatch(getPacksTC())
-  // }
-
   const onClickButtonMyHandler = () => {
     const urlParams = {
       ...filterAllParams({
@@ -151,6 +133,12 @@ export const PackList = () => {
   const addPack = (name: string) => {
     dispatch(addNewPackTC(name))
   }
+  const searchValueTextHandler = (valueSearch: string) => {
+    setPackName(valueSearch)
+    setSearchParams({
+      ...filterAllParams({ ...paramsSearchState, packName: valueSearch, userID: userIDURL }),
+    })
+  }
 
   useEffect(() => {
     if (JSON.stringify(paramsSearchState) !== JSON.stringify(urlParamsFilter))
@@ -192,7 +180,7 @@ export const PackList = () => {
           onChangeCommittedRange={onChangeCommittedRangeHandler}
           // setResetFilter={setResetFilterHandler}
           valueSearch={packName}
-          // searchValueText={searchValueTextHandler}
+          searchValueText={searchValueTextHandler}
           minRangeURL={minRangeURL}
           maxRangeURL={maxRangeURL}
           urlUserID={userIDURL}

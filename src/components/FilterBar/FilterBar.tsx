@@ -14,28 +14,16 @@ type propsType = {
   onClickButtonMy: () => void
   onClickButtonAll: () => void
   onChangeCommittedRange: (min: string, max: string) => void
-  valueSearch: string
   minRangeURL: string
   maxRangeURL: string
   urlUserID: string
-  // searchValueText: (valueSearch: string) => void
+  searchValueText: (valueSearch: string) => void
+  valueSearch: string
   // setResetFilter: () => void
 }
 export const FilterBar = (props: propsType) => {
   const dispatch = useAppDispatch()
-  //const showPackCards = useAppSelector(state => state.packs.showPackCards)
-  //const userID = useAppSelector(state => state.profile._id)
-  // const minCardsCount = useAppSelector(state => state.packs.minCardsCount)
-  // const maxCardsCount = useAppSelector(state => state.packs.maxCardsCount)
-  // const pageCount = useAppSelector(state => state.packs.pageCount)
-  // const page = useAppSelector(state => state.packs.page)
-  // const [minRange, setMinRange] = useState<number>(minCardsCount)
-  // const [maxRange, setMaxRange] = useState<number>(maxCardsCount)
-  //
-  const onClickClearFiltersHandler = () => {
-    // dispatch(getPacksTC({ page, pageCount }))
-    // dispatch(clearFiltersAC())
-  }
+  const onClickClearFiltersHandler = () => {}
 
   const minCardsCount = useAppSelector(state => state.packs.minCardsCount)
   const maxCardsCount = useAppSelector(state => state.packs.maxCardsCount)
@@ -52,14 +40,6 @@ export const FilterBar = (props: propsType) => {
     props.onChangeCommittedRange(value[0] + '', value[1] + '')
   }
 
-  //
-  // const searchHandler = (e: ChangeEvent<HTMLInputElement>) => {
-  //   searchValueText(e.currentTarget.value)
-  // }
-  // const onFunnelClickHandler = () => {
-  //   setResetFilter()
-  // }
-
   useEffect(() => {
     setMinRange(props.minRangeURL ? +props.minRangeURL : minCardsCount)
     setMaxRange(props.maxRangeURL ? +props.maxRangeURL : maxCardsCount)
@@ -69,7 +49,7 @@ export const FilterBar = (props: propsType) => {
     <div className={s.wrapper}>
       <div>
         <h3>Search</h3>
-        <SearchBar />
+        <SearchBar value={props.valueSearch} onChange={props.searchValueText} />
       </div>
       <div>
         <h3>Show packs cards</h3>

@@ -42,11 +42,13 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }))
 
-export const SearchBar = () => {
-  const dispatch = useAppDispatch()
-
+type PropsType = {
+  onChange: (value: string) => void
+  value: string
+}
+export const SearchBar = (props: PropsType) => {
   const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    dispatch(getPacksTC())
+    props.onChange(e.currentTarget.value)
   }
   const debouncedChangeHandler = useCallback(debounce(changeHandler, 1000), [])
 
@@ -59,7 +61,8 @@ export const SearchBar = () => {
         placeholder="Provide your text"
         inputProps={{ 'aria-label': 'search' }}
         type="text"
-        onChange={debouncedChangeHandler}
+        onChange={changeHandler}
+        value={props.value}
       />
     </Search>
   )
