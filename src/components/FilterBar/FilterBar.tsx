@@ -19,11 +19,15 @@ type propsType = {
   urlUserID: string
   searchValueText: (valueSearch: string) => void
   valueSearch: string
-  // setResetFilter: () => void
+  setResetFilter: () => void
 }
 export const FilterBar = (props: propsType) => {
   const dispatch = useAppDispatch()
-  const onClickClearFiltersHandler = () => {}
+  const onClickClearFiltersHandler = () => {
+    props.setResetFilter()
+    setMinRange(minCardsCount)
+    setMaxRange(maxCardsCount)
+  }
 
   const minCardsCount = useAppSelector(state => state.packs.minCardsCount)
   const maxCardsCount = useAppSelector(state => state.packs.maxCardsCount)

@@ -118,7 +118,11 @@ export const PackList = () => {
     dispatch(updateUrlParamsAC({ ...urlParams }))
     setSearchParams({ ...urlParams })
   }
-
+  const setResetFilterHandler = () => {
+    dispatch(updateUrlParamsAC({ page: '1', pageCount: '5', user_id: '', min: '', max: '' }))
+    setSearchParams({ page: '1', pageCount: '5' })
+    setPackName('')
+  }
   const onChangeCommittedRangeHandler = (min: string, max: string) => {
     dispatch(updateUrlParamsAC({ ...paramsSearchState, min, max, user_id: userIDURL }))
     setSearchParams({
@@ -188,7 +192,7 @@ export const PackList = () => {
           onClickButtonMy={onClickButtonMyHandler}
           onClickButtonAll={onClickButtonAllHandler}
           onChangeCommittedRange={onChangeCommittedRangeHandler}
-          // setResetFilter={setResetFilterHandler}
+          setResetFilter={setResetFilterHandler}
           valueSearch={packName}
           searchValueText={searchValueTextHandler}
           minRangeURL={minRangeURL}
