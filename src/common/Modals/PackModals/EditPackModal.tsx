@@ -6,11 +6,11 @@ import { BasicModal } from '../Basic Modal/BasicModal'
 import { ButtonBlockForModals } from '../ButtonBlockForModals/ButtonBlockForModals'
 
 type EditModalPropsType = {
-  itemTitle?: string
+  itemTitle: string
   title: string
   open: boolean
   toggleOpenMode: (value: boolean) => void
-  editItem: (name: string ) => void
+  editItem: (name: string) => void
 }
 
 export const EditPackModal = (props: EditModalPropsType) => {

@@ -185,7 +185,7 @@ export type PacksType = {
   user_id?: string
   user_name?: string
   private?: boolean
-  name?: string
+  name: string
   path?: string
   grade?: number
   shots?: number

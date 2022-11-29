@@ -16,11 +16,10 @@ import {
   TableRow,
 } from '@mui/material'
 import FormControl from '@mui/material/FormControl/FormControl'
-import { Navigate } from 'react-router-dom'
+import { Navigate, useSearchParams } from 'react-router-dom'
 
 import { PATH } from '../../app/App'
 import { AddPackModal } from '../../common/Modals/PackModals/AddPackModal'
-import { addNewPackTC, getPacksTC } from '../../redux/pack-reducer'
 import {
   addNewPackTC,
   deletePackTC,
@@ -70,6 +69,7 @@ export const PackList = () => {
   const maxRangeURL = searchParams.get('max') ? searchParams.get('max') + '' : ''
 
   const [packName, setPackName] = useState<string>(packNameURL ? packNameURL : '')
+  const [openAddModal, setOpenAddModal] = useState(false)
 
   const debouncedValue = useDebounce<string>(packName, 500)
 
@@ -144,6 +144,14 @@ export const PackList = () => {
     })
   }
 
+  const addButtonClickHandler = (event: React.MouseEvent<HTMLElement>) => {
+    setOpenAddModal(true)
+  }
+
+  const addPack = (name: string) => {
+    dispatch(addNewPackTC(name))
+  }
+
   useEffect(() => {
     if (JSON.stringify(paramsSearchState) !== JSON.stringify(urlParamsFilter))
       dispatch(updateUrlParamsAC({ ...urlParamsFilter }))
@@ -178,7 +186,6 @@ export const PackList = () => {
           toggleOpenMode={setOpenAddModal}
           addItem={addPack}
         />
-        <FilterBar />
         <FilterBar
           onClickButtonMy={onClickButtonMyHandler}
           onClickButtonAll={onClickButtonAllHandler}
@@ -208,7 +215,6 @@ export const PackList = () => {
               {packs.map(pack => (
                 <Pack
                   key={pack._id}
-                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                   _id={pack._id}
                   name={pack.name}
                   user_name={pack.user_name}

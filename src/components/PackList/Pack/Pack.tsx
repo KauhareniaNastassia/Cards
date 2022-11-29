@@ -43,8 +43,7 @@ export const Pack = (props: PacksType) => {
   const dispatch = useAppDispatch()
   const myID = useAppSelector(state => state.profile._id)
 
-  const deleteButtonClickHandler = (event: React.MouseEvent<HTMLElement>) => {
-    event.stopPropagation()
+  const deleteButtonClickHandler = () => {
     setOpenDeleteModal(true)
   }
 
@@ -52,8 +51,7 @@ export const Pack = (props: PacksType) => {
     dispatch(deletePackTC(props._id))
   }
 
-  const editButtonClickHandler = (event: React.MouseEvent<HTMLElement>) => {
-    event.stopPropagation()
+  const editButtonClickHandler = () => {
     setOpenEditModal(true)
   }
 

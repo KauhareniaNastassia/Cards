@@ -27,6 +27,7 @@ export const AddPackModal = (props: AddModalPropsType) => {
   const saveButtonHandler = () => {
     props.addItem(name)
     props.toggleOpenMode(false)
+    setText('')
   }
 
   return (
