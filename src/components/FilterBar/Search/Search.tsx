@@ -50,7 +50,7 @@ export const SearchBar = (props: PropsType) => {
   const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     props.onChange(e.currentTarget.value)
   }
-  const debouncedChangeHandler = useCallback(debounce(changeHandler, 1000), [])
+  // const debouncedChangeHandler = useCallback(debounce(changeHandler, 1000), [])
 
   return (
     <Search>

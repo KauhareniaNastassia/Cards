@@ -71,7 +71,7 @@ export const PackList = () => {
   const [packName, setPackName] = useState<string>(packNameURL ? packNameURL : '')
   const [openAddModal, setOpenAddModal] = useState(false)
 
-  const debouncedValue = useDebounce<string>(packName, 500)
+  const debouncedValue = useDebounce<string>(packName, 1000)
 
   const urlParamsFilter = filterAllParams({
     page: pageURL,
@@ -126,7 +126,7 @@ export const PackList = () => {
     })
   }
 
-  const addButtonClickHandler = (event: React.MouseEvent<HTMLElement>) => {
+  const addButtonClickHandler = () => {
     setOpenAddModal(true)
   }
 
@@ -135,18 +135,28 @@ export const PackList = () => {
   }
   const searchValueTextHandler = (valueSearch: string) => {
     setPackName(valueSearch)
-    setSearchParams({
-      ...filterAllParams({ ...paramsSearchState, packName: valueSearch, userID: userIDURL }),
-    })
+    //setSearchParams({
+    //...filterAllParams({ ...paramsSearchState, packName: valueSearch, userID: userIDURL }),
+    //})
   }
+
+  useEffect(() => {
+    setSearchParams({
+      ...filterAllParams({ ...paramsSearchState, packName: packName, userID: userIDURL }),
+    })
+    dispatch(updateUrlParamsAC({ ...urlParamsFilter }))
+    console.log('useEffect of debouncedValue')
+  }, [debouncedValue])
 
   useEffect(() => {
     if (JSON.stringify(paramsSearchState) !== JSON.stringify(urlParamsFilter))
       dispatch(updateUrlParamsAC({ ...urlParamsFilter }))
+    console.log('useEffect of updateUrlParamsAC')
   }, [dispatch, urlParamsFilter])
 
   useEffect(() => {
     if (JSON.stringify(paramsSearchState) === JSON.stringify(urlParamsFilter)) {
+      console.log('useEffect of getPacksTC')
       dispatch(getPacksTC())
     }
   }, [dispatch, paramsSearchState])
