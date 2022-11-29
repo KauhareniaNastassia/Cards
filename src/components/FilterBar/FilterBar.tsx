@@ -1,28 +1,69 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import FilterAltOffOutlinedIcon from '@mui/icons-material/FilterAltOffOutlined'
 import { Button, IconButton } from '@mui/material'
 
 import { SliderFromMateUI } from '../../common/SliderFromMateUI/SliderFromMateUI'
-import { clearFiltersAC, getPacksTC, setShowPackCardsTC } from '../../redux/pack-reducer'
+import { setShowPackCardsAC } from '../../redux/pack-reducer'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks'
 
 import s from './FilterBar.module.css'
 import { SearchBar } from './Search/Search'
 
-export const FilterBar = () => {
-  const showPackCards = useAppSelector(state => state.packs.showPackCards)
-  const userID = useAppSelector(state => state.profile._id)
+type propsType = {
+  onClickButtonMy: () => void
+  onClickButtonAll: () => void
+  onChangeCommittedRange: (min: string, max: string) => void
+  valueSearch: string
+  minRangeURL: string
+  maxRangeURL: string
+  urlUserID: string
+  // searchValueText: (valueSearch: string) => void
+  // setResetFilter: () => void
+}
+export const FilterBar = (props: propsType) => {
+  const dispatch = useAppDispatch()
+  //const showPackCards = useAppSelector(state => state.packs.showPackCards)
+  //const userID = useAppSelector(state => state.profile._id)
+  // const minCardsCount = useAppSelector(state => state.packs.minCardsCount)
+  // const maxCardsCount = useAppSelector(state => state.packs.maxCardsCount)
+  // const pageCount = useAppSelector(state => state.packs.pageCount)
+  // const page = useAppSelector(state => state.packs.page)
+  // const [minRange, setMinRange] = useState<number>(minCardsCount)
+  // const [maxRange, setMaxRange] = useState<number>(maxCardsCount)
+  //
+  const onClickClearFiltersHandler = () => {
+    // dispatch(getPacksTC({ page, pageCount }))
+    // dispatch(clearFiltersAC())
+  }
+
   const minCardsCount = useAppSelector(state => state.packs.minCardsCount)
   const maxCardsCount = useAppSelector(state => state.packs.maxCardsCount)
-  const pageCount = useAppSelector(state => state.packs.pageCount)
-  const page = useAppSelector(state => state.packs.page)
-  const dispatch = useAppDispatch()
 
-  const onClickClearFiltersHandler = () => {
-    dispatch(getPacksTC({ page, pageCount }))
-    dispatch(clearFiltersAC())
+  const [minRange, setMinRange] = useState<number>(minCardsCount)
+  const [maxRange, setMaxRange] = useState<number>(maxCardsCount)
+
+  const onChangeRangeHandler = (value: [number, number]) => {
+    setMinRange(value[0])
+    setMaxRange(value[1])
   }
+
+  const onChangeCommittedHandler = (value: [number, number]) => {
+    props.onChangeCommittedRange(value[0] + '', value[1] + '')
+  }
+
+  //
+  // const searchHandler = (e: ChangeEvent<HTMLInputElement>) => {
+  //   searchValueText(e.currentTarget.value)
+  // }
+  // const onFunnelClickHandler = () => {
+  //   setResetFilter()
+  // }
+
+  useEffect(() => {
+    setMinRange(props.minRangeURL ? +props.minRangeURL : minCardsCount)
+    setMaxRange(props.maxRangeURL ? +props.maxRangeURL : maxCardsCount)
+  }, [minCardsCount, maxCardsCount])
 
   return (
     <div className={s.wrapper}>
@@ -33,14 +74,17 @@ export const FilterBar = () => {
       <div>
         <h3>Show packs cards</h3>
         <Button
-          onClick={() => dispatch(setShowPackCardsTC(userID))}
-          variant={showPackCards === 'my' ? 'contained' : 'outlined'}
+          onClick={() => {
+            props.onClickButtonMy()
+            dispatch(setShowPackCardsAC('my'))
+          }}
+          variant={props.urlUserID ? 'contained' : 'outlined'}
         >
           My
         </Button>
         <Button
-          onClick={() => dispatch(setShowPackCardsTC())}
-          variant={showPackCards === 'all' ? 'contained' : 'outlined'}
+          onClick={props.onClickButtonAll}
+          variant={props.urlUserID ? 'outlined' : 'contained'}
         >
           All
         </Button>
@@ -48,9 +92,15 @@ export const FilterBar = () => {
       <div>
         <h3>Number of cards</h3>
         <div className={s.sliderWrap}>
-          <span className={s.sliderNumbers}>{minCardsCount}</span>
-          <SliderFromMateUI />
-          <span className={s.sliderNumbers}>{maxCardsCount}</span>
+          <span className={s.sliderValues}>{minRange}</span>
+          <SliderFromMateUI
+            value={[minRange, maxRange]}
+            min={minCardsCount}
+            max={maxCardsCount}
+            onChangeRange={onChangeRangeHandler}
+            onChangeCommitted={onChangeCommittedHandler}
+          />
+          <span className={s.sliderValues}>{maxRange}</span>
         </div>
       </div>
       <div className={s.clearFilters}>

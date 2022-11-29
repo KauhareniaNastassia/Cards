@@ -28,7 +28,6 @@ export const SignUp = () => {
     validate: validateUtil,
     onSubmit: (values: RegistrationRequestDataType) => {
       dispatch(RegisterMeTC(values))
-      formik.resetForm()
     },
   })
 
