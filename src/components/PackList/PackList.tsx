@@ -20,6 +20,7 @@ import FormControl from '@mui/material/FormControl/FormControl'
 import { Navigate } from 'react-router-dom'
 
 import { PATH } from '../../app/App'
+import { AddPackModal } from '../../common/Modals/PackModals/AddPackModal'
 import { addNewPackTC, getPacksTC } from '../../redux/pack-reducer'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks'
 import { FilterBar } from '../FilterBar/FilterBar'
@@ -36,6 +37,7 @@ export const PackList = () => {
   const [page, setPage] = useState(1)
   const dispatch = useAppDispatch()
   let pagesCount = Math.ceil(cardPacksTotalCount / pageCount)
+  const [openAddModal, setOpenAddModal] = useState(false)
 
   if (isLoggedIn) {
     useEffect(() => {
@@ -53,6 +55,14 @@ export const PackList = () => {
   const handleChange = (event: SelectChangeEvent) => {
     setPageCount(event.target.value as string)
     dispatch(getPacksTC({ page, pageCount: Number(event.target.value) }))
+  }
+
+  const addButtonClickHandler = (event: React.MouseEvent<HTMLElement>) => {
+    setOpenAddModal(true)
+  }
+
+  const addPack = (name: string) => {
+    dispatch(addNewPackTC(name))
   }
 
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -73,13 +83,17 @@ export const PackList = () => {
           <Button
             variant="contained"
             style={{ borderRadius: '20px' }}
-            onClick={() => {
-              dispatch(addNewPackTC(''))
-            }}
+            onClick={addButtonClickHandler}
           >
             Add new Pack
           </Button>
         </div>
+        <AddPackModal
+          title="Add Pack"
+          open={openAddModal}
+          toggleOpenMode={setOpenAddModal}
+          addItem={addPack}
+        />
         <FilterBar />
         <TableContainer className={s.table} component={Paper}>
           <Table sx={{ fontFamily: 'Montserrat' }} aria-label="simple table">

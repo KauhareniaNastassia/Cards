@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
@@ -9,6 +9,8 @@ import { Link } from 'react-router-dom'
 
 import { PacksType } from '../../../api/cards-API'
 import { PATH } from '../../../app/App'
+import { DeletePackModal } from '../../../common/Modals/PackModals/DeletePackModal'
+import { EditPackModal } from '../../../common/Modals/PackModals/EditPackModal'
 import { setCardsTC, setPackIdAC } from '../../../redux/cards-reducer'
 import { deletePackTC, updatePackTC } from '../../../redux/pack-reducer'
 import { useAppDispatch, useAppSelector } from '../../../utils/hooks'
@@ -17,6 +19,9 @@ import s from '../PackList.module.css'
 export const Pack = (props: PacksType) => {
   const page = useAppSelector(state => state.cards.page)
   const pageCount = useAppSelector(state => state.cards.pageCount)
+  const [openDeleteModal, setOpenDeleteModal] = useState(false)
+  const [openEditModal, setOpenEditModal] = useState(false)
+
   const onClickSetPack = () => {
     dispatch(
       setCardsTC({
@@ -37,6 +42,24 @@ export const Pack = (props: PacksType) => {
   }))
   const dispatch = useAppDispatch()
   const myID = useAppSelector(state => state.profile._id)
+
+  const deleteButtonClickHandler = (event: React.MouseEvent<HTMLElement>) => {
+    event.stopPropagation()
+    setOpenDeleteModal(true)
+  }
+
+  const deletePack = () => {
+    dispatch(deletePackTC(props._id))
+  }
+
+  const editButtonClickHandler = (event: React.MouseEvent<HTMLElement>) => {
+    event.stopPropagation()
+    setOpenEditModal(true)
+  }
+
+  const editPackItem = (newName: string) => {
+    dispatch(updatePackTC(props._id, newName))
+  }
 
   return (
     <TableRow
@@ -60,14 +83,28 @@ export const Pack = (props: PacksType) => {
         </IconButton>
         {myID === props.user_id && (
           <span>
-            <IconButton onClick={() => dispatch(updatePackTC(props._id, 'Updated Name'))}>
+            <IconButton onClick={editButtonClickHandler}>
               <EditIcon></EditIcon>
             </IconButton>
-            <IconButton onClick={() => dispatch(deletePackTC(props._id))}>
+            <IconButton onClick={deleteButtonClickHandler}>
               <DeleteIcon></DeleteIcon>
             </IconButton>
           </span>
         )}
+        <DeletePackModal
+          title="Delete Pack"
+          message={`Do you want to delete ${props.name}? All cards will be deleted.`}
+          open={openDeleteModal}
+          toggleOpenMode={setOpenDeleteModal}
+          deleteItem={deletePack}
+        />
+        <EditPackModal
+          itemTitle={props.name}
+          title="Edit Pack"
+          toggleOpenMode={setOpenEditModal}
+          open={openEditModal}
+          editItem={editPackItem}
+        />
       </StyledTableCellRow>
     </TableRow>
   )

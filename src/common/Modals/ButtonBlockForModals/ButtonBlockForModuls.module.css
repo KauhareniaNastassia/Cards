@@ -1,0 +1,10 @@
+.btnWrapper {
+    display: flex;
+    justify-content: space-between;
+
+    margin-top: 15px;
+}
+
+.btn {
+    margin: 15px 0px 0px;;
+}
