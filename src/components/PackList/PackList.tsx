@@ -16,7 +16,7 @@ import {
   TableRow,
 } from '@mui/material'
 import FormControl from '@mui/material/FormControl/FormControl'
-import { Navigate } from 'react-router-dom'
+import { Navigate, useSearchParams } from 'react-router-dom'
 
 import { PATH } from '../../app/App'
 import {
@@ -199,7 +199,6 @@ export const PackList = () => {
               {packs.map(pack => (
                 <Pack
                   key={pack._id}
-                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                   _id={pack._id}
                   name={pack.name}
                   user_name={pack.user_name}
