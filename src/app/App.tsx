@@ -12,6 +12,7 @@ import { CreateNewPassword } from '../components/CreateNewPassword/CreateNewPass
 import { Error404 } from '../components/Error404/Error404'
 import { Header } from '../components/Header/Header'
 import { Home } from '../components/Home/Home'
+import { Learn } from '../components/Learn/Learn'
 import { Login } from '../components/Login/Login'
 import { NavigationForUs } from '../components/NavigationForUs/NavigationForUs'
 import { PackList } from '../components/PackList/PackList'
@@ -32,6 +33,7 @@ export const PATH = {
   checkEmail: '/checkEmail',
   packList: '/packList',
   pack: '/pack',
+  learn: '/learn',
 }
 
 function App() {
@@ -63,7 +65,7 @@ function App() {
         <Route path={PATH.profile} element={<ProfileCard />} />
         <Route path={PATH.error404} element={<Error404 />} />
         <Route path={PATH.passwordRecovery} element={<PasswordRecovery />} />
-
+        <Route path={PATH.learn} element={<Learn />} />
         <Route path={PATH.createNewPassword} element={<CreateNewPassword />} />
         <Route path={PATH.checkEmail} element={<CheckEmail />} />
         <Route path={PATH.packList} element={<PackList />} />

@@ -5,7 +5,7 @@ import EditIcon from '@mui/icons-material/Edit'
 import SchoolIcon from '@mui/icons-material/School'
 import { IconButton, styled, TableCell, tableCellClasses, TableRow } from '@mui/material'
 import moment from 'moment'
-import { Link } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
 
 import { PacksType } from '../../../api/cards-API'
 import { PATH } from '../../../app/App'
@@ -56,7 +56,9 @@ export const Pack = (props: PacksType) => {
       <StyledTableCellRow align="center">{props.user_name}</StyledTableCellRow>
       <StyledTableCellRow align="center">
         <IconButton>
-          <SchoolIcon></SchoolIcon>
+          <Link style={{ textDecoration: 'none', color: 'gray' }} to={PATH.learn}>
+            <SchoolIcon></SchoolIcon>
+          </Link>
         </IconButton>
         {myID === props.user_id && (
           <span>

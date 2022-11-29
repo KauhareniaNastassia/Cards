@@ -37,11 +37,10 @@ export const PackList = () => {
   const dispatch = useAppDispatch()
   let pagesCount = Math.ceil(cardPacksTotalCount / pageCount)
 
-  if (isLoggedIn) {
-    useEffect(() => {
-      dispatch(getPacksTC({ page, pageCount }))
-    }, [])
-  }
+  useEffect(() => {
+    dispatch(getPacksTC({ page, pageCount }))
+  }, [])
+
   if (!isLoggedIn) {
     return <Navigate to={PATH.login} />
   }
