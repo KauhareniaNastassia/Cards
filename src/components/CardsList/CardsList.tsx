@@ -22,6 +22,9 @@ import moment from 'moment'
 import { Link } from 'react-router-dom'
 
 import { PATH } from '../../app/App'
+import { AddCardModal } from '../../common/Modals/CardModals/AddCardModal'
+import { DeleteCardModal } from '../../common/Modals/CardModals/DeleteCardModal'
+import { EditCardModal } from '../../common/Modals/CardModals/EditCardModal'
 import { addNewCardTC, deleteCardTC, setCardsTC, updateCardTC } from '../../redux/cards-reducer'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks'
 import { SearchForCards } from '../PackList/SettingsForCards/SearchForCards'
@@ -38,6 +41,9 @@ export const CardsList = () => {
   const cardsTotalCount = useAppSelector(state => state.cards.cardsTotalCount)
   const pagesCount = Math.ceil(cardsTotalCount / pageCount)
   const dispatch = useAppDispatch()
+  const [openDeleteCardModal, setOpenDeleteCardModal] = useState(false)
+  const [openEditCardModal, setOpenEditCardModal] = useState(false)
+  const [openAddCardModal, setOpenAddCardModal] = useState(false)
 
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -60,6 +66,26 @@ export const CardsList = () => {
     dispatch(setCardsTC({ cardsPack_id, page }))
   }
 
+  const deleteCard = (cardId: string) => {
+    dispatch(deleteCardTC(cardId, page, pageCount))
+  }
+
+  const deleteCardButtonClickHandler = () => {
+    setOpenDeleteCardModal(true)
+  }
+
+  const editCardButtonClickHandler = () => {
+    setOpenEditCardModal(true)
+  }
+
+  const addCard = () => {
+    dispatch(addNewCardTC(cardsPack_id, page, pageCount))
+  }
+
+  const addCardButtonClickHandler = () => {
+    setOpenDeleteCardModal(true)
+  }
+
   return (
     <div>
       <div className={s.arrow}>
@@ -73,13 +99,21 @@ export const CardsList = () => {
         <div className={s.div}>
           <div className={s.span}>This pack is empty. Click add new card to fill this pack</div>
           <Button
-            onClick={() => dispatch(addNewCardTC(cardsPack_id, page, pageCount))}
+            onClick={
+              addCardButtonClickHandler /*dispatch(addNewCardTC(cardsPack_id, page, pageCount))*/
+            }
             type="submit"
             variant="contained"
             style={{ borderRadius: '20px', marginTop: '40px' }}
           >
             Add New Card
           </Button>
+          <AddCardModal
+            title="Add new card"
+            open={openAddCardModal}
+            toggleOpenMode={setOpenAddCardModal}
+            addItem={addCard}
+          />
         </div>
       ) : (
         <div>
@@ -115,7 +149,9 @@ export const CardsList = () => {
                       {myID === card.user_id && (
                         <span>
                           <IconButton
-                            onClick={() =>
+                            onClick={
+                              editCardButtonClickHandler
+                              /*() =>
                               dispatch(
                                 updateCardTC(
                                   {
@@ -128,18 +164,49 @@ export const CardsList = () => {
                                   page,
                                   pageCount
                                 )
-                              )
+                              )*/
                             }
                           >
                             <EditIcon></EditIcon>
                           </IconButton>
                           <IconButton
-                            onClick={() => dispatch(deleteCardTC(card._id, page, pageCount))}
+                            onClick={
+                              deleteCardButtonClickHandler /*() => dispatch(deleteCardTC(card._id, page, pageCount))*/
+                            }
                           >
                             <DeleteIcon></DeleteIcon>
                           </IconButton>
                         </span>
                       )}
+                      <EditCardModal
+                        title="Edit Card"
+                        cardQuestion={card.question}
+                        cardAnswer={card.answer}
+                        open={openEditCardModal}
+                        toggleOpenMode={setOpenEditCardModal}
+                        editItem={(newQuestion: string, newAnswer: string) =>
+                          dispatch(
+                            updateCardTC(
+                              {
+                                card: {
+                                  _id: card._id,
+                                  answer: newAnswer,
+                                  question: newQuestion,
+                                },
+                              },
+                              page,
+                              pageCount
+                            )
+                          )
+                        }
+                      />
+                      <DeleteCardModal
+                        title="Delete Card"
+                        message={`Do you really want to remove ${card.question}?`}
+                        open={openDeleteCardModal}
+                        toggleOpenMode={setOpenDeleteCardModal}
+                        deleteItem={() => dispatch(deleteCardTC(card._id, page, pageCount))}
+                      />
                     </StyledTableCellRow>
                   </TableRow>
                 ))}

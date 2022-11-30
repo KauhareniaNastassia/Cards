@@ -85,7 +85,7 @@ export const addNewCardTC =
     try {
       const res = await cardsAPI.addNewCard({ card: { cardsPack_id } })
 
-      dispatch(setCardsTC({ cardsPack_id, page, pageCount }))
+      dispatch(setCardsTC({ cardsPack_id, page, pageCount}))
       dispatch(setAppStatusAC('succeed'))
     } catch (e) {
       console.log(e)
