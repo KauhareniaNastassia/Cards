@@ -61,6 +61,8 @@ export const PackList = () => {
   const user_id = useAppSelector(state => state.profile._id)
   const paramsSearchState = useAppSelector(state => state.packs.params)
   const pageCount = useAppSelector(state => state.packs.params.pageCount)
+  const page = useAppSelector(state => state.packs.params.page)
+  const cardPacksTotalCount = useAppSelector(state => state.packs.cardPacksTotalCount)
 
   const [searchParams, setSearchParams] = useSearchParams()
 
@@ -155,6 +157,19 @@ export const PackList = () => {
       }),
     })
   }
+
+  const changePageHandle = (event: React.ChangeEvent<unknown>, page: number) => {
+    dispatch(updateUrlParamsAC({ ...paramsSearchState, page: page + '' }))
+    setSearchParams({
+      ...filterAllParams({
+        ...paramsSearchState,
+        page: page + '',
+        userID: userIDURL,
+        packName,
+      }),
+    })
+  }
+
   const searchValueTextHandler = (valueSearch: string) => {
     setPackName(valueSearch)
     //setSearchParams({
@@ -167,6 +182,7 @@ export const PackList = () => {
       ...filterAllParams({
         ...paramsSearchState,
         pageCount: pageCountURL,
+        page: pageURL,
         packName,
         user_id: userIDURL,
         min: minRangeURL,
@@ -258,18 +274,16 @@ export const PackList = () => {
             className={s.pagination}
             color="primary"
             shape="rounded"
-            // page={page}
-            // onChange={handleChangePage}
-            // count={pagesCount}
+            page={+(page ? page : 1)}
+            count={cardPacksTotalCount}
+            onChange={changePageHandle}
           />
           <span className={s.show}>Show</span>
-          {/*<FormControl sx={{ m: 1, minWidth: 80 }}>*/}
           <NativeSelect value={pageCount} onChange={pageCountHandler}>
             <option value={5}>5</option>
             <option value={10}>10</option>
             <option value={20}>20</option>
           </NativeSelect>
-          {/*</FormControl>*/}
           <span>Cards per page</span>
         </div>
       </div>
