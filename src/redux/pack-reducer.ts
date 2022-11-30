@@ -16,7 +16,7 @@ const initialState = {
   pageCount: 5 as number,
   showPackCards: 'all' as 'all' | 'my',
   minCardsCount: 0 as number,
-  maxCardsCount: 100 as number,
+  maxCardsCount: 110 as number,
   params: {
     page: '1',
     pageCount: '5',

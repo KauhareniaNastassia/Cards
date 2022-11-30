@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { ChangeEvent, useEffect, useState } from 'react'
 
 import {
   Button,
@@ -6,6 +6,8 @@ import {
   MenuItem,
   Pagination,
   Paper,
+  Select,
+  SelectChangeEvent,
   styled,
   Table,
   TableBody,
@@ -16,6 +18,7 @@ import {
   TableRow,
 } from '@mui/material'
 import FormControl from '@mui/material/FormControl/FormControl'
+import NativeSelect from '@mui/material/NativeSelect'
 import { Navigate, useSearchParams } from 'react-router-dom'
 
 import { PATH } from '../../app/App'
@@ -35,7 +38,6 @@ import { FilterBar } from '../FilterBar/FilterBar'
 
 import { Pack } from './Pack/Pack'
 import s from './PackList.module.css'
-
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.grey['200'],
@@ -58,6 +60,9 @@ export const PackList = () => {
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
   const user_id = useAppSelector(state => state.profile._id)
   const paramsSearchState = useAppSelector(state => state.packs.params)
+  const pageCount = useAppSelector(state => state.packs.params.pageCount)
+  const page = useAppSelector(state => state.packs.params.page)
+  const cardPacksTotalCount = useAppSelector(state => state.packs.cardPacksTotalCount)
 
   const [searchParams, setSearchParams] = useSearchParams()
 
@@ -71,7 +76,7 @@ export const PackList = () => {
   const [packName, setPackName] = useState<string>(packNameURL ? packNameURL : '')
   const [openAddModal, setOpenAddModal] = useState(false)
 
-  const debouncedValue = useDebounce<string>(packName, 500)
+  const debouncedValue = useDebounce<string>(packName, 1000)
 
   const urlParamsFilter = filterAllParams({
     page: pageURL,
@@ -81,24 +86,6 @@ export const PackList = () => {
     min: minRangeURL,
     max: maxRangeURL,
   })
-
-  // const cardsPage = useAppSelector(state => state.cards.page)
-  // const cardsPageCount = useAppSelector(state => state.cards.pageCount)
-  // const pageCount = useAppSelector(state => state.packs.pageCount)
-  // const cardPacksTotalCount = useAppSelector(state => state.packs.cardPacksTotalCount)
-  // const [pageClientCount, setPageCount] = useState(String(pageCount))
-  // const [page, setPage] = useState(1)
-  // let pagesCount = Math.ceil(cardPacksTotalCount / pageCount)
-  //
-  // const handleChangePage = (event: unknown, page: number) => {
-  //   setPage(page)
-  //   dispatch(getPacksTC())
-  // }
-  //
-  // const handleChange = (event: SelectChangeEvent) => {
-  //   setPageCount(event.target.value as string)
-  //   dispatch(getPacksTC())
-  // }
 
   const onClickButtonMyHandler = () => {
     const urlParams = {
@@ -136,7 +123,11 @@ export const PackList = () => {
     dispatch(updateUrlParamsAC({ ...urlParams }))
     setSearchParams({ ...urlParams })
   }
-
+  const setResetFilterHandler = () => {
+    dispatch(updateUrlParamsAC({ page: '1', pageCount: '5', user_id: '', min: '', max: '' }))
+    setSearchParams({ page: '1', pageCount: '5' })
+    setPackName('')
+  }
   const onChangeCommittedRangeHandler = (min: string, max: string) => {
     dispatch(updateUrlParamsAC({ ...paramsSearchState, min, max, user_id: userIDURL }))
     setSearchParams({
@@ -144,21 +135,73 @@ export const PackList = () => {
     })
   }
 
-  const addButtonClickHandler = (event: React.MouseEvent<HTMLElement>) => {
+  const addButtonClickHandler = () => {
     setOpenAddModal(true)
   }
 
   const addPack = (name: string) => {
     dispatch(addNewPackTC(name))
   }
+  const pageCountHandler = (e: ChangeEvent<HTMLSelectElement>) => {
+    const value = e.currentTarget.value
+
+    dispatch(updateUrlParamsAC({ ...paramsSearchState, pageCount: value, min: '', max: '' }))
+    setSearchParams({
+      ...filterAllParams({
+        ...paramsSearchState,
+        pageCount: value,
+        min: minRangeURL,
+        max: maxRangeURL,
+        userID: userIDURL,
+        packName,
+      }),
+    })
+  }
+
+  const changePageHandle = (event: React.ChangeEvent<unknown>, page: number) => {
+    dispatch(updateUrlParamsAC({ ...paramsSearchState, page: page + '' }))
+    setSearchParams({
+      ...filterAllParams({
+        ...paramsSearchState,
+        page: page + '',
+        userID: userIDURL,
+        packName,
+      }),
+    })
+  }
+
+  const searchValueTextHandler = (valueSearch: string) => {
+    setPackName(valueSearch)
+    //setSearchParams({
+    //...filterAllParams({ ...paramsSearchState, packName: valueSearch, userID: userIDURL }),
+    //})
+  }
+
+  useEffect(() => {
+    setSearchParams({
+      ...filterAllParams({
+        ...paramsSearchState,
+        pageCount: pageCountURL,
+        page: pageURL,
+        packName,
+        user_id: userIDURL,
+        min: minRangeURL,
+        max: maxRangeURL,
+      }),
+    })
+    dispatch(updateUrlParamsAC({ ...urlParamsFilter }))
+    console.log('useEffect of debouncedValue')
+  }, [debouncedValue])
 
   useEffect(() => {
     if (JSON.stringify(paramsSearchState) !== JSON.stringify(urlParamsFilter))
       dispatch(updateUrlParamsAC({ ...urlParamsFilter }))
+    console.log('useEffect of updateUrlParamsAC')
   }, [dispatch, urlParamsFilter])
 
   useEffect(() => {
     if (JSON.stringify(paramsSearchState) === JSON.stringify(urlParamsFilter)) {
+      console.log('useEffect of getPacksTC')
       dispatch(getPacksTC())
     }
   }, [dispatch, paramsSearchState])
@@ -190,9 +233,9 @@ export const PackList = () => {
           onClickButtonMy={onClickButtonMyHandler}
           onClickButtonAll={onClickButtonAllHandler}
           onChangeCommittedRange={onChangeCommittedRangeHandler}
-          // setResetFilter={setResetFilterHandler}
+          setResetFilter={setResetFilterHandler}
           valueSearch={packName}
-          // searchValueText={searchValueTextHandler}
+          searchValueText={searchValueTextHandler}
           minRangeURL={minRangeURL}
           maxRangeURL={maxRangeURL}
           urlUserID={userIDURL}
@@ -231,18 +274,16 @@ export const PackList = () => {
             className={s.pagination}
             color="primary"
             shape="rounded"
-            // page={page}
-            // onChange={handleChangePage}
-            // count={pagesCount}
+            page={+(page ? page : 1)}
+            count={cardPacksTotalCount}
+            onChange={changePageHandle}
           />
           <span className={s.show}>Show</span>
-          <FormControl sx={{ m: 1, minWidth: 80 }}>
-            {/*<Select value={pageClientCount} onChange={handleChange}>*/}
-            {/*  <MenuItem value={5}>5</MenuItem>*/}
-            {/*  <MenuItem value={10}>10</MenuItem>*/}
-            {/*  <MenuItem value={20}>20</MenuItem>*/}
-            {/*</Select>*/}
-          </FormControl>
+          <NativeSelect value={pageCount} onChange={pageCountHandler}>
+            <option value={5}>5</option>
+            <option value={10}>10</option>
+            <option value={20}>20</option>
+          </NativeSelect>
           <span>Cards per page</span>
         </div>
       </div>
