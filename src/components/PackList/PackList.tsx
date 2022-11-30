@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { ChangeEvent, useEffect, useState } from 'react'
 
 import {
   Button,
@@ -6,6 +6,8 @@ import {
   MenuItem,
   Pagination,
   Paper,
+  Select,
+  SelectChangeEvent,
   styled,
   Table,
   TableBody,
@@ -16,6 +18,7 @@ import {
   TableRow,
 } from '@mui/material'
 import FormControl from '@mui/material/FormControl/FormControl'
+import NativeSelect from '@mui/material/NativeSelect'
 import { Navigate, useSearchParams } from 'react-router-dom'
 
 import { PATH } from '../../app/App'
@@ -35,7 +38,6 @@ import { FilterBar } from '../FilterBar/FilterBar'
 
 import { Pack } from './Pack/Pack'
 import s from './PackList.module.css'
-
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.grey['200'],
@@ -58,6 +60,7 @@ export const PackList = () => {
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
   const user_id = useAppSelector(state => state.profile._id)
   const paramsSearchState = useAppSelector(state => state.packs.params)
+  const pageCount = useAppSelector(state => state.packs.params.pageCount)
 
   const [searchParams, setSearchParams] = useSearchParams()
 
@@ -137,6 +140,21 @@ export const PackList = () => {
   const addPack = (name: string) => {
     dispatch(addNewPackTC(name))
   }
+  const pageCountHandler = (e: ChangeEvent<HTMLSelectElement>) => {
+    const value = e.currentTarget.value
+
+    dispatch(updateUrlParamsAC({ ...paramsSearchState, pageCount: value, min: '', max: '' }))
+    setSearchParams({
+      ...filterAllParams({
+        ...paramsSearchState,
+        pageCount: value,
+        min: minRangeURL,
+        max: maxRangeURL,
+        userID: userIDURL,
+        packName,
+      }),
+    })
+  }
   const searchValueTextHandler = (valueSearch: string) => {
     setPackName(valueSearch)
     //setSearchParams({
@@ -146,7 +164,14 @@ export const PackList = () => {
 
   useEffect(() => {
     setSearchParams({
-      ...filterAllParams({ ...paramsSearchState, packName: packName, userID: userIDURL }),
+      ...filterAllParams({
+        ...paramsSearchState,
+        pageCount: pageCountURL,
+        packName,
+        user_id: userIDURL,
+        min: minRangeURL,
+        max: maxRangeURL,
+      }),
     })
     dispatch(updateUrlParamsAC({ ...urlParamsFilter }))
     console.log('useEffect of debouncedValue')
@@ -238,13 +263,13 @@ export const PackList = () => {
             // count={pagesCount}
           />
           <span className={s.show}>Show</span>
-          <FormControl sx={{ m: 1, minWidth: 80 }}>
-            {/*<Select value={pageClientCount} onChange={handleChange}>*/}
-            {/*  <MenuItem value={5}>5</MenuItem>*/}
-            {/*  <MenuItem value={10}>10</MenuItem>*/}
-            {/*  <MenuItem value={20}>20</MenuItem>*/}
-            {/*</Select>*/}
-          </FormControl>
+          {/*<FormControl sx={{ m: 1, minWidth: 80 }}>*/}
+          <NativeSelect value={pageCount} onChange={pageCountHandler}>
+            <option value={5}>5</option>
+            <option value={10}>10</option>
+            <option value={20}>20</option>
+          </NativeSelect>
+          {/*</FormControl>*/}
           <span>Cards per page</span>
         </div>
       </div>
