@@ -4,6 +4,7 @@ import SearchIcon from '@mui/icons-material/Search'
 import { Button, debounce, InputBase } from '@mui/material'
 import { alpha, styled } from '@mui/material/styles'
 
+import { AddCardModal } from '../../../common/Modals/CardModals/AddCardModal'
 import { addNewCardTC, setCardsTC } from '../../../redux/cards-reducer'
 import { useAppDispatch, useAppSelector } from '../../../utils/hooks'
 
@@ -49,6 +50,15 @@ export const SearchForCards = () => {
   const cardsPack_id = useAppSelector(state => state.cards.cardsPack_id)
   const [page, setPage] = useState(1)
   const pageCount = useAppSelector(state => state.cards.pageCount)
+  const [openAddCardModal, setOpenAddCardModal] = useState(false)
+
+  const addCard = (question: string, answer: string) => {
+    dispatch(addNewCardTC(cardsPack_id, page, pageCount, question, answer))
+  }
+
+  const addCardButtonClickHandler = () => {
+    setOpenAddCardModal(true)
+  }
 
   const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     console.log()
@@ -74,11 +84,17 @@ export const SearchForCards = () => {
       </div>
 
       <Button
-        onClick={() => dispatch(addNewCardTC(cardsPack_id, page, pageCount))}
+        onClick={addCardButtonClickHandler}
         type="submit"
         variant="contained"
         style={{ borderRadius: '20px', marginTop: '40px' }}
       >
+        <AddCardModal
+          title="Add new card"
+          open={openAddCardModal}
+          toggleOpenMode={setOpenAddCardModal}
+          addItem={addCard}
+        />
         Add New Card
       </Button>
     </div>

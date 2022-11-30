@@ -9,25 +9,32 @@ type AddCardModalPropsType = {
   title: string
   open: boolean
   toggleOpenMode: (value: boolean) => void
-  addItem: (name: string) => void
+  addItem: (question: string, answer: string) => void
 }
 
 export const AddCardModal = (props: AddCardModalPropsType) => {
-  const [name, setText] = useState('')
+  const [question, setQuestion] = useState('')
+  const [answer, setAnswer] = useState('')
 
   const onCloseModalHandler = () => {
     props.toggleOpenMode(false)
-    setText('')
+    setQuestion('')
+    setAnswer('')
   }
 
-  const inputChangeHandler = (evt: ChangeEvent<HTMLInputElement>) => {
-    setText(evt.currentTarget.value)
+  const inputAddQuestionHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    setQuestion(event.currentTarget.value)
+  }
+
+  const inputAddAnswerHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    setAnswer(event.currentTarget.value)
   }
 
   const saveButtonHandler = () => {
-    props.addItem(name)
+    props.addItem(question, answer)
     props.toggleOpenMode(false)
-    setText('')
+    setQuestion('')
+    setAnswer('')
   }
 
   return (
@@ -38,10 +45,17 @@ export const AddCardModal = (props: AddCardModalPropsType) => {
       onCloseModal={onCloseModalHandler}
     >
       <TextField
-        value={name}
-        label="Name pack"
+        value={question}
+        label="Question"
         variant="standard"
-        onChange={inputChangeHandler}
+        onChange={inputAddQuestionHandler}
+        autoFocus
+      />
+      <TextField
+        value={answer}
+        label="Answer"
+        variant="standard"
+        onChange={inputAddAnswerHandler}
         autoFocus
       />
       <ButtonBlockForModals

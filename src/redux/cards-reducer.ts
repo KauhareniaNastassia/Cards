@@ -79,13 +79,19 @@ export const setCardsTC =
   }
 
 export const addNewCardTC =
-  (cardsPack_id: string, page: number, pageCount: number): AppThunkType =>
+  (
+    cardsPack_id: string,
+    page: number,
+    pageCount: number,
+    question: string,
+    answer: string
+  ): AppThunkType =>
   async dispatch => {
     dispatch(setAppStatusAC('loading'))
     try {
-      const res = await cardsAPI.addNewCard({ card: { cardsPack_id } })
+      const res = await cardsAPI.addNewCard({ card: { cardsPack_id, question, answer } })
 
-      dispatch(setCardsTC({ cardsPack_id, page, pageCount}))
+      dispatch(setCardsTC({ cardsPack_id, page, pageCount }))
       dispatch(setAppStatusAC('succeed'))
     } catch (e) {
       console.log(e)

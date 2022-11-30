@@ -78,12 +78,12 @@ export const CardsList = () => {
     setOpenEditCardModal(true)
   }
 
-  const addCard = () => {
-    dispatch(addNewCardTC(cardsPack_id, page, pageCount))
+  const addCard = (question: string, answer: string) => {
+    dispatch(addNewCardTC(cardsPack_id, page, pageCount, question, answer))
   }
 
   const addCardButtonClickHandler = () => {
-    setOpenDeleteCardModal(true)
+    setOpenAddCardModal(true)
   }
 
   return (
@@ -100,7 +100,8 @@ export const CardsList = () => {
           <div className={s.span}>This pack is empty. Click add new card to fill this pack</div>
           <Button
             onClick={
-              addCardButtonClickHandler /*dispatch(addNewCardTC(cardsPack_id, page, pageCount))*/
+              addCardButtonClickHandler /*() =>
+                dispatch(addNewCardTC(cardsPack_id, page, pageCount))*/
             }
             type="submit"
             variant="contained"
