@@ -40,6 +40,7 @@ export const EditPackModal = (props: EditModalPropsType) => {
         value={name}
         label="Name pack"
         variant="standard"
+        style={{ width: '100%' }}
         onChange={inputChangeHandler}
         autoFocus
       />

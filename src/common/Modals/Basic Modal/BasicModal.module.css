@@ -2,9 +2,7 @@
     display: flex;
     justify-content: space-between;
 
-    margin-bottom: 20px;
-
-    border-bottom: 1px solid grey;
+    margin: 15px 25px 10px;
 }
 
 .title {
@@ -12,6 +10,15 @@
 
     font-size: 20px;
     font-weight: normal;
+}
+
+.line {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.children {
+    margin: 35px 25px;
 }
 
 .closeBtn {

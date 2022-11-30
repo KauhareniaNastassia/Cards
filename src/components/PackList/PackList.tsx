@@ -38,6 +38,7 @@ import { FilterBar } from '../FilterBar/FilterBar'
 
 import { Pack } from './Pack/Pack'
 import s from './PackList.module.css'
+
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.grey['200'],
@@ -224,7 +225,7 @@ export const PackList = () => {
           </Button>
         </div>
         <AddPackModal
-          title="Add Pack"
+          title="Add new pack"
           open={openAddModal}
           toggleOpenMode={setOpenAddModal}
           addItem={addPack}

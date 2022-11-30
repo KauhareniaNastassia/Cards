@@ -5,7 +5,7 @@ import { ButtonBlockForModals } from '../ButtonBlockForModals/ButtonBlockForModa
 
 type DeleteModalPropsType = {
   title: string
-  message: string
+  name: string
   open: boolean
   toggleOpenMode: (value: boolean) => void
   deleteItem: () => void
@@ -28,7 +28,9 @@ export const DeletePackModal = (props: DeleteModalPropsType) => {
       toggleOpenMode={props.toggleOpenMode}
       onCloseModal={onCloseModalHandler}
     >
-      <p>{props.message}</p>
+      <p>
+        Do you want to delete <b>{props.name}</b>? All cards will be deleted.
+      </p>
       <ButtonBlockForModals
         onCloseModalHandler={onCloseModalHandler}
         actionButtonHandler={deletePackButtonHandler}

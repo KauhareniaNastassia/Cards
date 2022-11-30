@@ -42,6 +42,7 @@ export const AddPackModal = (props: AddModalPropsType) => {
         label="Name pack"
         variant="standard"
         onChange={inputChangeHandler}
+        style={{ width: '100%' }}
         autoFocus
       />
       <ButtonBlockForModals

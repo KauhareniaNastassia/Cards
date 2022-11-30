@@ -48,7 +48,6 @@ const style = {
   width: 400,
   bgcolor: 'background.paper',
   boxShadow: 24,
-  p: 4,
 }
 
 type BasicModalPropsType = {
@@ -83,7 +82,8 @@ export function BasicModal(props: BasicModalPropsType) {
               <CloseIcon color="primary" />
             </IconButton>
           </div>
-          {props.children}
+          <hr className={s.line} />
+          <div className={s.children}>{props.children}</div>
         </Box>
       </Modal>
     </div>

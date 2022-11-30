@@ -93,7 +93,7 @@ export const Pack = (props: PacksType) => {
         )}
         <DeletePackModal
           title="Delete Pack"
-          message={`Do you want to delete ${props.name}? All cards will be deleted.`}
+          name={props.name}
           open={openDeleteModal}
           toggleOpenMode={setOpenDeleteModal}
           deleteItem={deletePack}

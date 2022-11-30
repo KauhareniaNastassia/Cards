@@ -29,7 +29,18 @@ import { addNewCardTC, deleteCardTC, setCardsTC, updateCardTC } from '../../redu
 import { useAppDispatch, useAppSelector } from '../../utils/hooks'
 import { SearchForCards } from '../PackList/SettingsForCards/SearchForCards'
 
+import { Card } from './Card/Card'
 import s from './CardsList.module.css'
+
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  [`&.${tableCellClasses.head}`]: {
+    backgroundColor: theme.palette.grey['200'],
+    color: theme.palette.common.black,
+    fontFamily: 'Montseratt',
+    fontWeight: 'bold',
+    fontSize: '15px',
+  },
+}))
 
 export const CardsList = () => {
   const cards = useAppSelector(state => state.cards.cards)
@@ -44,16 +55,6 @@ export const CardsList = () => {
   const [openDeleteCardModal, setOpenDeleteCardModal] = useState(false)
   const [openEditCardModal, setOpenEditCardModal] = useState(false)
   const [openAddCardModal, setOpenAddCardModal] = useState(false)
-
-  const StyledTableCell = styled(TableCell)(({ theme }) => ({
-    [`&.${tableCellClasses.head}`]: {
-      backgroundColor: theme.palette.grey['200'],
-      color: theme.palette.common.black,
-      fontFamily: 'Montseratt',
-      fontWeight: 'bold',
-      fontSize: '15px',
-    },
-  }))
 
   const StyledTableCellRow = styled(TableCell)(({}) => ({
     [`&.${tableCellClasses.body}`]: {
@@ -130,8 +131,10 @@ export const CardsList = () => {
                   <StyledTableCell align="right"></StyledTableCell>
                 </TableRow>
               </TableHead>
+
               <TableBody>
                 {cards.map(card => (
+                  /*<Card key={card._id} card={card} page={page} pageCount={pageCount} />*/
                   <TableRow
                     key={card._id}
                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -149,32 +152,10 @@ export const CardsList = () => {
                     <StyledTableCellRow align="right">
                       {myID === card.user_id && (
                         <span>
-                          <IconButton
-                            onClick={
-                              editCardButtonClickHandler
-                              /*() =>
-                              dispatch(
-                                updateCardTC(
-                                  {
-                                    card: {
-                                      _id: card._id,
-                                      answer: 'some new answer',
-                                      question: 'updated new Question',
-                                    },
-                                  },
-                                  page,
-                                  pageCount
-                                )
-                              )*/
-                            }
-                          >
+                          <IconButton onClick={editCardButtonClickHandler}>
                             <EditIcon></EditIcon>
                           </IconButton>
-                          <IconButton
-                            onClick={
-                              deleteCardButtonClickHandler /*() => dispatch(deleteCardTC(card._id, page, pageCount))*/
-                            }
-                          >
+                          <IconButton onClick={deleteCardButtonClickHandler}>
                             <DeleteIcon></DeleteIcon>
                           </IconButton>
                         </span>
@@ -203,7 +184,7 @@ export const CardsList = () => {
                       />
                       <DeleteCardModal
                         title="Delete Card"
-                        message={`Do you really want to remove ${card.question}?`}
+                        question={card.question}
                         open={openDeleteCardModal}
                         toggleOpenMode={setOpenDeleteCardModal}
                         deleteItem={() => dispatch(deleteCardTC(card._id, page, pageCount))}

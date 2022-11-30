@@ -23,7 +23,7 @@ export const ButtonBlockForModals = (props: ButtonBlockForModalsPropsType) => {
       </Button>
       <Button
         variant="contained"
-        style={{ borderRadius: '20px' }}
+        style={{ borderRadius: '20px', width: '100px' }}
         className={s.btn}
         onClick={props.actionButtonHandler}
       >
