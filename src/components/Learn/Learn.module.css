@@ -11,8 +11,14 @@
     display: flex;
     flex-direction: column;
 }
+.none {
+    display: none !important;
+}
 .button{
     margin: 20px auto;
+}
+.buttonMUI {
+    border-radius: 20px !important;
 }
 .question{
     margin-bottom: 20px;
