@@ -21,6 +21,8 @@ export const Pack = (props: PacksType) => {
   const pageCount = useAppSelector(state => state.cards.pageCount)
   const [openDeleteModal, setOpenDeleteModal] = useState(false)
   const [openEditModal, setOpenEditModal] = useState(false)
+  const dispatch = useAppDispatch()
+  const myID = useAppSelector(state => state.profile._id)
 
   const onClickSetPack = () => {
     dispatch(
@@ -40,8 +42,6 @@ export const Pack = (props: PacksType) => {
       fontSize: '15px',
     },
   }))
-  const dispatch = useAppDispatch()
-  const myID = useAppSelector(state => state.profile._id)
 
   const deleteButtonClickHandler = () => {
     setOpenDeleteModal(true)

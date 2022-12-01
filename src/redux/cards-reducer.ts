@@ -62,6 +62,7 @@ export const setTotalCardsCountAC = (cardsTotalCount: number) =>
     type: 'CARDS/SET_TOTAL_CARDS_COUNT',
     cardsTotalCount,
   } as const)
+
 //thunks
 export const setCardsTC =
   (params: GetCardsParamsType): AppThunkType =>
