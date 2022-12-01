@@ -29,7 +29,6 @@ import { addNewCardTC, deleteCardTC, setCardsTC, updateCardTC } from '../../redu
 import { useAppDispatch, useAppSelector } from '../../utils/hooks'
 import { SearchForCards } from '../PackList/SettingsForCards/SearchForCards'
 
-import { Card } from './Card/Card'
 import s from './CardsList.module.css'
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({

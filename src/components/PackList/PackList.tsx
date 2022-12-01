@@ -2,12 +2,8 @@ import React, { ChangeEvent, useEffect, useState } from 'react'
 
 import {
   Button,
-  IconButton,
-  MenuItem,
   Pagination,
   Paper,
-  Select,
-  SelectChangeEvent,
   styled,
   Table,
   TableBody,
@@ -17,7 +13,6 @@ import {
   TableHead,
   TableRow,
 } from '@mui/material'
-import FormControl from '@mui/material/FormControl/FormControl'
 import NativeSelect from '@mui/material/NativeSelect'
 import { Navigate, useSearchParams } from 'react-router-dom'
 
@@ -25,10 +20,8 @@ import { PATH } from '../../app/App'
 import { AddPackModal } from '../../common/Modals/PackModals/AddPackModal'
 import {
   addNewPackTC,
-  deletePackTC,
   getPacksTC,
   setShowPackCardsAC,
-  updatePackTC,
   updateUrlParamsAC,
 } from '../../redux/pack-reducer'
 import { filterAllParams } from '../../utils/filterParams'

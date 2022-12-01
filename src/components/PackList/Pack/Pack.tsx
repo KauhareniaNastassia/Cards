@@ -11,7 +11,7 @@ import { PacksType } from '../../../api/cards-API'
 import { PATH } from '../../../app/App'
 import { DeletePackModal } from '../../../common/Modals/PackModals/DeletePackModal'
 import { EditPackModal } from '../../../common/Modals/PackModals/EditPackModal'
-import { setCardsTC, setPackIdAC } from '../../../redux/cards-reducer'
+import { setCardsAC, setCardsTC, setPackIdAC } from '../../../redux/cards-reducer'
 import { deletePackTC, updatePackTC } from '../../../redux/pack-reducer'
 import { useAppDispatch, useAppSelector } from '../../../utils/hooks'
 import s from '../PackList.module.css'
@@ -58,6 +58,9 @@ export const Pack = (props: PacksType) => {
   const editPackItem = (newName: string) => {
     dispatch(updatePackTC(props._id, newName))
   }
+  const onClickLearnHandler = () => {
+    dispatch(setCardsTC({ packName: props.name, cardsPack_id: props._id, page }))
+  }
 
   return (
     <TableRow
@@ -77,8 +80,8 @@ export const Pack = (props: PacksType) => {
       <StyledTableCellRow align="center">{props.user_name}</StyledTableCellRow>
       <StyledTableCellRow align="center">
         <IconButton>
-          <Link style={{ textDecoration: 'none', color: 'gray' }} to={PATH.learn}>
-            <SchoolIcon></SchoolIcon>
+          <Link style={{ textDecoration: 'none', color: 'gray' }} to={`learn/${props._id}`}>
+            <SchoolIcon onClick={onClickLearnHandler}></SchoolIcon>
           </Link>
         </IconButton>
         {myID === props.user_id && (

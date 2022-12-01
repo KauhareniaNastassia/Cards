@@ -33,7 +33,7 @@ export const PATH = {
   checkEmail: '/checkEmail',
   packList: '/packList',
   pack: '/pack',
-  learn: '/learn',
+  learn: '/packList/learn/:id',
 }
 
 function App() {
