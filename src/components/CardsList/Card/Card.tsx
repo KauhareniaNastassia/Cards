@@ -10,7 +10,6 @@ import { DeleteCardModal } from '../../../common/Modals/CardModals/DeleteCardMod
 import { EditCardModal } from '../../../common/Modals/CardModals/EditCardModal'
 import { deleteCardTC, updateCardTC } from '../../../redux/cards-reducer'
 import { useAppDispatch, useAppSelector } from '../../../utils/hooks'
-import s from '../CardsList.module.css'
 
 type CardPropsType = {
   card: CardPackType
@@ -31,6 +30,18 @@ export const Card = (props: CardPropsType) => {
     },
   }))
 
+  const deleteCardButtonClickHandler = () => {
+    setOpenDeleteCardModal(true)
+  }
+
+  const deleteCard = () => {
+    dispatch(deleteCardTC(props.card._id, props.page, props.pageCount))
+  }
+
+  const editCardButtonClickHandler = () => {
+    setOpenEditCardModal(true)
+  }
+
   const editCard = (newQuestion: string, newAnswer: string) => {
     dispatch(
       updateCardTC(
@@ -47,79 +58,45 @@ export const Card = (props: CardPropsType) => {
     )
   }
 
-  const editCardButtonClickHandler = () => {
-    setOpenEditCardModal(true)
-  }
-
-  const deleteCard = () => {
-    dispatch(deleteCardTC(props.card._id, props.page, props.pageCount))
-  }
-
-  const deleteCardButtonClickHandler = () => {
-    setOpenDeleteCardModal(true)
-  }
-
   return (
-    <div>
-      <TableRow
-        key={props.card._id}
-        className={s.tableRow}
-        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-      >
-        <StyledTableCellRow className={s.nameColumn} component="th" scope="row">
-          {props.card.question}
-        </StyledTableCellRow>
-        <StyledTableCellRow align="center">{props.card.answer}</StyledTableCellRow>
-        <StyledTableCellRow align="center">
-          {moment(`${props.card.updated}`).format('D.M.Y')}
-        </StyledTableCellRow>
-        <StyledTableCellRow align="center">
-          <Rating name="half-rating" defaultValue={props.card.grade} precision={0.1} />
-        </StyledTableCellRow>
-        <StyledTableCellRow align="center">
-          {myID === props.card.user_id && (
-            <span>
-              <IconButton onClick={editCardButtonClickHandler}>
-                <EditIcon></EditIcon>
-              </IconButton>
-              <IconButton onClick={deleteCardButtonClickHandler}>
-                <DeleteIcon></DeleteIcon>
-              </IconButton>
-            </span>
-          )}
-          <EditCardModal
-            title="Edit Card"
-            cardQuestion={props.card.question}
-            cardAnswer={props.card.answer}
-            open={openEditCardModal}
-            toggleOpenMode={setOpenEditCardModal}
-            editItem={
-              editCard /*(newQuestion: string, newAnswer: string) =>
-              dispatch(
-                updateCardTC(
-                  {
-                    card: {
-                      _id: card._id,
-                      answer: newAnswer,
-                      question: newQuestion,
-                    },
-                  },
-                  page,
-                  pageCount
-                )
-              )
-            */
-            }
-          />
-          <DeleteCardModal
-            title="Delete Card"
-            question={props.card.question}
-            open={openDeleteCardModal}
-            toggleOpenMode={setOpenDeleteCardModal}
-            deleteItem={deleteCard /*() => dispatch(deleteCardTC(card._id, page, pageCount))*/}
-          />
-        </StyledTableCellRow>
-      </TableRow>
-    </div>
+    <TableRow key={props.card._id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+      <StyledTableCellRow component="th" scope="row">
+        {props.card.question}
+      </StyledTableCellRow>
+      <StyledTableCellRow align="right">{props.card.answer}</StyledTableCellRow>
+      <StyledTableCellRow align="right">
+        {moment(`${props.card.updated}`).format('D.M.Y')}
+      </StyledTableCellRow>
+      <StyledTableCellRow align="right">
+        <Rating name="half-rating" defaultValue={props.card.grade} precision={0.1} />
+      </StyledTableCellRow>
+      <StyledTableCellRow align="right">
+        {myID === props.card.user_id && (
+          <span>
+            <IconButton onClick={editCardButtonClickHandler}>
+              <EditIcon></EditIcon>
+            </IconButton>
+            <IconButton onClick={deleteCardButtonClickHandler}>
+              <DeleteIcon></DeleteIcon>
+            </IconButton>
+          </span>
+        )}
+        <EditCardModal
+          title="Edit Card"
+          cardQuestion={props.card.question}
+          cardAnswer={props.card.answer}
+          open={openEditCardModal}
+          toggleOpenMode={setOpenEditCardModal}
+          editItem={editCard}
+        />
+        <DeleteCardModal
+          title="Delete Card"
+          question={props.card.question}
+          open={openDeleteCardModal}
+          toggleOpenMode={setOpenDeleteCardModal}
+          deleteItem={deleteCard}
+        />
+      </StyledTableCellRow>
+    </TableRow>
   )
 }
