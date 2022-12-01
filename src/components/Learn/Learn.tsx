@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import { useAppSelector } from '../../utils/hooks'
 
@@ -10,7 +10,7 @@ export const Learn = () => {
 
   return (
     <div className={s.wrapper}>
-      <div className={s.packName}>Learn {packName}</div>
+      <div className={s.packName}>Learn {`"${packName}"`}</div>
       <LearnCard />
     </div>
   )

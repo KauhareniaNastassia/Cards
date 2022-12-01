@@ -101,7 +101,20 @@ export const setCardsTC =
       console.log(e)
     }
   }
+export const createLearnCardsTC =
+  (data: CardLearnType): AppThunkType =>
+  async dispatch => {
+    dispatch(setAppStatusAC('loading'))
+    try {
+      const res = await cardsAPI.updateGradeCard(data)
 
+      dispatch(setCardsLearnDataAC(res.data.updatedGrade))
+    } catch (e) {
+      console.log(e)
+    } finally {
+      dispatch(setAppStatusAC('idle'))
+    }
+  }
 export const addNewCardTC =
   (
     cardsPack_id: string,

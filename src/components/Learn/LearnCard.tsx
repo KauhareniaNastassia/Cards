@@ -1,23 +1,78 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { Button, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from '@mui/material'
 import { useParams } from 'react-router-dom'
 
-import { CardPackType, GetCardsParamsType } from '../../api/cards-API'
-import { useAppSelector } from '../../utils/hooks'
+import { CardPackType } from '../../api/cards-API'
+import { createLearnCardsTC, setCardsTC } from '../../redux/cards-reducer'
+import { useAppDispatch, useAppSelector } from '../../utils/hooks'
 
 import s from './Learn.module.css'
+const grades = ['Did not know', 'Forgot', 'A lot of thought', 'Confused', 'Knew the answer']
+const getCard = (cards: CardPackType[]) => {
+  const sum = cards.reduce((acc, card) => acc + (6 - card.grade) * (6 - card.grade), 0)
+  const rand = Math.random() * sum
+  const res = cards.reduce(
+    (acc: { sum: number; id: number }, card, i) => {
+      const newSum = acc.sum + (6 - card.grade) * (6 - card.grade)
+
+      return { sum: newSum, id: newSum < rand ? i : acc.id }
+    },
+    { sum: 0, id: -1 }
+  )
+
+  return cards[res.id + 1]
+}
 
 export const LearnCard = () => {
-  const cards = useAppSelector(state => state.cards.cards)
+  const dispatch = useAppDispatch()
+  const [first, setFirst] = useState<boolean>(true)
   const [answer, setAnswer] = useState(false)
+  const [valueRadio, setValueRadio] = useState<number>(1)
+  const { id } = useParams()
+  const cards = useAppSelector(state => state.cards.cards)
+  const [card, setCard] = useState<CardPackType>({
+    _id: '',
+    cardsPack_id: '',
+    user_id: '',
+    answer: '',
+    question: '',
+    grade: 0,
+    shots: 0,
+    comments: '',
+    type: '',
+    rating: 0,
+    more_id: '',
+    created: '',
+    updated: '',
+    __v: 0,
+  })
   const onClickHandler = () => {
     setAnswer(!answer)
   }
-  const { id } = useParams()
-  const card = cards.find(card => card.cardsPack_id === id)
 
-  if (card) {
+  useEffect(() => {
+    if (first) {
+      dispatch(setCardsTC({ cardsPack_id: id }))
+      setFirst(false)
+    }
+
+    if (cards.length > 0) {
+      setCard(getCard(cards))
+    }
+
+    return () => {}
+  }, [dispatch, id, cards, first])
+
+  const onNext = () => {
+    setAnswer(false)
+    if (cards.length > 0) {
+      dispatch(createLearnCardsTC({ card_id: card._id, grade: valueRadio }))
+      setCard(getCard(cards))
+    }
+  }
+
+  if (cards.length > 0) {
     return (
       <div className={s.card}>
         <div className={s.question}>
@@ -40,23 +95,28 @@ export const LearnCard = () => {
             <div className={s.question}>
               Answer: <span className={s.questionText}> {card.answer}</span>
             </div>
-            <FormControl>
-              <FormLabel id="demo-radio-buttons-group-label">Rate yourself</FormLabel>
-              <RadioGroup
-                aria-labelledby="demo-radio-buttons-group-label"
-                defaultValue="female"
-                name="radio-buttons-group"
-              >
-                <FormControlLabel value={1} control={<Radio />} label="Did not know" />
-                <FormControlLabel value={2} control={<Radio />} label="Forgot" />
-                <FormControlLabel value={3} control={<Radio />} label="A lot of thought" />
-                <FormControlLabel value={4} control={<Radio />} label="Confused" />
-                <FormControlLabel value={5} control={<Radio />} label="Knew the answer" />
-              </RadioGroup>
-            </FormControl>
+            <div>
+              <span>Rate yourself:</span>
+              {grades.map((el, index) => {
+                const onClickHandler = () => {
+                  setValueRadio(index + 1)
+                }
+
+                return (
+                  <div key={index}>
+                    <FormControlLabel
+                      onClick={onClickHandler}
+                      checked={valueRadio === index + 1}
+                      control={<Radio />}
+                      label={el}
+                    />
+                  </div>
+                )
+              })}
+            </div>
 
             <div className={s.button}>
-              <Button variant="contained" style={{ borderRadius: '20px' }}>
+              <Button onClick={onNext} variant="contained" style={{ borderRadius: '20px' }}>
                 Next
               </Button>
             </div>
