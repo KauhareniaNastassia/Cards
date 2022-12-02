@@ -178,9 +178,6 @@ export const PackList = () => {
   const searchValueTextHandler = useCallback(
     (valueSearch: string) => {
       setPackName(valueSearch)
-      //setSearchParams({
-      //...filterAllParams({ ...paramsSearchState, packName: valueSearch, userID: userIDURL }),
-      //})
     },
     [dispatch]
   )
@@ -197,19 +194,16 @@ export const PackList = () => {
         max: maxRangeURL,
       }),
     })
-    dispatch(updateUrlParamsAC({ ...urlParamsFilter }))
-    console.log('useEffect of debouncedValue')
   }, [debouncedValue])
 
   useEffect(() => {
-    if (JSON.stringify(paramsSearchState) !== JSON.stringify(urlParamsFilter))
+    if (JSON.stringify(paramsSearchState) !== JSON.stringify(urlParamsFilter)) {
       dispatch(updateUrlParamsAC({ ...urlParamsFilter }))
-    console.log('useEffect of updateUrlParamsAC')
+    }
   }, [dispatch, urlParamsFilter])
 
   useEffect(() => {
     if (JSON.stringify(paramsSearchState) === JSON.stringify(urlParamsFilter)) {
-      console.log('useEffect of getPacksTC')
       dispatch(getPacksTC())
     }
   }, [dispatch, paramsSearchState])
