@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from 'react'
+import React, { ChangeEvent, useCallback, useEffect, useState } from 'react'
 
 import {
   Button,
@@ -81,7 +81,7 @@ export const PackList = () => {
     max: maxRangeURL,
   })
 
-  const onClickButtonMyHandler = () => {
+  const onClickButtonMyHandler = useCallback(() => {
     const urlParams = {
       ...filterAllParams({
         ...paramsSearchState,
@@ -98,9 +98,9 @@ export const PackList = () => {
     dispatch(updateUrlParamsAC({ ...urlParams }))
 
     setSearchParams({ ...urlParams })
-  }
+  }, [dispatch])
 
-  const onClickButtonAllHandler = () => {
+  const onClickButtonAllHandler = useCallback(() => {
     const urlParams = {
       ...filterAllParams({
         ...paramsSearchState,
@@ -116,18 +116,23 @@ export const PackList = () => {
     dispatch(setShowPackCardsAC('all'))
     dispatch(updateUrlParamsAC({ ...urlParams }))
     setSearchParams({ ...urlParams })
-  }
-  const setResetFilterHandler = () => {
+  }, [dispatch])
+
+  const setResetFilterHandler = useCallback(() => {
     dispatch(updateUrlParamsAC({ page: '1', pageCount: '5', user_id: '', min: '', max: '' }))
     setSearchParams({ page: '1', pageCount: '5' })
     setPackName('')
-  }
-  const onChangeCommittedRangeHandler = (min: string, max: string) => {
-    dispatch(updateUrlParamsAC({ ...paramsSearchState, min, max, user_id: userIDURL }))
-    setSearchParams({
-      ...filterAllParams({ ...paramsSearchState, min, max, user_id: userIDURL, packName }),
-    })
-  }
+  }, [dispatch])
+
+  const onChangeCommittedRangeHandler = useCallback(
+    (min: string, max: string) => {
+      dispatch(updateUrlParamsAC({ ...paramsSearchState, min, max, user_id: userIDURL }))
+      setSearchParams({
+        ...filterAllParams({ ...paramsSearchState, min, max, user_id: userIDURL, packName }),
+      })
+    },
+    [dispatch]
+  )
 
   const addButtonClickHandler = () => {
     setOpenAddModal(true)
@@ -136,40 +141,49 @@ export const PackList = () => {
   const addPack = (name: string) => {
     dispatch(addNewPackTC(name))
   }
-  const pageCountHandler = (e: ChangeEvent<HTMLSelectElement>) => {
-    const value = e.currentTarget.value
+  const pageCountHandler = useCallback(
+    (e: ChangeEvent<HTMLSelectElement>) => {
+      const value = e.currentTarget.value
 
-    dispatch(updateUrlParamsAC({ ...paramsSearchState, pageCount: value, min: '', max: '' }))
-    setSearchParams({
-      ...filterAllParams({
-        ...paramsSearchState,
-        pageCount: value,
-        min: minRangeURL,
-        max: maxRangeURL,
-        userID: userIDURL,
-        packName,
-      }),
-    })
-  }
+      dispatch(updateUrlParamsAC({ ...paramsSearchState, pageCount: value, min: '', max: '' }))
+      setSearchParams({
+        ...filterAllParams({
+          ...paramsSearchState,
+          pageCount: value,
+          min: minRangeURL,
+          max: maxRangeURL,
+          userID: userIDURL,
+          packName,
+        }),
+      })
+    },
+    [dispatch]
+  )
 
-  const changePageHandle = (event: React.ChangeEvent<unknown>, page: number) => {
-    dispatch(updateUrlParamsAC({ ...paramsSearchState, page: page + '' }))
-    setSearchParams({
-      ...filterAllParams({
-        ...paramsSearchState,
-        page: page + '',
-        userID: userIDURL,
-        packName,
-      }),
-    })
-  }
+  const changePageHandle = useCallback(
+    (event: React.ChangeEvent<unknown>, page: number) => {
+      dispatch(updateUrlParamsAC({ ...paramsSearchState, page: page + '' }))
+      setSearchParams({
+        ...filterAllParams({
+          ...paramsSearchState,
+          page: page + '',
+          userID: userIDURL,
+          packName,
+        }),
+      })
+    },
+    [dispatch]
+  )
 
-  const searchValueTextHandler = (valueSearch: string) => {
-    setPackName(valueSearch)
-    //setSearchParams({
-    //...filterAllParams({ ...paramsSearchState, packName: valueSearch, userID: userIDURL }),
-    //})
-  }
+  const searchValueTextHandler = useCallback(
+    (valueSearch: string) => {
+      setPackName(valueSearch)
+      //setSearchParams({
+      //...filterAllParams({ ...paramsSearchState, packName: valueSearch, userID: userIDURL }),
+      //})
+    },
+    [dispatch]
+  )
 
   useEffect(() => {
     setSearchParams({

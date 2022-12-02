@@ -20,7 +20,7 @@ import { PATH } from '../../app/App'
 import { AddCardModal } from '../../common/Modals/CardModals/AddCardModal'
 import { addNewCardTC, setCardsTC } from '../../redux/cards-reducer'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks'
-import { SearchForCards } from '../PackList/SettingsForCards/SearchForCards'
+import { SearchForCards } from '../PackList/SearchForCards/SearchForCards'
 
 import { Card } from './Card/Card'
 import s from './CardsList.module.css'

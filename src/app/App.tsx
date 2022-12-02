@@ -29,11 +29,11 @@ export const PATH = {
   profile: '/profile',
   error404: '/error404',
   passwordRecovery: '/passwordRecovery',
-  createNewPassword: '/createNewPassword/:token',
   checkEmail: '/checkEmail',
   packList: '/packList',
   pack: '/pack',
-  learn: '/packList/learn/:id',
+  createNewPassword: '/createNewPassword/:token',
+  learn: '/learn/:id',
 }
 
 function App() {

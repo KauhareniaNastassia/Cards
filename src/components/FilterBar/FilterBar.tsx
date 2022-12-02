@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { memo, useCallback, useEffect, useState } from 'react'
 
 import FilterAltOffOutlinedIcon from '@mui/icons-material/FilterAltOffOutlined'
 import { Button, IconButton } from '@mui/material'
@@ -21,13 +21,8 @@ type propsType = {
   valueSearch: string
   setResetFilter: () => void
 }
-export const FilterBar = (props: propsType) => {
+export const FilterBar = memo((props: propsType) => {
   const dispatch = useAppDispatch()
-  const onClickClearFiltersHandler = () => {
-    props.setResetFilter()
-    setMinRange(minCardsCount)
-    setMaxRange(maxCardsCount)
-  }
 
   const minCardsCount = useAppSelector(state => state.packs.minCardsCount)
   const maxCardsCount = useAppSelector(state => state.packs.maxCardsCount)
@@ -35,19 +30,28 @@ export const FilterBar = (props: propsType) => {
   const [minRange, setMinRange] = useState<number>(minCardsCount)
   const [maxRange, setMaxRange] = useState<number>(maxCardsCount)
 
+  useEffect(() => {
+    setMinRange(props.minRangeURL ? +props.minRangeURL : minCardsCount)
+    setMaxRange(props.maxRangeURL ? +props.maxRangeURL : maxCardsCount)
+  }, [minCardsCount, maxCardsCount])
+
+  const onClickClearFiltersHandler = useCallback(() => {
+    props.setResetFilter()
+    setMinRange(minCardsCount)
+    setMaxRange(maxCardsCount)
+  }, [dispatch, props.setResetFilter])
+
   const onChangeRangeHandler = (value: [number, number]) => {
     setMinRange(value[0])
     setMaxRange(value[1])
   }
 
-  const onChangeCommittedHandler = (value: [number, number]) => {
-    props.onChangeCommittedRange(value[0] + '', value[1] + '')
-  }
-
-  useEffect(() => {
-    setMinRange(props.minRangeURL ? +props.minRangeURL : minCardsCount)
-    setMaxRange(props.maxRangeURL ? +props.maxRangeURL : maxCardsCount)
-  }, [minCardsCount, maxCardsCount])
+  const onChangeCommittedHandler = useCallback(
+    (value: [number, number]) => {
+      props.onChangeCommittedRange(value[0] + '', value[1] + '')
+    },
+    [dispatch, props.onChangeCommittedRange]
+  )
 
   return (
     <div className={s.wrapper}>
@@ -94,4 +98,4 @@ export const FilterBar = (props: propsType) => {
       </div>
     </div>
   )
-}
+})

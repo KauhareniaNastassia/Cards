@@ -1,13 +1,9 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 
 import { CircularProgress } from '@mui/material'
 import { Navigate } from 'react-router-dom'
 
 import { PATH } from '../../app/App'
-import Button from '../../common/Button/Button'
-import css_btn from '../../common/Button/Button.module.css'
-import Checkbox from '../../common/Checkbox/Checkbox'
-import Input from '../../common/Input/Input'
 import { useAppSelector } from '../../utils/hooks'
 
 export const Home = () => {

@@ -92,7 +92,7 @@ export const setCardsTC =
   async dispatch => {
     dispatch(setAppStatusAC('loading'))
     try {
-      const res = await cardsAPI.getCards({ ...params })
+      const res = await cardsAPI.getCards(params)
 
       dispatch(setCardsAC(res.data))
       dispatch(setAppStatusAC('succeed'))
@@ -106,7 +106,7 @@ export const setLearnCardsTC =
   async dispatch => {
     dispatch(setAppStatusAC('loading'))
     try {
-      const res = await cardsAPI.getCards({ ...params })
+      const res = await cardsAPI.getCards(params)
 
       dispatch(setCardsAC(res.data))
       dispatch(setAppStatusAC('succeed'))

@@ -1,4 +1,4 @@
-import { ChangeEvent, useCallback } from 'react'
+import { ChangeEvent, memo, useCallback } from 'react'
 
 import SearchIcon from '@mui/icons-material/Search'
 import { debounce, InputBase } from '@mui/material'
@@ -46,10 +46,13 @@ type PropsType = {
   onChange: (value: string) => void
   value: string
 }
-export const SearchBar = (props: PropsType) => {
-  const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    props.onChange(e.currentTarget.value)
-  }
+export const SearchBar = memo((props: PropsType) => {
+  const changeHandler = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      props.onChange(e.currentTarget.value)
+    },
+    [props.onChange]
+  )
   // const debouncedChangeHandler = useCallback(debounce(changeHandler, 1000), [])
 
   return (
@@ -66,4 +69,4 @@ export const SearchBar = (props: PropsType) => {
       />
     </Search>
   )
-}
+})

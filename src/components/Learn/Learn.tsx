@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { CardPackType } from '../../api/cards-API'
-import { setLearnCardsTC } from '../../redux/cards-reducer'
+import { setCardsTC, setLearnCardsTC } from '../../redux/cards-reducer'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks'
 
 import { getCard } from './GetCardSmartRandom/getCardSmartRandom'
@@ -36,7 +36,7 @@ export const Learn = () => {
 
   useEffect(() => {
     if (first) {
-      dispatch(setLearnCardsTC({ cardsPack_id: id }))
+      // dispatch(setCardsTC({ cardsPack_id: id }))
       setFirst(false)
     }
 

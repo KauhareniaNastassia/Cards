@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { memo, useState } from 'react'
 
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
@@ -16,7 +16,14 @@ import { deletePackTC, updatePackTC } from '../../../redux/pack-reducer'
 import { useAppDispatch, useAppSelector } from '../../../utils/hooks'
 import s from '../PackList.module.css'
 
-export const Pack = (props: PacksType) => {
+const StyledTableCellRow = styled(TableCell)(({ theme }) => ({
+  [`&.${tableCellClasses.body}`]: {
+    fontFamily: 'Montseratt',
+    fontSize: '15px',
+  },
+}))
+
+export const Pack = memo((props: PacksType) => {
   const page = useAppSelector(state => state.cards.page)
   const pageCount = useAppSelector(state => state.cards.pageCount)
   const [openDeleteModal, setOpenDeleteModal] = useState(false)
@@ -35,13 +42,6 @@ export const Pack = (props: PacksType) => {
     )
     dispatch(setPackIdAC(props._id))
   }
-
-  const StyledTableCellRow = styled(TableCell)(({ theme }) => ({
-    [`&.${tableCellClasses.body}`]: {
-      fontFamily: 'Montseratt',
-      fontSize: '15px',
-    },
-  }))
 
   const deleteButtonClickHandler = () => {
     setOpenDeleteModal(true)
@@ -80,7 +80,7 @@ export const Pack = (props: PacksType) => {
       <StyledTableCellRow align="center">{props.user_name}</StyledTableCellRow>
       <StyledTableCellRow align="center">
         <IconButton>
-          <Link style={{ textDecoration: 'none', color: 'gray' }} to={`learn/${props._id}`}>
+          <Link style={{ textDecoration: 'none', color: 'gray' }} to={`${PATH.learn}${props._id}`}>
             <SchoolIcon onClick={onClickLearnHandler}></SchoolIcon>
           </Link>
         </IconButton>
@@ -111,4 +111,4 @@ export const Pack = (props: PacksType) => {
       </StyledTableCellRow>
     </TableRow>
   )
-}
+})
