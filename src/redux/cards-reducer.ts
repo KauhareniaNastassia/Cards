@@ -101,6 +101,19 @@ export const setCardsTC =
       console.log(e)
     }
   }
+export const setLearnCardsTC =
+  (params: GetCardsParamsType): AppThunkType =>
+  async dispatch => {
+    dispatch(setAppStatusAC('loading'))
+    try {
+      const res = await cardsAPI.getCards({ ...params })
+
+      dispatch(setCardsAC(res.data))
+      dispatch(setAppStatusAC('succeed'))
+    } catch (e) {
+      console.log(e)
+    }
+  }
 export const createLearnCardsTC =
   (data: CardLearnType): AppThunkType =>
   async dispatch => {

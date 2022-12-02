@@ -1,12 +1,6 @@
-import axios, { AxiosResponse } from 'axios'
+import { AxiosResponse } from 'axios'
 
-export const instance = axios.create({
-  baseURL:
-    process.env.NODE_ENV === 'development'
-      ? 'http://localhost:7542/2.0/'
-      : 'https://neko-back.herokuapp.com/2.0/',
-  withCredentials: true,
-})
+import { instance } from './instance'
 
 export const authAPI = {
   registration(values: RegistrationRequestDataType) {
@@ -33,13 +27,13 @@ export const authAPI = {
     return instance.delete<AxiosResponse<{ info: string }>>(`/auth/me`)
   },
   passwordRecovery(data: PasswordRecoveryDataType) {
-    return axios.post<PasswordRecoveryDataType, AxiosResponse<PasswordRecoveryResponseType>>(
+    return instance.post<PasswordRecoveryDataType, AxiosResponse<PasswordRecoveryResponseType>>(
       'https://neko-back.herokuapp.com/2.0/auth/forgot',
       data
     )
   },
   setNewPassword(data: SetNewPasswordDataType) {
-    return axios.post<SetNewPasswordDataType, AxiosResponse<SetNewPasswordResponseTye>>(
+    return instance.post<SetNewPasswordDataType, AxiosResponse<SetNewPasswordResponseTye>>(
       'https://neko-back.herokuapp.com/2.0/auth/set-new-password',
       data
     )

@@ -1,7 +1,31 @@
 .header {
   box-shadow: 0 2px 10px rgba(109, 109, 109, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
+.profilePopover {
+  display: flex;
+  flex-direction: column;
+}
+.superButton{
+  text-decoration: none;
 
+  background: none;
+  border: none;
+}
+.superButton:hover {
+  box-shadow: none;
+
+}
+.button{
+  cursor: pointer;
+
+  font-family: Montseratt;
+  font-size: large;
+  color: #000000;
+  text-decoration: none;
+
+  background: none;
+  border: none;
+}
 .headerWrapper {
   display: flex;
   align-items: center;
@@ -11,8 +35,6 @@
 }
 
 .userName {
-  cursor: pointer;
-
   margin-right: 20px;
   padding-bottom: 3px;
 

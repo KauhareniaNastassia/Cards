@@ -68,7 +68,7 @@ export const Card = (props: CardPropsType) => {
         {moment(`${props.card.updated}`).format('D.M.Y')}
       </StyledTableCellRow>
       <StyledTableCellRow align="right">
-        <Rating name="half-rating" defaultValue={props.card.grade} precision={0.1} />
+        <Rating name="read-only" defaultValue={props.card.grade} precision={0.1} readOnly />
       </StyledTableCellRow>
       <StyledTableCellRow align="right">
         {myID === props.card.user_id && (
