@@ -9,6 +9,7 @@ import { Link, Navigate } from 'react-router-dom'
 
 import { PacksType } from '../../../api/cards-API'
 import { PATH } from '../../../app/App'
+import defaultPackCover from '../../../assets/picture/defaultImage.jpg'
 import { DeletePackModal } from '../../../common/Modals/PackModals/DeletePackModal'
 import { EditPackModal } from '../../../common/Modals/PackModals/EditPackModal'
 import { setCardsAC, setCardsTC, setPackIdAC } from '../../../redux/cards-reducer'
@@ -69,7 +70,7 @@ export const Pack = memo((props: PacksType) => {
       sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
     >
       <StyledTableCellRow className={s.deckCoverColumn} align="center">
-        <img src={props.deckCover} alt="img" />
+        <img src={props.deckCover ? props.deckCover : defaultPackCover} alt="img" />
       </StyledTableCellRow>
       <StyledTableCellRow onClick={onClickSetPack} className={s.nameColumn}>
         <Link style={{ textDecoration: 'none', color: 'black' }} to={PATH.pack}>
