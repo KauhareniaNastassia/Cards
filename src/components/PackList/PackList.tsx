@@ -138,8 +138,8 @@ export const PackList = () => {
     setOpenAddModal(true)
   }
 
-  const addPack = (name: string) => {
-    dispatch(addNewPackTC(name))
+  const addPack = (name: string, deckCover: string) => {
+    dispatch(addNewPackTC(name, deckCover))
   }
   const pageCountHandler = useCallback(
     (e: ChangeEvent<HTMLSelectElement>) => {
@@ -246,6 +246,7 @@ export const PackList = () => {
           <Table sx={{ fontFamily: 'Montserrat' }} aria-label="simple table">
             <TableHead>
               <TableRow className={s.tableHead}>
+                <StyledTableCell align="left">Cover</StyledTableCell>
                 <StyledTableCell align="left">Name</StyledTableCell>
                 <StyledTableCell align="center">Cards</StyledTableCell>
                 <StyledTableCell className={s.lastUpdated} align="center">
@@ -266,6 +267,7 @@ export const PackList = () => {
                   user_id={pack.user_id}
                   cardsCount={pack.cardsCount}
                   updated={pack.updated}
+                  deckCover={pack.deckCover}
                 />
               ))}
             </TableBody>

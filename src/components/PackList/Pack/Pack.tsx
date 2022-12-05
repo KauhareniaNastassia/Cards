@@ -55,8 +55,8 @@ export const Pack = memo((props: PacksType) => {
     setOpenEditModal(true)
   }
 
-  const editPackItem = (newName: string) => {
-    dispatch(updatePackTC(props._id, newName))
+  const editPackItem = (newName: string, newDeckCover: string) => {
+    dispatch(updatePackTC(props._id, newName, newDeckCover))
   }
   const onClickLearnHandler = () => {
     dispatch(setCardsTC({ packName: props.name, cardsPack_id: props._id, page }))
@@ -68,6 +68,9 @@ export const Pack = memo((props: PacksType) => {
       key={props._id}
       sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
     >
+      <StyledTableCellRow className={s.deckCoverColumn} align="center">
+        <img src={props.deckCover} alt="img" />
+      </StyledTableCellRow>
       <StyledTableCellRow onClick={onClickSetPack} className={s.nameColumn}>
         <Link style={{ textDecoration: 'none', color: 'black' }} to={PATH.pack}>
           {props.name}
@@ -107,6 +110,7 @@ export const Pack = memo((props: PacksType) => {
           toggleOpenMode={setOpenEditModal}
           open={openEditModal}
           editItem={editPackItem}
+          img={props.deckCover}
         />
       </StyledTableCellRow>
     </TableRow>

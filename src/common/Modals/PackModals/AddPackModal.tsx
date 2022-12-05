@@ -1,7 +1,10 @@
 import React, { ChangeEvent, useState } from 'react'
 
+import { Button } from '@mui/material'
 import TextField from '@mui/material/TextField/TextField'
 
+import defaultPackCover from '../../../assets/picture/defaultImage.jpg'
+import { InputTypeFile } from '../../../utils/uploadImages/InputTypeFile'
 import { BasicModal } from '../Basic Modal/BasicModal'
 import { ButtonBlockForModals } from '../ButtonBlockForModals/ButtonBlockForModals'
 
@@ -9,11 +12,12 @@ type AddModalPropsType = {
   title: string
   open: boolean
   toggleOpenMode: (value: boolean) => void
-  addItem: (name: string) => void
+  addItem: (name: string, deckCover: string) => void
 }
 
 export const AddPackModal = (props: AddModalPropsType) => {
   const [name, setText] = useState('')
+  const [deckCover, setDeckCover] = useState(defaultPackCover)
 
   const onCloseModalHandler = () => {
     props.toggleOpenMode(false)
@@ -25,9 +29,10 @@ export const AddPackModal = (props: AddModalPropsType) => {
   }
 
   const saveButtonHandler = () => {
-    props.addItem(name)
+    props.addItem(name, deckCover)
     props.toggleOpenMode(false)
     setText('')
+    setDeckCover('')
   }
 
   return (
@@ -37,6 +42,12 @@ export const AddPackModal = (props: AddModalPropsType) => {
       toggleOpenMode={props.toggleOpenMode}
       onCloseModal={onCloseModalHandler}
     >
+      <InputTypeFile
+        title={'Upload pack cover'}
+        img={deckCover}
+        name={'coverFile'}
+        saveImg={setDeckCover}
+      />
       <TextField
         value={name}
         label="Name pack"

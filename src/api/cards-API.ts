@@ -203,6 +203,7 @@ export type PacksType = {
   updated?: string
   more_id?: string
   __v?: number
+  deckCover: string
 }
 
 export type AddNewPackDataType = {
@@ -244,6 +245,7 @@ export type UpdatePackDataType = {
   cardsPack: {
     _id: string
     name: string
+    deckCover?: string
   }
 }
 export type UpdatePackResponseType = {

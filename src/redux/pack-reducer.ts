@@ -148,7 +148,7 @@ export const addNewPackTC =
         updated: res.data.newCardsPack.updated,
         name: res.data.newCardsPack.name,
         cardsCount: res.data.newCardsPack.cardsCount,
-        // deckCover: deckCover ? deckCover : '',
+        deckCover: deckCover ? deckCover : '',
         __v: res.data.newCardsPack.__v,
         type: res.data.newCardsPack.type,
         created: res.data.newCardsPack.created,
@@ -180,9 +180,11 @@ export const deletePackTC =
     }
   }
 export const updatePackTC =
-  (packID: string, newName: string): AppThunkType =>
+  (packID: string, newName: string, newDeckCover?: string): AppThunkType =>
   async dispatch => {
-    const updatedForPack: UpdatePackDataType = { cardsPack: { _id: packID, name: newName } }
+    const updatedForPack: UpdatePackDataType = {
+      cardsPack: { _id: packID, name: newName, deckCover: newDeckCover },
+    }
 
     dispatch(setAppStatusAC('loading'))
     try {
@@ -194,7 +196,7 @@ export const updatePackTC =
         user_id: res.data.updatedCardsPack.user_id,
         updated: res.data.updatedCardsPack.updated,
         cardsCount: res.data.updatedCardsPack.cardsCount,
-        // deckCover: res.data.updatedCardsPack.deckCover,
+        deckCover: res.data.updatedCardsPack.deckCover,
         __v: res.data.updatedCardsPack.__v,
         type: res.data.updatedCardsPack.type,
         created: res.data.updatedCardsPack.created,
