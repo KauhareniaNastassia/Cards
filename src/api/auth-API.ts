@@ -18,10 +18,14 @@ export const authAPI = {
       data
     )
   },
-  updateProfile(name: string) {
-    return instance.put<{ name: string }, AxiosResponse<ResponseType>>(`/auth/me`, {
-      name,
-    })
+  updateProfile(name?: string, avatar?: string) {
+    return instance.put<{ name: string; avatar: string }, AxiosResponse<UpdatedUserResponseType>>(
+      `/auth/me`,
+      {
+        name,
+        avatar,
+      }
+    )
   },
   logout() {
     return instance.delete<AxiosResponse<{ info: string }>>(`/auth/me`)
@@ -120,4 +124,22 @@ export type SetNewPasswordDataType = {
 type SetNewPasswordResponseTye = {
   info: string
   error: string
+}
+
+export type UpdateProfileResponseDataType = {
+  _id: string
+  email: string
+  name: string
+  avatar: string
+  publicCardPacksCount: number // количество колод
+  created: Date
+  updated: Date
+  isAdmin: boolean
+  verified: boolean // подтвердил ли почту
+  rememberMe: boolean
+  error?: string
+}
+
+export type UpdatedUserResponseType = {
+  updatedUser: UpdateProfileResponseDataType
 }

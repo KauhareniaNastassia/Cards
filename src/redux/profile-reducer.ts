@@ -1,4 +1,4 @@
-import { authAPI } from '../api/auth-API'
+import { authAPI, UpdateProfileResponseDataType } from '../api/auth-API'
 import { handleServerNetworkError } from '../utils/error-handler'
 
 import { setAppStatusAC, SetAppSuccessAC } from './app-reducer'
@@ -22,7 +22,7 @@ export const profileReducer = (
         ...action.profile,
       }
     case 'UPDATE-PROFILE': {
-      return { ...state, name: action.name }
+      return { ...state, ...action.data }
     }
     default:
       return state
@@ -30,14 +30,14 @@ export const profileReducer = (
 }
 
 export const updateUserProfileTC =
-  (name: string): AppThunkType =>
+  (name: string, avatar?: string): AppThunkType =>
   async dispatch => {
     dispatch(setAppStatusAC('loading'))
     try {
-      const res = await authAPI.updateProfile(name)
+      const res = await authAPI.updateProfile(name, avatar)
 
       dispatch(setAppStatusAC('succeed'))
-      dispatch(updateProfile(name))
+      dispatch(updateProfile(res.data.updatedUser))
       dispatch(SetAppSuccessAC('User name successfully changed'))
     } catch (e) {
       handleServerNetworkError(e as { errorMessage: string }, dispatch)
@@ -49,8 +49,10 @@ export const setUserProfile = (profile: UserType) => {
   return { type: 'SET-USER-PROFILE', profile } as const
 }
 
-export const updateProfile = (name: string) => {
-  return { type: 'UPDATE-PROFILE', name } as const
+export const updateProfile = (
+  data: UpdateProfileResponseDataType /*name: string, avatar?: string*/
+) => {
+  return { type: 'UPDATE-PROFILE', data } as const
 }
 
 //types

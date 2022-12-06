@@ -131,6 +131,7 @@ export type AddNewCardDataType = {
     questionImg?: string // "url or base 64"
     questionVideo?: string // "url or base 64"
     answerVideo?: string // "url or base 64"
+    /*type?: 'Text' | 'Image'*/
   }
 }
 export type AddNewCardResponseType = {
@@ -144,6 +145,8 @@ export type ResponseCardType = {
   user_id: string
   answer: string
   question: string
+  answerImg: string // "url or base 64"
+  questionImg: string // "url or base 64"
   grade: number
   shots: number
   comments: string
@@ -275,6 +278,8 @@ export type CardPackType = {
   user_id: string
   answer: string
   question: string
+  answerImg: string
+  questionImg: string
   grade: number
   shots: number
   comments: string
@@ -297,3 +302,16 @@ export type UpdatedGradeCartType = {
   updated: string
   __v: number
 }
+
+/*export type CardModelType = {
+  cardsPack_id: string
+  question?: string
+  answer?: string
+  grade?: number
+  shots?: number
+  answerImg?: string
+  questionImg?: string
+  questionVideo?: string
+  answerVideo?: string
+  type?: 'Text' | 'Image'
+}*/

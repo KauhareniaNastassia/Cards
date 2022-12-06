@@ -38,6 +38,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 export const CardsList = () => {
   const cards = useAppSelector(state => state.cards.cards)
   const packName = useAppSelector(state => state.cards.packName)
+  const packDeckCover = useAppSelector(state => state.cards.packDeckCover)
   const cardsPack_id = useAppSelector(state => state.cards.cardsPack_id)
   const [page, setPage] = useState(1)
   const pageCount = useAppSelector(state => state.cards.pageCount)
@@ -51,8 +52,13 @@ export const CardsList = () => {
     dispatch(setCardsTC({ cardsPack_id, page }))
   }
 
-  const addCard = (question: string, answer: string) => {
-    dispatch(addNewCardTC(cardsPack_id, page, pageCount, question, answer))
+  const addCard = (
+    question: string,
+    answer: string /*, questionImg: string, answerImg: string*/
+  ) => {
+    dispatch(
+      addNewCardTC(cardsPack_id, page, pageCount, question, answer /*, questionImg, answerImg*/)
+    )
   }
 
   const addCardButtonClickHandler = () => {
@@ -67,7 +73,7 @@ export const CardsList = () => {
         </Link>
       </div>
       <div className={s.packName}>{packName}</div>
-
+      {packDeckCover && <img className={s.packDeckCover} src={packDeckCover} alt={'deck cover'} />}
       {cards.length === 0 ? (
         <div className={s.div}>
           <div className={s.span}>This pack is empty. Click add new card to fill this pack</div>

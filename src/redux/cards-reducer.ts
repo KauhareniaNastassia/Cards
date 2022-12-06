@@ -19,6 +19,8 @@ const initialState = {
       user_id: '',
       answer: '',
       question: '',
+      answerImg: '',
+      questionImg: '',
       grade: 0,
       shots: 0,
       comments: '',
@@ -33,6 +35,7 @@ const initialState = {
   packUserId: '',
   packName: '',
   packPrivate: false,
+  packDeckCover: '',
   packCreated: '',
   packUpdated: '',
   page: 0,
@@ -133,13 +136,17 @@ export const addNewCardTC =
     cardsPack_id: string,
     page: number,
     pageCount: number,
-    question: string,
-    answer: string
+    question?: string,
+    answer?: string
+    /* questionImg?: string,
+    answerImg?: string*/
   ): AppThunkType =>
   async dispatch => {
     dispatch(setAppStatusAC('loading'))
     try {
-      const res = await cardsAPI.addNewCard({ card: { cardsPack_id, question, answer } })
+      const res = await cardsAPI.addNewCard({
+        card: { cardsPack_id, question, answer /*, questionImg, answerImg*/ },
+      })
 
       dispatch(setCardsTC({ cardsPack_id, page, pageCount }))
       dispatch(setAppStatusAC('succeed'))

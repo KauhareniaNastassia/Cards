@@ -11,6 +11,7 @@ import s from './EditableSpan.module.css'
 
 type EditableSpanPropsType = {
   value: string
+  onChange: (newUserName: string) => void
 }
 export const EditableSpan = function (props: EditableSpanPropsType) {
   const dispatch = useAppDispatch()
@@ -22,7 +23,7 @@ export const EditableSpan = function (props: EditableSpanPropsType) {
   }
   const deactivateMode = () => {
     setEditMode(false)
-    dispatch(updateUserProfileTC(userName))
+    props.onChange(userName)
   }
   const onStatusChange = (event: ChangeEvent<HTMLInputElement>) => {
     return setUserName(event.currentTarget.value)

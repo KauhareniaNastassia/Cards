@@ -62,8 +62,24 @@ export const Card = (props: CardPropsType) => {
     <TableRow key={props.card._id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
       <StyledTableCellRow component="th" scope="row">
         {props.card.question}
+        {/*{props.card.type === 'Text' ? (
+          props.card.question
+        ) : (
+          <div>
+            <img src={props.card.questionImg} alt={'question image'} />
+          </div>
+        )}*/}
       </StyledTableCellRow>
-      <StyledTableCellRow align="right">{props.card.answer}</StyledTableCellRow>
+      <StyledTableCellRow align="right">
+        {props.card.answer}
+        {/* {props.card.type === 'Text' ? (
+          props.card.answer
+        ) : (
+          <div>
+            <img src={props.card.answerImg} alt={'question image'} />
+          </div>
+        )}*/}
+      </StyledTableCellRow>
       <StyledTableCellRow align="right">
         {moment(`${props.card.updated}`).format('D.M.Y')}
       </StyledTableCellRow>

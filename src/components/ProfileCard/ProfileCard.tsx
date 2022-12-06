@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ChangeEvent, useState } from 'react'
 
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import LogoutIcon from '@mui/icons-material/Logout'
@@ -9,9 +9,11 @@ import { Link, Navigate } from 'react-router-dom'
 import { PATH } from '../../app/App'
 import photoCamera from '../../assets/picture/icons8-camera-48.png'
 import SuperButton from '../../common/Button/SuperButton/SuperButton'
+import { SetAppErrorAC } from '../../redux/app-reducer'
 import { logOutTC } from '../../redux/auth-reducer'
-import { UserType } from '../../redux/profile-reducer'
+import { updateUserProfileTC, UserType } from '../../redux/profile-reducer'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks'
+import { convertToBase64 } from '../../utils/uploadImages/ConvertToBase64'
 import { EditableSpan } from '../EditableSpan/EditableSpan'
 
 import s from './ProfileCard.module.css'
@@ -22,8 +24,10 @@ export const customAvatar =
 export const ProfileCard = () => {
   const dispatch = useAppDispatch()
   const avatar = useAppSelector(state => state.profile.avatar)
+  const name = useAppSelector(state => state.profile.name)
   const email = useAppSelector(state => state.profile.email)
   const userName = useAppSelector(state => state.profile.name)
+  const [ava, setAva] = useState(customAvatar)
 
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
 
@@ -41,6 +45,24 @@ export const ProfileCard = () => {
     dispatch(logOutTC())
   }
 
+  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length) {
+      const file = e.target.files[0]
+
+      if (file.size < 4000000) {
+        convertToBase64(file, (file64: string) => {
+          dispatch(updateUserProfileTC(name, file64))
+        })
+      } else {
+        dispatch(SetAppErrorAC('File size is too big'))
+      }
+    }
+  }
+
+  const UpdateDataHandler = (name: string) => {
+    dispatch(updateUserProfileTC(name, avatar))
+  }
+
   return (
     <>
       <div className={s.arrow}>
@@ -51,18 +73,22 @@ export const ProfileCard = () => {
       <div className={s.card}>
         <div className={s.container}>
           <div className={s.title}>Personal information</div>
-          <Badge
-            overlap="circular"
-            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-            badgeContent={<SmallAvatar alt="uploadPhoto" src={photoCamera} />}
-          >
-            <Avatar
-              sx={{ width: 96, height: 96 }}
-              alt={'User Name'}
-              src={avatar === '' ? customAvatar : avatar}
-            />
-          </Badge>
-          <EditableSpan value={userName} />
+          <label>
+            <Badge
+              overlap="circular"
+              anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+              badgeContent={<SmallAvatar alt="uploadPhoto" src={photoCamera} />}
+            >
+              <input type="file" onChange={onChangeHandler} style={{ display: 'none' }} />
+              <Avatar
+                sx={{ width: 96, height: 96 }}
+                alt={'User Name'}
+                src={avatar === '' ? customAvatar : avatar}
+              />
+            </Badge>
+          </label>
+
+          <EditableSpan value={userName} onChange={UpdateDataHandler} />
           <div className={s.email}>{email}</div>
           <SuperButton onClick={logOutHandler} className={s.button}>
             <LogoutIcon /> Log out

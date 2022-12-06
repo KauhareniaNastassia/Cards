@@ -23,6 +23,8 @@ export const Learn = () => {
     user_id: '',
     answer: '',
     question: '',
+    answerImg: '',
+    questionImg: '',
     grade: 0,
     shots: 0,
     comments: '',

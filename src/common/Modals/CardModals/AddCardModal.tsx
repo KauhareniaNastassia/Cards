@@ -5,6 +5,7 @@ import FormControl from '@mui/material/FormControl/FormControl'
 import InputLabel from '@mui/material/InputLabel/InputLabel'
 import TextField from '@mui/material/TextField/TextField'
 
+import { InputTypeFile } from '../../../utils/uploadImages/InputTypeFile'
 import { BasicModal } from '../Basic Modal/BasicModal'
 import { ButtonBlockForModals } from '../ButtonBlockForModals/ButtonBlockForModals'
 
@@ -12,13 +13,15 @@ type AddCardModalPropsType = {
   title: string
   open: boolean
   toggleOpenMode: (value: boolean) => void
-  addItem: (question: string, answer: string) => void
+  addItem: (question: string, answer: string, questionImg: string, answerImg: string) => void
 }
 
 export const AddCardModal = (props: AddCardModalPropsType) => {
   const [question, setQuestion] = useState('')
   const [answer, setAnswer] = useState('')
   const [typeOfQuestion, setTypeOfQuestion] = useState('Text')
+  const [questionImg, setQuestionImg] = useState('')
+  const [answerImg, setAnswerImg] = useState('')
 
   const onCloseModalHandler = () => {
     props.toggleOpenMode(false)
@@ -38,8 +41,15 @@ export const AddCardModal = (props: AddCardModalPropsType) => {
     setAnswer(event.currentTarget.value)
   }
 
+  const onQuestionImgChangeHandler = (questionImg: string) => {
+    setQuestionImg(questionImg)
+  }
+  const onAnswerImgChangeHandler = (answerImg: string) => {
+    setAnswerImg(answerImg)
+  }
+
   const saveButtonHandler = () => {
-    props.addItem(question, answer)
+    props.addItem(question, answer, questionImg, answerImg)
     props.toggleOpenMode(false)
     setQuestion('')
     setAnswer('')
@@ -64,22 +74,42 @@ export const AddCardModal = (props: AddCardModalPropsType) => {
           <MenuItem value={'Image'}>Image</MenuItem>
         </Select>
       </FormControl>
-      <TextField
-        value={question}
-        label="Question"
-        variant="standard"
-        sx={{ width: '100%', marginBottom: '15px' }}
-        onChange={inputAddQuestionHandler}
-        autoFocus
-      />
-      <TextField
-        value={answer}
-        label="Answer"
-        variant="standard"
-        sx={{ width: '100%' }}
-        onChange={inputAddAnswerHandler}
-        autoFocus
-      />
+      {typeOfQuestion === 'Text' ? (
+        <div>
+          <TextField
+            value={question}
+            label="Question"
+            variant="standard"
+            sx={{ width: '100%', marginBottom: '15px' }}
+            onChange={inputAddQuestionHandler}
+            autoFocus
+          />
+          <TextField
+            value={answer}
+            label="Answer"
+            variant="standard"
+            sx={{ width: '100%' }}
+            onChange={inputAddAnswerHandler}
+            autoFocus
+          />
+        </div>
+      ) : (
+        <div>
+          <InputTypeFile
+            title={'Upload question image'}
+            img={questionImg}
+            name={'questionFile'}
+            saveImg={onQuestionImgChangeHandler}
+          />
+          <InputTypeFile
+            title={'Upload answer image'}
+            img={answerImg}
+            name={'answerFile'}
+            saveImg={onAnswerImgChangeHandler}
+          />
+        </div>
+      )}
+
       <ButtonBlockForModals
         onCloseModalHandler={onCloseModalHandler}
         actionButtonHandler={saveButtonHandler}

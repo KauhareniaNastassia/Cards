@@ -5,6 +5,7 @@ import { Button } from '@mui/material'
 import { SetAppErrorAC } from '../../redux/app-reducer'
 import { useAppDispatch } from '../hooks'
 
+import { convertToBase64 } from './ConvertToBase64'
 import s from './InputTypeFile.module.css'
 
 type InputTypeFilePropsType = {
@@ -31,28 +32,17 @@ export const InputTypeFile = (props: InputTypeFilePropsType) => {
     }
   }
 
-  const convertToBase64 = (file: File, callBack: (value: string) => void) => {
-    const reader = new FileReader()
-
-    reader.onloadend = () => {
-      const file64 = reader.result as string
-
-      callBack(file64)
-    }
-    reader.readAsDataURL(file)
-  }
-
   return (
     <label>
-      <Button style={{ borderRadius: '20px', width: '100%' }} variant="contained" component="label">
+      <Button
+        style={{ borderRadius: '20px', width: '100%', marginTop: '15px' }}
+        variant="contained"
+        component="label"
+      >
         {props.title}
         <input hidden accept="image/*" type="file" onChange={uploadHandler} />
       </Button>
       {props.img && <div className={s.image} style={{ backgroundImage: `url(${props.img})` }} />}
-
-      {/*<IconButton component="span">
-        <CloudUploadIcon />
-      </IconButton>*/}
     </label>
   )
 }
