@@ -17,6 +17,7 @@ import {
 import { Link } from 'react-router-dom'
 
 import { PATH } from '../../app/App'
+import defaultPackCover from '../../assets/picture/icons8-image-96.png'
 import { AddCardModal } from '../../common/Modals/CardModals/AddCardModal'
 import { addNewCardTC, setCardsTC } from '../../redux/cards-reducer'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks'
@@ -46,6 +47,8 @@ export const CardsList = () => {
   const pagesCount = Math.ceil(cardsTotalCount / pageCount)
   const dispatch = useAppDispatch()
   const [openAddCardModal, setOpenAddCardModal] = useState(false)
+  const myID = useAppSelector(state => state.profile._id)
+  const userID = useAppSelector(state => state.cards.packUserId)
 
   const handleChangePage = (event: unknown, page: number) => {
     setPage(page)
@@ -73,24 +76,38 @@ export const CardsList = () => {
         </Link>
       </div>
       <div className={s.packName}>{packName}</div>
-      {packDeckCover && <img className={s.packDeckCover} src={packDeckCover} alt={'deck cover'} />}
+      <div>
+        <img
+          className={s.packDeckCover}
+          src={packDeckCover ? packDeckCover : defaultPackCover}
+          alt={'deck cover'}
+        />
+      </div>
       {cards.length === 0 ? (
         <div className={s.div}>
-          <div className={s.span}>This pack is empty. Click add new card to fill this pack</div>
-          <Button
-            onClick={addCardButtonClickHandler}
-            type="submit"
-            variant="contained"
-            style={{ borderRadius: '20px', marginTop: '40px' }}
-          >
-            Add New Card
-          </Button>
-          <AddCardModal
-            title="Add new card"
-            open={openAddCardModal}
-            toggleOpenMode={setOpenAddCardModal}
-            addItem={addCard}
-          />
+          {myID === userID ? (
+            <>
+              <div className={s.span}>This pack is empty. Click add new card to fill this pack</div>
+              <Button
+                onClick={addCardButtonClickHandler}
+                type="submit"
+                variant="contained"
+                style={{ borderRadius: '20px', marginTop: '40px' }}
+              >
+                Add New Card
+              </Button>
+              <AddCardModal
+                title="Add new card"
+                open={openAddCardModal}
+                toggleOpenMode={setOpenAddCardModal}
+                addItem={addCard}
+              />
+            </>
+          ) : (
+            <>
+              <div className={s.span}>This pack is empty.</div>
+            </>
+          )}
         </div>
       ) : (
         <div>

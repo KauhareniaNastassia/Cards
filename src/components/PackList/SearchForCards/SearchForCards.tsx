@@ -3,7 +3,9 @@ import React, { ChangeEvent, useCallback, useState } from 'react'
 import SearchIcon from '@mui/icons-material/Search'
 import { Button, debounce, InputBase } from '@mui/material'
 import { alpha, styled } from '@mui/material/styles'
+import { Link } from 'react-router-dom'
 
+import { PATH } from '../../../app/App'
 import { AddCardModal } from '../../../common/Modals/CardModals/AddCardModal'
 import { addNewCardTC, setCardsTC } from '../../../redux/cards-reducer'
 import { useAppDispatch, useAppSelector } from '../../../utils/hooks'
@@ -46,8 +48,11 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }))
 
 export const SearchForCards = () => {
+  const myID = useAppSelector(state => state.profile._id)
+  const userID = useAppSelector(state => state.cards.packUserId)
   const dispatch = useAppDispatch()
   const cardsPack_id = useAppSelector(state => state.cards.cardsPack_id)
+  const packName = useAppSelector(state => state.cards.packName)
   const [page, setPage] = useState(1)
   const pageCount = useAppSelector(state => state.cards.pageCount)
   const [openAddCardModal, setOpenAddCardModal] = useState(false)
@@ -61,10 +66,12 @@ export const SearchForCards = () => {
   }
 
   const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log()
     dispatch(setCardsTC({ cardQuestion: e.target.value }))
   }
   const debouncedChangeHandler = useCallback(debounce(changeHandler, 1000), [])
+  const onClickLearnHandler = () => {
+    dispatch(setCardsTC({ packName, cardsPack_id, page }))
+  }
 
   return (
     <div className={s.settingsBlock}>
@@ -83,20 +90,40 @@ export const SearchForCards = () => {
         </Search>
       </div>
 
-      <Button
-        onClick={addCardButtonClickHandler}
-        type="submit"
-        variant="contained"
-        style={{ borderRadius: '20px', marginTop: '40px' }}
-      >
-        <AddCardModal
-          title="Add new card"
-          open={openAddCardModal}
-          toggleOpenMode={setOpenAddCardModal}
-          addItem={addCard}
-        />
-        Add New Card
-      </Button>
+      {myID === userID ? (
+        <>
+          <Button
+            onClick={addCardButtonClickHandler}
+            type="submit"
+            variant="contained"
+            style={{ borderRadius: '20px', marginTop: '40px' }}
+          >
+            <AddCardModal
+              title="Add new card"
+              open={openAddCardModal}
+              toggleOpenMode={setOpenAddCardModal}
+              addItem={addCard}
+            />
+            Add New Card
+          </Button>
+        </>
+      ) : (
+        <>
+          <Link
+            style={{ textDecoration: 'none', color: 'gray' }}
+            to={`${PATH.learn}${cardsPack_id}`}
+          >
+            <Button
+              onClick={onClickLearnHandler}
+              type="submit"
+              variant="contained"
+              style={{ borderRadius: '20px', marginTop: '40px' }}
+            >
+              Learn to pack
+            </Button>
+          </Link>
+        </>
+      )}
     </div>
   )
 }

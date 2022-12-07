@@ -262,6 +262,7 @@ export type GetCardsResponseType = {
   packUserId: string
   packName: string
   packPrivate: boolean
+  packDeckCover: string
   packCreated: string
   packUpdated: string
   page: number

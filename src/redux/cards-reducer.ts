@@ -57,6 +57,8 @@ export const cardsReducer = (
         cards: action.data.cards,
         packName: action.data.packName,
         page: action.data.page,
+        packDeckCover: action.data.packDeckCover,
+        packUserId: action.data.packUserId,
       }
     case 'CARDS/SET_PACK_ID':
       return { ...state, cardsPack_id: action.cardsPack_id }
@@ -104,6 +106,7 @@ export const setCardsTC =
       console.log(e)
     }
   }
+
 export const setLearnCardsTC =
   (params: GetCardsParamsType): AppThunkType =>
   async dispatch => {
@@ -117,6 +120,7 @@ export const setLearnCardsTC =
       console.log(e)
     }
   }
+
 export const createLearnCardsTC =
   (data: CardLearnType): AppThunkType =>
   async dispatch => {

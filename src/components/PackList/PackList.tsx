@@ -41,12 +41,6 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     fontSize: '15px',
   },
 }))
-const StyledTableCellRow = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.body}`]: {
-    fontFamily: 'Montseratt',
-    fontSize: '15px',
-  },
-}))
 
 export const PackList = () => {
   const dispatch = useAppDispatch()

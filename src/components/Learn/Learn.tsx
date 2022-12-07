@@ -38,7 +38,6 @@ export const Learn = () => {
 
   useEffect(() => {
     if (first) {
-      // dispatch(setCardsTC({ cardsPack_id: id }))
       setFirst(false)
     }
 
