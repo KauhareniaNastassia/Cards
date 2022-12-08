@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom'
 
 import { PacksType } from '../../../api/cards-API'
 import { PATH } from '../../../app/App'
-import defaultPackCover from '../../../assets/picture/icons8-image-48.png'
+import defaultPackCover from '../../../assets/picture/noImage.jpg'
 import { DeletePackModal } from '../../../common/Modals/PackModals/DeletePackModal'
 import { EditPackModal } from '../../../common/Modals/PackModals/EditPackModal'
 import { setCardsTC, setPackIdAC } from '../../../redux/cards-reducer'

@@ -43,8 +43,8 @@ export const cardsAPI = {
     })
   },
 
-  addNewCard(data: AddNewCardDataType) {
-    return instance.post<AddNewCardResponseType>('/cards/card', data)
+  addNewCard(card: AddNewCardDataType) {
+    return instance.post<AddNewCardResponseType>('/cards/card', { card })
   },
   deleteCard(cardID: string) {
     return instance.delete<DeleteCardResponseType>('/cards/card', {
@@ -86,6 +86,7 @@ export type UpdatedCardType = {
   questionVideo: string
 }
 export type CardLearnType = {
+  shots: number
   grade: number
   card_id: string
 }
@@ -121,18 +122,15 @@ export type DeletedCardType = {
   __v: number
 }
 export type AddNewCardDataType = {
-  card: {
-    cardsPack_id: string
-    question?: string //"no question"
-    answer?: string //"no answer"
-    grade?: number // 0..5
-    shots?: number
-    answerImg?: string // "url or base 64"
-    questionImg?: string // "url or base 64"
-    questionVideo?: string // "url or base 64"
-    answerVideo?: string // "url or base 64"
-    /*type?: 'Text' | 'Image'*/
-  }
+  cardsPack_id: string
+  question?: string //"no question"
+  answer?: string //"no answer"
+  grade?: number // 0..5
+  shots?: number
+  answerImg?: string // "url or base 64"
+  questionImg?: string // "url or base 64"
+  questionVideo?: string // "url or base 64"
+  answerVideo?: string // "url or base 64"
 }
 export type AddNewCardResponseType = {
   newCard: ResponseCardType

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { CardPackType } from '../../api/cards-API'
-import { setCardsTC, setLearnCardsTC } from '../../redux/cards-reducer'
+import { BackToPackList } from '../../common/BackArrow/BackToPackList'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks'
 
 import { getCard } from './GetCardSmartRandom/getCardSmartRandom'
@@ -49,14 +49,17 @@ export const Learn = () => {
   }, [dispatch, id, cards, first])
 
   return (
-    <div className={s.wrapper}>
-      <div className={s.packName}>Learn {`"${packName}"`}</div>
-      {cards.length > 0 ? (
-        <LearnCard cards={cards} card={card} setCard={setCard} setFirst={setFirst} />
-      ) : (
-        // eslint-disable-next-line react/no-unescaped-entities
-        <div style={{ marginTop: '30px' }}>This pack doesn't contains any cards</div>
-      )}
+    <div>
+      <BackToPackList />
+      <div className={s.wrapper}>
+        <div className={s.packName}>Learn {`"${packName}"`}</div>
+        {cards.length > 0 ? (
+          <LearnCard cards={cards} card={card} setCard={setCard} setFirst={setFirst} />
+        ) : (
+          // eslint-disable-next-line react/no-unescaped-entities
+          <div style={{ marginTop: '30px' }}>This pack doesn't contains any cards</div>
+        )}
+      </div>
     </div>
   )
 }

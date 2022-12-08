@@ -3,7 +3,12 @@ import React, { useState } from 'react'
 import { Button, FormControlLabel, Radio } from '@mui/material'
 
 import { CardPackType } from '../../../api/cards-API'
-import { createLearnCardsTC, setCardsAC, setCardsTC } from '../../../redux/cards-reducer'
+import {
+  createLearnCardsTC,
+  setCardsAC,
+  setCardsLearnDataAC,
+  setCardsTC,
+} from '../../../redux/cards-reducer'
 import { setPacksAC } from '../../../redux/pack-reducer'
 import { useAppDispatch } from '../../../utils/hooks'
 import { getCard } from '../GetCardSmartRandom/getCardSmartRandom'
@@ -28,11 +33,10 @@ export const LearnCard = (props: LearnCardPropsType) => {
     setAnswer(false)
     props.setFirst(true)
     if (props.cards.length > 0) {
-      dispatch(createLearnCardsTC({ card_id: props.card._id, grade: valueRadio }))
+      dispatch(
+        createLearnCardsTC({ card_id: props.card._id, grade: valueRadio, shots: props.card.shots })
+      )
       props.setCard(getCard(props.cards))
-      setTimeout(() => {
-        dispatch(setCardsTC({ cardsPack_id: props.card.cardsPack_id }))
-      }, 300)
     }
   }
 

@@ -68,7 +68,9 @@ export const cardsReducer = (
       return {
         ...state,
         cards: state.cards.map(el =>
-          el._id === action.data.card_id ? { ...el, grade: action.data.grade } : el
+          el._id === action.data.card_id
+            ? { ...el, grade: action.data.grade, shots: action.data.shots }
+            : el
         ),
       }
     }
@@ -107,20 +109,6 @@ export const setCardsTC =
     }
   }
 
-export const setLearnCardsTC =
-  (params: GetCardsParamsType): AppThunkType =>
-  async dispatch => {
-    dispatch(setAppStatusAC('loading'))
-    try {
-      const res = await cardsAPI.getCards(params)
-
-      dispatch(setCardsAC(res.data))
-      dispatch(setAppStatusAC('succeed'))
-    } catch (e) {
-      console.log(e)
-    }
-  }
-
 export const createLearnCardsTC =
   (data: CardLearnType): AppThunkType =>
   async dispatch => {
@@ -141,15 +129,19 @@ export const addNewCardTC =
     page: number,
     pageCount: number,
     question?: string,
-    answer?: string
-    /* questionImg?: string,
-    answerImg?: string*/
+    answer?: string,
+    questionImg?: string,
+    answerImg?: string
   ): AppThunkType =>
   async dispatch => {
     dispatch(setAppStatusAC('loading'))
     try {
       const res = await cardsAPI.addNewCard({
-        card: { cardsPack_id, question, answer /*, questionImg, answerImg*/ },
+        cardsPack_id,
+        question,
+        answer,
+        questionImg,
+        answerImg,
       })
 
       dispatch(setCardsTC({ cardsPack_id, page, pageCount }))

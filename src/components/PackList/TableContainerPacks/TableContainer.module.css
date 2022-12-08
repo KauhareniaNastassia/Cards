@@ -1,0 +1,23 @@
+@media only screen and (max-width: 890px) {
+    .tableHead > th {
+        max-width: 30px;
+        padding: 5px;
+    }
+    .tableRow > td {
+        padding: 0;
+    }
+    .nameColumn {
+        overflow: hidden;
+
+        max-width: 120px;
+
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}
+
+@media only screen and (max-width: 707px) {
+    .lastUpdated {
+        display: none !important;
+    }
+}

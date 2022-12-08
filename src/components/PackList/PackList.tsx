@@ -1,18 +1,6 @@
 import React, { ChangeEvent, useCallback, useEffect, useState } from 'react'
 
-import {
-  Button,
-  Pagination,
-  Paper,
-  styled,
-  Table,
-  TableBody,
-  TableCell,
-  tableCellClasses,
-  TableContainer,
-  TableHead,
-  TableRow,
-} from '@mui/material'
+import { Button, Pagination } from '@mui/material'
 import NativeSelect from '@mui/material/NativeSelect'
 import { Navigate, useSearchParams } from 'react-router-dom'
 
@@ -29,30 +17,20 @@ import { useAppDispatch, useAppSelector } from '../../utils/hooks'
 import { useDebounce } from '../../utils/useDebounce'
 import { FilterBar } from '../FilterBar/FilterBar'
 
-import { Pack } from './Pack/Pack'
 import s from './PackList.module.css'
-
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.grey['200'],
-    color: theme.palette.common.black,
-    fontFamily: 'Montseratt',
-    fontWeight: 'bold',
-    fontSize: '15px',
-  },
-}))
+import { TableContainerPacks } from './TableContainerPacks/TableContainerPacks'
 
 export const PackList = () => {
   const dispatch = useAppDispatch()
-  const packs = useAppSelector(state => state.packs.cardPacks)
+  const [searchParams, setSearchParams] = useSearchParams()
+  const [openAddModal, setOpenAddModal] = useState(false)
+
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
   const user_id = useAppSelector(state => state.profile._id)
   const paramsSearchState = useAppSelector(state => state.packs.params)
   const pageCount = useAppSelector(state => state.packs.params.pageCount)
   const page = useAppSelector(state => state.packs.params.page)
   const cardPacksTotalCount = useAppSelector(state => state.packs.cardPacksTotalCount)
-
-  const [searchParams, setSearchParams] = useSearchParams()
 
   const pageURL = searchParams.get('page') ? searchParams.get('page') + '' : '1'
   const pageCountURL = searchParams.get('pageCount') ? searchParams.get('pageCount') + '' : '5'
@@ -62,8 +40,6 @@ export const PackList = () => {
   const maxRangeURL = searchParams.get('max') ? searchParams.get('max') + '' : ''
 
   const [packName, setPackName] = useState<string>(packNameURL ? packNameURL : '')
-  const [openAddModal, setOpenAddModal] = useState(false)
-
   const debouncedValue = useDebounce<string>(packName, 1000)
 
   const urlParamsFilter = filterAllParams({
@@ -75,7 +51,7 @@ export const PackList = () => {
     max: maxRangeURL,
   })
 
-  const onClickButtonMyHandler = useCallback(() => {
+  const onClickButtonMyHandler = () => {
     const urlParams = {
       ...filterAllParams({
         ...paramsSearchState,
@@ -92,9 +68,9 @@ export const PackList = () => {
     dispatch(updateUrlParamsAC({ ...urlParams }))
 
     setSearchParams({ ...urlParams })
-  }, [dispatch])
+  }
 
-  const onClickButtonAllHandler = useCallback(() => {
+  const onClickButtonAllHandler = () => {
     const urlParams = {
       ...filterAllParams({
         ...paramsSearchState,
@@ -110,23 +86,20 @@ export const PackList = () => {
     dispatch(setShowPackCardsAC('all'))
     dispatch(updateUrlParamsAC({ ...urlParams }))
     setSearchParams({ ...urlParams })
-  }, [dispatch])
+  }
 
-  const setResetFilterHandler = useCallback(() => {
+  const setResetFilterHandler = () => {
     dispatch(updateUrlParamsAC({ page: '1', pageCount: '5', user_id: '', min: '', max: '' }))
     setSearchParams({ page: '1', pageCount: '5' })
     setPackName('')
-  }, [dispatch])
+  }
 
-  const onChangeCommittedRangeHandler = useCallback(
-    (min: string, max: string) => {
-      dispatch(updateUrlParamsAC({ ...paramsSearchState, min, max, user_id: userIDURL }))
-      setSearchParams({
-        ...filterAllParams({ ...paramsSearchState, min, max, user_id: userIDURL, packName }),
-      })
-    },
-    [dispatch]
-  )
+  const onChangeCommittedRangeHandler = (min: string, max: string) => {
+    dispatch(updateUrlParamsAC({ ...paramsSearchState, min, max, user_id: userIDURL }))
+    setSearchParams({
+      ...filterAllParams({ ...paramsSearchState, min, max, user_id: userIDURL, packName }),
+    })
+  }
 
   const addButtonClickHandler = () => {
     setOpenAddModal(true)
@@ -135,46 +108,37 @@ export const PackList = () => {
   const addPack = (name: string, deckCover: string) => {
     dispatch(addNewPackTC(name, deckCover))
   }
-  const pageCountHandler = useCallback(
-    (e: ChangeEvent<HTMLSelectElement>) => {
-      const value = e.currentTarget.value
+  const pageCountHandler = (e: ChangeEvent<HTMLSelectElement>) => {
+    const value = e.currentTarget.value
 
-      dispatch(updateUrlParamsAC({ ...paramsSearchState, pageCount: value, min: '', max: '' }))
-      setSearchParams({
-        ...filterAllParams({
-          ...paramsSearchState,
-          pageCount: value,
-          min: minRangeURL,
-          max: maxRangeURL,
-          userID: userIDURL,
-          packName,
-        }),
-      })
-    },
-    [dispatch]
-  )
+    dispatch(updateUrlParamsAC({ ...paramsSearchState, pageCount: value, min: '', max: '' }))
+    setSearchParams({
+      ...filterAllParams({
+        ...paramsSearchState,
+        pageCount: value,
+        min: minRangeURL,
+        max: maxRangeURL,
+        userID: userIDURL,
+        packName,
+      }),
+    })
+  }
 
-  const changePageHandle = useCallback(
-    (event: React.ChangeEvent<unknown>, page: number) => {
-      dispatch(updateUrlParamsAC({ ...paramsSearchState, page: page + '' }))
-      setSearchParams({
-        ...filterAllParams({
-          ...paramsSearchState,
-          page: page + '',
-          userID: userIDURL,
-          packName,
-        }),
-      })
-    },
-    [dispatch]
-  )
+  const changePageHandle = (event: React.ChangeEvent<unknown>, page: number) => {
+    dispatch(updateUrlParamsAC({ ...paramsSearchState, page: page + '' }))
+    setSearchParams({
+      ...filterAllParams({
+        ...paramsSearchState,
+        page: page + '',
+        userID: userIDURL,
+        packName,
+      }),
+    })
+  }
 
-  const searchValueTextHandler = useCallback(
-    (valueSearch: string) => {
-      setPackName(valueSearch)
-    },
-    [dispatch]
-  )
+  const searchValueTextHandler = (valueSearch: string) => {
+    setPackName(valueSearch)
+  }
 
   useEffect(() => {
     setSearchParams({
@@ -209,7 +173,7 @@ export const PackList = () => {
   return (
     <section>
       <div className="container">
-        <div className={s.HeaderWrapper}>
+        <div className={s.headerWrapper}>
           <h2 className={s.title}>Pack list</h2>
           <Button
             variant="contained"
@@ -236,37 +200,7 @@ export const PackList = () => {
           maxRangeURL={maxRangeURL}
           urlUserID={userIDURL}
         />
-        <TableContainer className={s.table} component={Paper}>
-          <Table sx={{ fontFamily: 'Montserrat' }} aria-label="simple table">
-            <TableHead>
-              <TableRow className={s.tableHead}>
-                <StyledTableCell align="left">Cover</StyledTableCell>
-                <StyledTableCell align="left">Name</StyledTableCell>
-                <StyledTableCell align="center">Cards</StyledTableCell>
-                <StyledTableCell className={s.lastUpdated} align="center">
-                  Last updated
-                </StyledTableCell>
-                <StyledTableCell align="center">Created by</StyledTableCell>
-                <StyledTableCell align="center">Actions</StyledTableCell>
-              </TableRow>
-            </TableHead>
-
-            <TableBody>
-              {packs.map(pack => (
-                <Pack
-                  key={pack._id}
-                  _id={pack._id}
-                  name={pack.name}
-                  user_name={pack.user_name}
-                  user_id={pack.user_id}
-                  cardsCount={pack.cardsCount}
-                  updated={pack.updated}
-                  deckCover={pack.deckCover}
-                />
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+        <TableContainerPacks />
         <div className={s.paginationWithSelect}>
           <Pagination
             className={s.pagination}

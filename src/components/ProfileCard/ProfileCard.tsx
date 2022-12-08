@@ -8,6 +8,7 @@ import { Link, Navigate } from 'react-router-dom'
 
 import { PATH } from '../../app/App'
 import photoCamera from '../../assets/picture/icons8-camera-48.png'
+import { BackToPackList } from '../../common/BackArrow/BackToPackList'
 import SuperButton from '../../common/Button/SuperButton/SuperButton'
 import { SetAppErrorAC } from '../../redux/app-reducer'
 import { logOutTC } from '../../redux/auth-reducer'
@@ -65,11 +66,7 @@ export const ProfileCard = () => {
 
   return (
     <>
-      <div className={s.arrow}>
-        <Link to={PATH.packList} className={s.link}>
-          <ArrowBackIcon fontSize={'small'} /> Back to Packs List
-        </Link>
-      </div>
+      <BackToPackList />
       <div className={s.card}>
         <div className={s.container}>
           <div className={s.title}>Personal information</div>
