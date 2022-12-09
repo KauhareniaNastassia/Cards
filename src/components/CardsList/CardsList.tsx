@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import {
@@ -14,13 +14,13 @@ import {
   TableHead,
   TableRow,
 } from '@mui/material'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 
 import { PATH } from '../../app/App'
 import defaultPackCover from '../../assets/picture/noImage.jpg'
 import { BackToPackList } from '../../common/BackArrow/BackToPackList'
 import { AddCardModal } from '../../common/Modals/CardModals/AddCardModal'
-import { addNewCardTC, setCardsTC } from '../../redux/cards-reducer'
+import { addNewCardTC, setCardsTC, setPackIdAC } from '../../redux/cards-reducer'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks'
 import { SearchForCards } from '../PackList/SearchForCards/SearchForCards'
 
@@ -51,6 +51,8 @@ export const CardsList = () => {
   const myID = useAppSelector(state => state.profile._id)
   const userID = useAppSelector(state => state.cards.packUserId)
 
+  const { packID } = useParams()
+
   const handleChangePage = (event: unknown, page: number) => {
     setPage(page)
     dispatch(setCardsTC({ cardsPack_id, page }))
@@ -63,6 +65,17 @@ export const CardsList = () => {
   const addCardButtonClickHandler = () => {
     setOpenAddCardModal(true)
   }
+
+  useEffect(() => {
+    dispatch(
+      setCardsTC({
+        cardsPack_id: packID,
+      })
+    )
+    if (packID) {
+      dispatch(setPackIdAC(packID))
+    }
+  }, [])
 
   return (
     <div>

@@ -12,7 +12,7 @@ import { PATH } from '../../../app/App'
 import defaultPackCover from '../../../assets/picture/noImage.jpg'
 import { DeletePackModal } from '../../../common/Modals/PackModals/DeletePackModal'
 import { EditPackModal } from '../../../common/Modals/PackModals/EditPackModal'
-import { setCardsTC, setPackIdAC } from '../../../redux/cards-reducer'
+import { setCardsTC } from '../../../redux/cards-reducer'
 import { deletePackTC, updatePackTC } from '../../../redux/pack-reducer'
 import { useAppDispatch, useAppSelector } from '../../../utils/hooks'
 import s from '../PackList.module.css'
@@ -26,23 +26,10 @@ const StyledTableCellRow = styled(TableCell)(({ theme }) => ({
 
 export const Pack = memo((props: PacksType) => {
   const page = useAppSelector(state => state.cards.page)
-  const pageCount = useAppSelector(state => state.cards.pageCount)
   const [openDeleteModal, setOpenDeleteModal] = useState(false)
   const [openEditModal, setOpenEditModal] = useState(false)
   const dispatch = useAppDispatch()
   const myID = useAppSelector(state => state.profile._id)
-
-  const onClickSetPack = () => {
-    dispatch(
-      setCardsTC({
-        cardsPack_id: props._id,
-        page: page,
-        pageCount: pageCount,
-        packName: props.name,
-      })
-    )
-    dispatch(setPackIdAC(props._id))
-  }
 
   const deleteButtonClickHandler = () => {
     setOpenDeleteModal(true)
@@ -76,8 +63,8 @@ export const Pack = memo((props: PacksType) => {
           alt="img"
         />
       </StyledTableCellRow>
-      <StyledTableCellRow onClick={onClickSetPack} className={s.nameColumn}>
-        <Link style={{ textDecoration: 'none', color: 'black' }} to={PATH.pack}>
+      <StyledTableCellRow className={s.nameColumn}>
+        <Link style={{ textDecoration: 'none', color: 'black' }} to={`/pack/${props._id}`}>
           {props.name}
         </Link>
       </StyledTableCellRow>

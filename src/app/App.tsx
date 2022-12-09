@@ -31,7 +31,7 @@ export const PATH = {
   passwordRecovery: '/passwordRecovery',
   checkEmail: '/checkEmail',
   packList: '/packList',
-  pack: '/pack',
+  pack: '/pack/:packID',
   createNewPassword: '/createNewPassword/:token',
   learn: '/learn/:id',
 }
