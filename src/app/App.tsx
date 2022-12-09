@@ -14,7 +14,6 @@ import { Header } from '../components/Header/Header'
 import { Home } from '../components/Home/Home'
 import { Learn } from '../components/Learn/Learn'
 import { Login } from '../components/Login/Login'
-import { NavigationForUs } from '../components/NavigationForUs/NavigationForUs'
 import { PackList } from '../components/PackList/PackList'
 import { PasswordRecovery } from '../components/PasswordRecovery/PasswordRecovery'
 import { ProfileCard } from '../components/ProfileCard/ProfileCard'
@@ -55,7 +54,6 @@ function App() {
 
   return (
     <div className="App">
-      <NavigationForUs />
       <Header />
       {loading === 'loading' ? <LinearProgress /> : <div style={{ height: '4px' }} />}
       <Routes>

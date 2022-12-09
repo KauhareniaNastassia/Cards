@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 import AccountBoxIcon from '@mui/icons-material/AccountBox'
 import LogoutIcon from '@mui/icons-material/Logout'
-import { Avatar, Button, Popover, Stack, Typography } from '@mui/material'
+import { Avatar, Button, Popover, Stack } from '@mui/material'
 import { Link } from 'react-router-dom'
 
 import { PATH } from '../../app/App'
@@ -68,7 +68,6 @@ export const Header = () => {
                     <LogoutIcon /> Log out
                   </SuperButton>
                 </div>
-                {/*<Typography sx={{ p: 2 }}>The content of the Popover.</Typography>*/}
               </Popover>
               <Stack direction="row" spacing={2}>
                 <Avatar

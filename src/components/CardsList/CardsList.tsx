@@ -1,22 +1,17 @@
 import React, { useState } from 'react'
 
-import ArrowBackIcon from '@mui/icons-material/ArrowBack'
-import {
-  Button,
-  Pagination,
-  Paper,
-  styled,
-  Table,
-  TableBody,
-  TableCell,
-  tableCellClasses,
-  TableContainer,
-  TableHead,
-  TableRow,
-} from '@mui/material'
-import { Link } from 'react-router-dom'
+import MoreVertIcon from '@mui/icons-material/MoreVert'
+import Button from '@mui/material/Button'
+import Pagination from '@mui/material/Pagination'
+import Paper from '@mui/material/Paper'
+import styled from '@mui/material/styles/styled'
+import Table from '@mui/material/Table'
+import TableBody from '@mui/material/TableBody'
+import TableCell, { tableCellClasses } from '@mui/material/TableCell'
+import TableContainer from '@mui/material/TableContainer'
+import TableHead from '@mui/material/TableHead'
+import TableRow from '@mui/material/TableRow'
 
-import { PATH } from '../../app/App'
 import defaultPackCover from '../../assets/picture/noImage.jpg'
 import { BackToPackList } from '../../common/BackArrow/BackToPackList'
 import { AddCardModal } from '../../common/Modals/CardModals/AddCardModal'
@@ -56,8 +51,8 @@ export const CardsList = () => {
     dispatch(setCardsTC({ cardsPack_id, page }))
   }
 
-  const addCard = (question: string, answer: string, questionImg: string, answerImg: string) => {
-    dispatch(addNewCardTC(cardsPack_id, page, pageCount, question, answer, questionImg, answerImg))
+  const addCard = (question: string, answer: string) => {
+    dispatch(addNewCardTC(cardsPack_id, page, pageCount, question, answer))
   }
 
   const addCardButtonClickHandler = () => {
@@ -69,7 +64,9 @@ export const CardsList = () => {
       <BackToPackList />
       <div>
         <div className={s.headerWrapper}>
-          <div className={s.packName}>{packName}</div>
+          <div className={s.packName}>
+            {packName} <MoreVertIcon />
+          </div>
           <img
             className={s.packDeckCover}
             src={packDeckCover ? packDeckCover : defaultPackCover}

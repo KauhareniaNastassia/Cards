@@ -31,7 +31,8 @@
   align-items: center;
   justify-content: space-between;
 
-  margin: 10px 0;
+
+  padding: 10px 0px;
 }
 
 .userName {
@@ -54,6 +55,9 @@
 
   background-color: #ffffff;
   border-radius: 20px;
+}
+.signInButtonLink {
+  text-decoration: none;
 }
 
 @media only screen and (max-width: 400px) {
@@ -78,6 +82,4 @@
   }
 }
 
-.signInButtonLink {
-  text-decoration: none;
-}
+

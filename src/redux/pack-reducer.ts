@@ -59,7 +59,7 @@ export const packReducer = (
       return {
         ...state,
         minCardsCount: 0,
-        maxCardsCount: 100,
+        maxCardsCount: 110,
         showPackCards: 'all',
       }
     case 'PACKS/UPDATE_URL_PARAMS':

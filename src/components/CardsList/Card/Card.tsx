@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
 import { IconButton, Rating, styled, TableCell, tableCellClasses, TableRow } from '@mui/material'
-import moment from 'moment'
+import dayjs from 'dayjs'
 
 import { CardPackType } from '../../../api/cards-API'
 import { DeleteCardModal } from '../../../common/Modals/CardModals/DeleteCardModal'
@@ -61,27 +61,21 @@ export const Card = (props: CardPropsType) => {
   return (
     <TableRow key={props.card._id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
       <StyledTableCellRow component="th" scope="row">
-        {props.card.question}
-        {/*{props.card.type === 'Text' ? (
+        {props.card.questionImg === '' ? (
           props.card.question
         ) : (
-          <div>
-            <img src={props.card.questionImg} alt={'question image'} />
-          </div>
-        )}*/}
+          <img src={props.card.questionImg} alt={'question image'} />
+        )}
       </StyledTableCellRow>
       <StyledTableCellRow align="right">
-        {props.card.answer}
-        {/* {props.card.type === 'Text' ? (
-          props.card.answer
+        {props.card.answerImg === '' ? (
+          props.card.question
         ) : (
-          <div>
-            <img src={props.card.answerImg} alt={'question image'} />
-          </div>
-        )}*/}
+          <img src={props.card.answerImg} alt={'answer image'} />
+        )}
       </StyledTableCellRow>
       <StyledTableCellRow align="right">
-        {moment(`${props.card.updated}`).format('D.M.Y')}
+        {String(dayjs(`${props.card.updated}`).format('DD.MM.YYYY'))}
       </StyledTableCellRow>
       <StyledTableCellRow align="right">
         <Rating name="read-only" defaultValue={props.card.grade} precision={0.1} readOnly />

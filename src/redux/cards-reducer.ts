@@ -12,26 +12,7 @@ import { setAppStatusAC } from './app-reducer'
 import { AppThunkType } from './store'
 
 const initialState = {
-  cards: [
-    {
-      _id: '',
-      cardsPack_id: '',
-      user_id: '',
-      answer: '',
-      question: '',
-      answerImg: '',
-      questionImg: '',
-      grade: 0,
-      shots: 0,
-      comments: '',
-      type: '',
-      rating: 0,
-      more_id: '',
-      created: '',
-      updated: '',
-      __v: 0,
-    },
-  ] as CardPackType[],
+  cards: [] as CardPackType[],
   packUserId: '',
   packName: '',
   packPrivate: false,
