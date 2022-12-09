@@ -13,8 +13,6 @@ import { useAppDispatch, useAppSelector } from '../../../utils/hooks'
 
 type CardPropsType = {
   card: CardPackType
-  page: number
-  pageCount: number
 }
 
 export const Card = (props: CardPropsType) => {
@@ -35,7 +33,7 @@ export const Card = (props: CardPropsType) => {
   }
 
   const deleteCard = () => {
-    dispatch(deleteCardTC(props.card._id, props.page, props.pageCount))
+    dispatch(deleteCardTC(props.card._id))
   }
 
   const editCardButtonClickHandler = () => {
@@ -44,17 +42,13 @@ export const Card = (props: CardPropsType) => {
 
   const editCard = (newQuestion: string, newAnswer: string) => {
     dispatch(
-      updateCardTC(
-        {
-          card: {
-            _id: props.card._id,
-            answer: newAnswer,
-            question: newQuestion,
-          },
+      updateCardTC({
+        card: {
+          _id: props.card._id,
+          answer: newAnswer,
+          question: newQuestion,
         },
-        props.page,
-        props.pageCount
-      )
+      })
     )
   }
 

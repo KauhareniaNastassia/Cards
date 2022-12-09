@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 
-import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import {
   Button,
   Pagination,
@@ -14,13 +13,12 @@ import {
   TableHead,
   TableRow,
 } from '@mui/material'
-import { Link, useParams } from 'react-router-dom'
+import { useParams, useSearchParams } from 'react-router-dom'
 
-import { PATH } from '../../app/App'
 import defaultPackCover from '../../assets/picture/noImage.jpg'
 import { BackToPackList } from '../../common/BackArrow/BackToPackList'
 import { AddCardModal } from '../../common/Modals/CardModals/AddCardModal'
-import { addNewCardTC, setCardsTC, setPackIdAC } from '../../redux/cards-reducer'
+import { addNewCardTC, setCardsTC } from '../../redux/cards-reducer'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks'
 import { SearchForCards } from '../PackList/SearchForCards/SearchForCards'
 
@@ -41,41 +39,36 @@ export const CardsList = () => {
   const cards = useAppSelector(state => state.cards.cards)
   const packName = useAppSelector(state => state.cards.packName)
   const packDeckCover = useAppSelector(state => state.cards.packDeckCover)
-  const cardsPack_id = useAppSelector(state => state.cards.cardsPack_id)
-  const [page, setPage] = useState(1)
-  const pageCount = useAppSelector(state => state.cards.pageCount)
+  // const cardsPack_id = useAppSelector(state => state.cards.cardsPack_id)
   const cardsTotalCount = useAppSelector(state => state.cards.cardsTotalCount)
-  const pagesCount = Math.ceil(cardsTotalCount / pageCount)
-  const dispatch = useAppDispatch()
-  const [openAddCardModal, setOpenAddCardModal] = useState(false)
   const myID = useAppSelector(state => state.profile._id)
   const userID = useAppSelector(state => state.cards.packUserId)
 
+  const dispatch = useAppDispatch()
+  const [searchParams, setSearchParams] = useSearchParams()
   const { packID } = useParams()
 
+  const [openAddCardModal, setOpenAddCardModal] = useState(false)
+  const [params, setParams] = useState({
+    page: 1,
+  })
+
+  useEffect(() => {
+    dispatch(setCardsTC({ cardsPack_id: packID }))
+  }, [dispatch])
+
   const handleChangePage = (event: unknown, page: number) => {
-    setPage(page)
-    dispatch(setCardsTC({ cardsPack_id, page }))
+    setParams({ page })
+    setSearchParams({ page: page + '' })
   }
 
   const addCard = (question: string, answer: string, questionImg: string, answerImg: string) => {
-    dispatch(addNewCardTC(cardsPack_id, page, pageCount, question, answer, questionImg, answerImg))
+    // dispatch(addNewCardTC(cardsPack_id, pageCount, question, answer, questionImg, answerImg))
   }
 
   const addCardButtonClickHandler = () => {
     setOpenAddCardModal(true)
   }
-
-  useEffect(() => {
-    dispatch(
-      setCardsTC({
-        cardsPack_id: packID,
-      })
-    )
-    if (packID) {
-      dispatch(setPackIdAC(packID))
-    }
-  }, [])
 
   return (
     <div>
@@ -134,7 +127,7 @@ export const CardsList = () => {
 
                 <TableBody>
                   {cards.map(card => (
-                    <Card key={card._id} card={card} page={page} pageCount={pageCount} />
+                    <Card key={card._id} card={card} />
                   ))}
                 </TableBody>
               </Table>
@@ -145,9 +138,9 @@ export const CardsList = () => {
           className={s.pagination}
           color="primary"
           shape="rounded"
-          page={page}
+          page={+(params.page ? params.page : 1)}
           onChange={handleChangePage}
-          count={pagesCount}
+          count={cardsTotalCount}
         />
       </div>
     </div>

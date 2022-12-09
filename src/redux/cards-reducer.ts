@@ -133,13 +133,13 @@ export const addNewCardTC =
   }
 
 export const deleteCardTC =
-  (cardID: string, page: number, pageCount: number): AppThunkType =>
+  (cardID: string): AppThunkType =>
   async dispatch => {
     dispatch(setAppStatusAC('loading'))
     try {
       const res = await cardsAPI.deleteCard(cardID)
 
-      dispatch(setCardsTC({ cardsPack_id: res.data.deletedCard.cardsPack_id, page, pageCount }))
+      dispatch(setCardsTC({ cardsPack_id: res.data.deletedCard.cardsPack_id }))
       dispatch(setAppStatusAC('succeed'))
     } catch (e) {
       console.log(e)
@@ -147,13 +147,13 @@ export const deleteCardTC =
   }
 
 export const updateCardTC =
-  (card: UpdateCardDataType, page: number, pageCount: number): AppThunkType =>
+  (card: UpdateCardDataType): AppThunkType =>
   async dispatch => {
     dispatch(setAppStatusAC('loading'))
     try {
       const res = await cardsAPI.updateCard({ ...card })
 
-      dispatch(setCardsTC({ cardsPack_id: res.data.updatedCard.cardsPack_id, page, pageCount }))
+      dispatch(setCardsTC({ cardsPack_id: res.data.updatedCard.cardsPack_id }))
       dispatch(setAppStatusAC('succeed'))
     } catch (e) {
       console.log(e)
