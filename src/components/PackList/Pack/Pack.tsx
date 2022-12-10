@@ -7,7 +7,7 @@ import IconButton from '@mui/material/IconButton'
 import styled from '@mui/material/styles/styled'
 import TableCell, { tableCellClasses } from '@mui/material/TableCell'
 import TableRow from '@mui/material/TableRow'
-import dayjs from 'dayjs'
+// import dayjs from 'dayjs'
 import { Link } from 'react-router-dom'
 
 import { PacksType } from '../../../api/cards-API'
@@ -73,7 +73,7 @@ export const Pack = memo((props: PacksType) => {
       </StyledTableCellRow>
       <StyledTableCellRow align="center">{props.cardsCount}</StyledTableCellRow>
       <StyledTableCellRow className={s.lastUpdated} align="center">
-        {String(dayjs(`${props.updated}`).format('DD.MM.YYYY'))}
+        {/*{String(dayjs(`${props.updated}`).format('DD.MM.YYYY'))}*/}
       </StyledTableCellRow>
       <StyledTableCellRow align="center">{props.user_name}</StyledTableCellRow>
       <StyledTableCellRow align="center">

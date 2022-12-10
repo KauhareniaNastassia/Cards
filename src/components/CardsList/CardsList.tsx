@@ -11,11 +11,12 @@ import TableCell, { tableCellClasses } from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
+import { useParams, useSearchParams } from 'react-router-dom'
 
 import defaultPackCover from '../../assets/picture/noImage.jpg'
 import { BackToPackList } from '../../common/BackArrow/BackToPackList'
 import { AddCardModal } from '../../common/Modals/CardModals/AddCardModal'
-import { addNewCardTC, setCardsTC } from '../../redux/cards-reducer'
+import { setCardsTC } from '../../redux/cards-reducer'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks'
 import { SearchForCards } from '../PackList/SearchForCards/SearchForCards'
 
@@ -36,7 +37,6 @@ export const CardsList = () => {
   const cards = useAppSelector(state => state.cards.cards)
   const packName = useAppSelector(state => state.cards.packName)
   const packDeckCover = useAppSelector(state => state.cards.packDeckCover)
-  // const cardsPack_id = useAppSelector(state => state.cards.cardsPack_id)
   const cardsTotalCount = useAppSelector(state => state.cards.cardsTotalCount)
   const myID = useAppSelector(state => state.profile._id)
   const userID = useAppSelector(state => state.cards.packUserId)
@@ -45,17 +45,24 @@ export const CardsList = () => {
   const [searchParams, setSearchParams] = useSearchParams()
   const { packID } = useParams()
 
+  const pageUrl = searchParams.get('page') ? searchParams.get('page') + '' : '1'
+  const pageCountUrl = searchParams.get('pageCount') ? searchParams.get('pageCount') + '' : '4'
+
   const [openAddCardModal, setOpenAddCardModal] = useState(false)
   const [params, setParams] = useState({
     page: 1,
+    pageCount: 4,
   })
+  const paginationPages = Math.ceil(cardsTotalCount / params.pageCount)
 
   useEffect(() => {
-    dispatch(setCardsTC({ cardsPack_id: packID }))
-  }, [dispatch])
+    setSearchParams({ page: pageUrl, pageCount: pageCountUrl })
+    setParams({ page: +pageUrl, pageCount: +pageCountUrl })
+    dispatch(setCardsTC({ cardsPack_id: packID, page: +pageUrl, pageCount: +pageCountUrl }))
+  }, [dispatch, pageUrl, pageCountUrl])
 
   const handleChangePage = (event: unknown, page: number) => {
-    setParams({ page })
+    setParams({ ...params, page })
     setSearchParams({ page: page + '' })
   }
 
@@ -139,7 +146,7 @@ export const CardsList = () => {
           shape="rounded"
           page={+(params.page ? params.page : 1)}
           onChange={handleChangePage}
-          count={cardsTotalCount}
+          count={paginationPages}
         />
       </div>
     </div>
