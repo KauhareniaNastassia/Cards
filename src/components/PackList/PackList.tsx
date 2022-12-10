@@ -1,11 +1,11 @@
-import React, { ChangeEvent, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
-import { Button, Pagination } from '@mui/material'
-import NativeSelect from '@mui/material/NativeSelect'
+import Button from '@mui/material/Button'
 import { Navigate, useSearchParams } from 'react-router-dom'
 
 import { PATH } from '../../app/App'
 import { AddPackModal } from '../../common/Modals/PackModals/AddPackModal'
+import { PaginationBar } from '../../common/PaginationBar/PaginationBar'
 import {
   addNewPackTC,
   getPacksTC,
@@ -41,6 +41,8 @@ export const PackList = () => {
 
   const [packName, setPackName] = useState<string>(packNameURL ? packNameURL : '')
   const debouncedValue = useDebounce<string>(packName, 1000)
+
+  const paginationPages = Math.ceil(cardPacksTotalCount / (pageCount ? +pageCount : 1))
 
   const urlParamsFilter = filterAllParams({
     page: pageURL,
@@ -108,9 +110,7 @@ export const PackList = () => {
   const addPack = (name: string, deckCover: string) => {
     dispatch(addNewPackTC(name, deckCover))
   }
-  const pageCountHandler = (e: ChangeEvent<HTMLSelectElement>) => {
-    const value = e.currentTarget.value
-
+  const pageCountHandler = (value: string) => {
     dispatch(updateUrlParamsAC({ ...paramsSearchState, pageCount: value, min: '', max: '' }))
     setSearchParams({
       ...filterAllParams({
@@ -124,7 +124,7 @@ export const PackList = () => {
     })
   }
 
-  const changePageHandle = (event: React.ChangeEvent<unknown>, page: number) => {
+  const changePageHandle = (page: number) => {
     dispatch(updateUrlParamsAC({ ...paramsSearchState, page: page + '' }))
     setSearchParams({
       ...filterAllParams({
@@ -201,23 +201,14 @@ export const PackList = () => {
           urlUserID={userIDURL}
         />
         <TableContainerPacks />
-        <div className={s.paginationWithSelect}>
-          <Pagination
-            className={s.pagination}
-            color="primary"
-            shape="rounded"
-            page={+(page ? page : 1)}
-            count={cardPacksTotalCount}
-            onChange={changePageHandle}
-          />
-          <span className={s.show}>Show</span>
-          <NativeSelect value={pageCount} onChange={pageCountHandler}>
-            <option value={5}>5</option>
-            <option value={10}>10</option>
-            <option value={20}>20</option>
-          </NativeSelect>
-          <span>Cards per page</span>
-        </div>
+        <PaginationBar
+          handleChangePage={changePageHandle}
+          pageCountHandler={pageCountHandler}
+          page={+(page ? page : 1)}
+          pageCount={+(pageCount ? pageCount : 5)}
+          paginationPages={paginationPages}
+          selectOption={[5, 10, 20]}
+        />
       </div>
     </section>
   )

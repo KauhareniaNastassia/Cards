@@ -11,6 +11,13 @@ import { EditCardModal } from '../../../common/Modals/CardModals/EditCardModal'
 import { deleteCardTC, updateCardTC } from '../../../redux/cards-reducer'
 import { useAppDispatch, useAppSelector } from '../../../utils/hooks'
 
+const StyledTableCellRow = styled(TableCell)(({}) => ({
+  [`&.${tableCellClasses.body}`]: {
+    fontFamily: 'Montseratt',
+    fontSize: '15px',
+  },
+}))
+
 type CardPropsType = {
   card: CardPackType
 }
@@ -20,13 +27,6 @@ export const Card = (props: CardPropsType) => {
   const [openDeleteCardModal, setOpenDeleteCardModal] = useState(false)
   const [openEditCardModal, setOpenEditCardModal] = useState(false)
   const dispatch = useAppDispatch()
-
-  const StyledTableCellRow = styled(TableCell)(({}) => ({
-    [`&.${tableCellClasses.body}`]: {
-      fontFamily: 'Montseratt',
-      fontSize: '15px',
-    },
-  }))
 
   const deleteCardButtonClickHandler = () => {
     setOpenDeleteCardModal(true)

@@ -17,6 +17,7 @@ import { useParams, useSearchParams } from 'react-router-dom'
 import defaultPackCover from '../../assets/picture/noImage.jpg'
 import { BackToPackList } from '../../common/BackArrow/BackToPackList'
 import { AddCardModal } from '../../common/Modals/CardModals/AddCardModal'
+import { PaginationBar } from '../../common/PaginationBar/PaginationBar'
 import { setCardsTC } from '../../redux/cards-reducer'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks'
 import { SearchForCards } from '../PackList/SearchForCards/SearchForCards'
@@ -62,7 +63,7 @@ export const CardsList = () => {
     dispatch(setCardsTC({ cardsPack_id: packID, page: +pageUrl, pageCount: +pageCountUrl }))
   }, [dispatch, pageUrl, pageCountUrl])
 
-  const handleChangePage = (event: unknown, page: number) => {
+  const handleChangePage = (page: number) => {
     setParams({ ...params, page })
     setSearchParams({ page: page + '' })
   }
@@ -75,9 +76,7 @@ export const CardsList = () => {
     setOpenAddCardModal(true)
   }
 
-  const pageCountHandler = (e: ChangeEvent<HTMLSelectElement>) => {
-    const value = e.currentTarget.value
-
+  const pageCountHandler = (value: string) => {
     setParams({ ...params, pageCount: +value })
     setSearchParams({ pageCount: value })
   }
@@ -148,22 +147,14 @@ export const CardsList = () => {
             </TableContainer>
           </div>
         )}
-        <Pagination
-          className={s.pagination}
-          color="primary"
-          shape="rounded"
+        <PaginationBar
+          handleChangePage={handleChangePage}
+          pageCountHandler={pageCountHandler}
           page={+(params.page ? params.page : 1)}
-          onChange={handleChangePage}
-          count={paginationPages}
+          pageCount={params.pageCount}
+          paginationPages={paginationPages}
+          selectOption={[5, 10, 20, 40, 100]}
         />
-        <span className={s.show}>Show</span>
-        <NativeSelect value={params.pageCount} onChange={pageCountHandler}>
-          <option value={5}>5</option>
-          <option value={10}>10</option>
-          <option value={20}>20</option>
-          <option value={40}>40</option>
-        </NativeSelect>
-        <span>Cards per page</span>
       </div>
     </div>
   )
