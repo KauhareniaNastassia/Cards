@@ -1,19 +1,16 @@
 import React, { useEffect, useState } from 'react'
 
-import {
-  Button,
-  Pagination,
-  Paper,
-  styled,
-  Table,
-  TableBody,
-  TableCell,
-  tableCellClasses,
-  TableContainer,
-  TableHead,
-  TableRow,
-} from '@mui/material'
-import { useParams, useSearchParams } from 'react-router-dom'
+import MoreVertIcon from '@mui/icons-material/MoreVert'
+import Button from '@mui/material/Button'
+import Pagination from '@mui/material/Pagination'
+import Paper from '@mui/material/Paper'
+import styled from '@mui/material/styles/styled'
+import Table from '@mui/material/Table'
+import TableBody from '@mui/material/TableBody'
+import TableCell, { tableCellClasses } from '@mui/material/TableCell'
+import TableContainer from '@mui/material/TableContainer'
+import TableHead from '@mui/material/TableHead'
+import TableRow from '@mui/material/TableRow'
 
 import defaultPackCover from '../../assets/picture/noImage.jpg'
 import { BackToPackList } from '../../common/BackArrow/BackToPackList'
@@ -75,7 +72,9 @@ export const CardsList = () => {
       <BackToPackList />
       <div>
         <div className={s.headerWrapper}>
-          <div className={s.packName}>{packName}</div>
+          <div className={s.packName}>
+            {packName} <MoreVertIcon />
+          </div>
           <img
             className={s.packDeckCover}
             src={packDeckCover ? packDeckCover : defaultPackCover}

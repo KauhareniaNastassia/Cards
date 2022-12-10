@@ -1,10 +1,9 @@
 import React, { ChangeEvent, useState } from 'react'
 
-import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import LogoutIcon from '@mui/icons-material/Logout'
 import { Avatar, styled } from '@mui/material'
 import Badge from '@mui/material/Badge'
-import { Link, Navigate } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
 
 import { PATH } from '../../app/App'
 import photoCamera from '../../assets/picture/icons8-camera-48.png'
@@ -12,7 +11,7 @@ import { BackToPackList } from '../../common/BackArrow/BackToPackList'
 import SuperButton from '../../common/Button/SuperButton/SuperButton'
 import { SetAppErrorAC } from '../../redux/app-reducer'
 import { logOutTC } from '../../redux/auth-reducer'
-import { updateUserProfileTC, UserType } from '../../redux/profile-reducer'
+import { updateUserProfileTC } from '../../redux/profile-reducer'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks'
 import { convertToBase64 } from '../../utils/uploadImages/ConvertToBase64'
 import { EditableSpan } from '../EditableSpan/EditableSpan'
@@ -28,7 +27,6 @@ export const ProfileCard = () => {
   const name = useAppSelector(state => state.profile.name)
   const email = useAppSelector(state => state.profile.email)
   const userName = useAppSelector(state => state.profile.name)
-  const [ava, setAva] = useState(customAvatar)
 
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
 
@@ -72,6 +70,7 @@ export const ProfileCard = () => {
           <div className={s.title}>Personal information</div>
           <label>
             <Badge
+              sx={{ cursor: 'pointer' }}
               overlap="circular"
               anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
               badgeContent={<SmallAvatar alt="uploadPhoto" src={photoCamera} />}

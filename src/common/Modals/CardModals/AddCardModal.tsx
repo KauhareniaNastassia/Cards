@@ -13,7 +13,7 @@ type AddCardModalPropsType = {
   title: string
   open: boolean
   toggleOpenMode: (value: boolean) => void
-  addItem: (question: string, answer: string, questionImg: string, answerImg: string) => void
+  addItem: (question: string, answer: string) => void
 }
 
 export const AddCardModal = (props: AddCardModalPropsType) => {
@@ -49,7 +49,7 @@ export const AddCardModal = (props: AddCardModalPropsType) => {
   }
 
   const saveButtonHandler = () => {
-    props.addItem(question, answer, questionImg, answerImg)
+    props.addItem(question && questionImg, answer && answerImg)
     props.toggleOpenMode(false)
     setQuestion('')
     setAnswer('')

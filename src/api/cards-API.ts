@@ -44,7 +44,17 @@ export const cardsAPI = {
   },
 
   addNewCard(card: AddNewCardDataType) {
-    return instance.post<AddNewCardResponseType>('/cards/card', { card })
+    return instance.post<AddNewCardResponseType>('/cards/card', {
+      card: {
+        cardsPack_id: card.cardsPack_id,
+        question: card.question,
+        answer: card.answer,
+        grade: card.grade,
+        shots: card.shots,
+        questionImg: card.questionImg,
+        answerImg: card.answerImg,
+      },
+    })
   },
   deleteCard(cardID: string) {
     return instance.delete<DeleteCardResponseType>('/cards/card', {
@@ -94,6 +104,8 @@ export type UpdateCardDataType = {
   card: {
     _id: string
     answer?: string
+    answerImg?: string
+    questionImg?: string
     question?: string
     grade?: number
     comments?: string
@@ -123,14 +135,14 @@ export type DeletedCardType = {
 }
 export type AddNewCardDataType = {
   cardsPack_id: string
-  question?: string //"no question"
-  answer?: string //"no answer"
-  grade?: number // 0..5
+  question?: string
+  answer?: string
+  grade?: number
   shots?: number
-  answerImg?: string // "url or base 64"
-  questionImg?: string // "url or base 64"
-  questionVideo?: string // "url or base 64"
-  answerVideo?: string // "url or base 64"
+  answerImg?: string
+  questionImg?: string
+  questionVideo?: string
+  answerVideo?: string
 }
 export type AddNewCardResponseType = {
   newCard: ResponseCardType
@@ -143,8 +155,8 @@ export type ResponseCardType = {
   user_id: string
   answer: string
   question: string
-  answerImg: string // "url or base 64"
-  questionImg: string // "url or base 64"
+  answerImg: string
+  questionImg: string
   grade: number
   shots: number
   comments: string
@@ -301,16 +313,3 @@ export type UpdatedGradeCartType = {
   updated: string
   __v: number
 }
-
-/*export type CardModelType = {
-  cardsPack_id: string
-  question?: string
-  answer?: string
-  grade?: number
-  shots?: number
-  answerImg?: string
-  questionImg?: string
-  questionVideo?: string
-  answerVideo?: string
-  type?: 'Text' | 'Image'
-}*/

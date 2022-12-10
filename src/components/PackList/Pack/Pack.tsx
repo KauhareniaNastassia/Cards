@@ -3,8 +3,11 @@ import React, { memo, useState } from 'react'
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
 import SchoolIcon from '@mui/icons-material/School'
-import { IconButton, styled, TableCell, tableCellClasses, TableRow } from '@mui/material'
-import moment from 'moment'
+import IconButton from '@mui/material/IconButton'
+import styled from '@mui/material/styles/styled'
+import TableCell, { tableCellClasses } from '@mui/material/TableCell'
+import TableRow from '@mui/material/TableRow'
+import dayjs from 'dayjs'
 import { Link } from 'react-router-dom'
 
 import { PacksType } from '../../../api/cards-API'
@@ -70,7 +73,7 @@ export const Pack = memo((props: PacksType) => {
       </StyledTableCellRow>
       <StyledTableCellRow align="center">{props.cardsCount}</StyledTableCellRow>
       <StyledTableCellRow className={s.lastUpdated} align="center">
-        {moment(`${props.updated}`).format('D.M.Y')}
+        {String(dayjs(`${props.updated}`).format('DD.MM.YYYY'))}
       </StyledTableCellRow>
       <StyledTableCellRow align="center">{props.user_name}</StyledTableCellRow>
       <StyledTableCellRow align="center">
