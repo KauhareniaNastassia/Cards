@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { ChangeEvent, useEffect, useState } from 'react'
 
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import Button from '@mui/material/Button'
+import NativeSelect from '@mui/material/NativeSelect'
 import Pagination from '@mui/material/Pagination'
 import Paper from '@mui/material/Paper'
 import styled from '@mui/material/styles/styled'
@@ -46,12 +47,12 @@ export const CardsList = () => {
   const { packID } = useParams()
 
   const pageUrl = searchParams.get('page') ? searchParams.get('page') + '' : '1'
-  const pageCountUrl = searchParams.get('pageCount') ? searchParams.get('pageCount') + '' : '4'
+  const pageCountUrl = searchParams.get('pageCount') ? searchParams.get('pageCount') + '' : '5'
 
   const [openAddCardModal, setOpenAddCardModal] = useState(false)
   const [params, setParams] = useState({
     page: 1,
-    pageCount: 4,
+    pageCount: 5,
   })
   const paginationPages = Math.ceil(cardsTotalCount / params.pageCount)
 
@@ -72,6 +73,13 @@ export const CardsList = () => {
 
   const addCardButtonClickHandler = () => {
     setOpenAddCardModal(true)
+  }
+
+  const pageCountHandler = (e: ChangeEvent<HTMLSelectElement>) => {
+    const value = e.currentTarget.value
+
+    setParams({ ...params, pageCount: +value })
+    setSearchParams({ pageCount: value })
   }
 
   return (
@@ -148,6 +156,14 @@ export const CardsList = () => {
           onChange={handleChangePage}
           count={paginationPages}
         />
+        <span className={s.show}>Show</span>
+        <NativeSelect value={params.pageCount} onChange={pageCountHandler}>
+          <option value={5}>5</option>
+          <option value={10}>10</option>
+          <option value={20}>20</option>
+          <option value={40}>40</option>
+        </NativeSelect>
+        <span>Cards per page</span>
       </div>
     </div>
   )
