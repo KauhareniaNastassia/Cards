@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
 import { IconButton, Rating, styled, TableCell, tableCellClasses, TableRow } from '@mui/material'
-// import dayjs from 'dayjs'
+import dayjs from 'dayjs'
 
 import { CardPackType } from '../../../api/cards-API'
 import { DeleteCardModal } from '../../../common/Modals/CardModals/DeleteCardModal'
@@ -69,7 +69,7 @@ export const Card = (props: CardPropsType) => {
         )}
       </StyledTableCellRow>
       <StyledTableCellRow align="right">
-        {/*{String(dayjs(`${props.card.updated}`).format('DD.MM.YYYY'))}*/}
+        {String(dayjs(`${props.card.updated}`).format('DD.MM.YYYY'))}
       </StyledTableCellRow>
       <StyledTableCellRow align="right">
         <Rating name="read-only" defaultValue={props.card.grade} precision={0.1} readOnly />

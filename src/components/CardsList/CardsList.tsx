@@ -1,6 +1,10 @@
 import React, { ChangeEvent, useEffect, useState } from 'react'
 
+import AccountBoxIcon from '@mui/icons-material/AccountBox'
+import LogoutIcon from '@mui/icons-material/Logout'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
+import SchoolIcon from '@mui/icons-material/School'
+import { Popover } from '@mui/material'
 import Button from '@mui/material/Button'
 import NativeSelect from '@mui/material/NativeSelect'
 import Pagination from '@mui/material/Pagination'
@@ -12,10 +16,12 @@ import TableCell, { tableCellClasses } from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
-import { useParams, useSearchParams } from 'react-router-dom'
+import { Link, useParams, useSearchParams } from 'react-router-dom'
 
+import { PATH } from '../../app/App'
 import defaultPackCover from '../../assets/picture/noImage.jpg'
 import { BackToPackList } from '../../common/BackArrow/BackToPackList'
+import SuperButton from '../../common/Button/SuperButton/SuperButton'
 import { AddCardModal } from '../../common/Modals/CardModals/AddCardModal'
 import { PaginationBar } from '../../common/PaginationBar/PaginationBar'
 import { setCardsTC } from '../../redux/cards-reducer'
@@ -36,6 +42,15 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 }))
 
 export const CardsList = () => {
+  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null)
+  const open = Boolean(anchorEl)
+  const id = open ? 'simple-popover' : undefined
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget)
+  }
+  const handleClose = () => {
+    setAnchorEl(null)
+  }
   const cards = useAppSelector(state => state.cards.cards)
   const packName = useAppSelector(state => state.cards.packName)
   const packDeckCover = useAppSelector(state => state.cards.packDeckCover)
@@ -87,7 +102,40 @@ export const CardsList = () => {
       <div>
         <div className={s.headerWrapper}>
           <div className={s.packName}>
-            {packName} <MoreVertIcon />
+            {packName}{' '}
+            <button className={s.button} onClick={handleClick}>
+              <MoreVertIcon className={s.moreIcon} />
+            </button>
+            <Popover
+              id={id}
+              open={open}
+              anchorEl={anchorEl}
+              onClose={handleClose}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left',
+              }}
+            >
+              <div className={s.popover}>
+                <Link to={PATH.learn}>
+                  <SuperButton className={s.superButton} onClick={handleClose}>
+                    <div className={s.icon}>
+                      <SchoolIcon sx={{ marginRight: '5px' }} /> Learn
+                    </div>
+                  </SuperButton>
+                </Link>
+                <SuperButton onClick={() => {}} className={s.superButton}>
+                  <div className={s.icon}>
+                    <LogoutIcon /> Edit
+                  </div>
+                </SuperButton>
+                <SuperButton onClick={() => {}} className={s.superButton}>
+                  <div className={s.icon}>
+                    <LogoutIcon /> Delete
+                  </div>
+                </SuperButton>
+              </div>
+            </Popover>
           </div>
           <img
             className={s.packDeckCover}
