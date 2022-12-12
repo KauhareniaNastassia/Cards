@@ -30,6 +30,7 @@ export const PackList = () => {
   const paramsSearchState = useAppSelector(state => state.packs.params)
   const pageCount = useAppSelector(state => state.packs.params.pageCount)
   const page = useAppSelector(state => state.packs.params.page)
+
   const cardPacksTotalCount = useAppSelector(state => state.packs.cardPacksTotalCount)
 
   const pageURL = searchParams.get('page') ? searchParams.get('page') + '' : '1'

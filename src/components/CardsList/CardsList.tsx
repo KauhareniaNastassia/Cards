@@ -1,13 +1,11 @@
-import React, { ChangeEvent, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
-import AccountBoxIcon from '@mui/icons-material/AccountBox'
-import LogoutIcon from '@mui/icons-material/Logout'
+import DeleteIcon from '@mui/icons-material/Delete'
+import EditIcon from '@mui/icons-material/Edit'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import SchoolIcon from '@mui/icons-material/School'
 import { Popover } from '@mui/material'
 import Button from '@mui/material/Button'
-import NativeSelect from '@mui/material/NativeSelect'
-import Pagination from '@mui/material/Pagination'
 import Paper from '@mui/material/Paper'
 import styled from '@mui/material/styles/styled'
 import Table from '@mui/material/Table'
@@ -23,8 +21,10 @@ import defaultPackCover from '../../assets/picture/noImage.jpg'
 import { BackToPackList } from '../../common/BackArrow/BackToPackList'
 import SuperButton from '../../common/Button/SuperButton/SuperButton'
 import { AddCardModal } from '../../common/Modals/CardModals/AddCardModal'
+import { EditPackModal } from '../../common/Modals/PackModals/EditPackModal'
 import { PaginationBar } from '../../common/PaginationBar/PaginationBar'
-import { setCardsTC } from '../../redux/cards-reducer'
+import { addNewCardTC, setCardsTC } from '../../redux/cards-reducer'
+import { updatePackTC } from '../../redux/pack-reducer'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks'
 import { SearchForCards } from '../PackList/SearchForCards/SearchForCards'
 
@@ -51,7 +51,9 @@ export const CardsList = () => {
   const handleClose = () => {
     setAnchorEl(null)
   }
+
   const cards = useAppSelector(state => state.cards.cards)
+
   const packName = useAppSelector(state => state.cards.packName)
   const packDeckCover = useAppSelector(state => state.cards.packDeckCover)
   const cardsTotalCount = useAppSelector(state => state.cards.cardsTotalCount)
@@ -84,7 +86,7 @@ export const CardsList = () => {
   }
 
   const addCard = (question: string, answer: string, questionImg: string, answerImg: string) => {
-    // dispatch(addNewCardTC(cardsPack_id, pageCount, question, answer, questionImg, answerImg))
+    //dispatch(addNewCardTC(cardsPack_id, pageCount, question, answer, questionImg, answerImg))
   }
 
   const addCardButtonClickHandler = () => {
@@ -103,39 +105,43 @@ export const CardsList = () => {
         <div className={s.headerWrapper}>
           <div className={s.packName}>
             {packName}{' '}
-            <button className={s.button} onClick={handleClick}>
-              <MoreVertIcon className={s.moreIcon} />
-            </button>
-            <Popover
-              id={id}
-              open={open}
-              anchorEl={anchorEl}
-              onClose={handleClose}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-            >
-              <div className={s.popover}>
-                <Link to={PATH.learn}>
-                  <SuperButton className={s.superButton} onClick={handleClose}>
-                    <div className={s.icon}>
-                      <SchoolIcon sx={{ marginRight: '5px' }} /> Learn
-                    </div>
-                  </SuperButton>
-                </Link>
-                <SuperButton onClick={() => {}} className={s.superButton}>
-                  <div className={s.icon}>
-                    <LogoutIcon /> Edit
+            {myID === userID && (
+              <div>
+                <button className={s.button} onClick={handleClick}>
+                  <MoreVertIcon className={s.moreIcon} />
+                </button>
+                <Popover
+                  id={id}
+                  open={open}
+                  anchorEl={anchorEl}
+                  onClose={handleClose}
+                  anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'left',
+                  }}
+                >
+                  <div className={s.popover}>
+                    <Link to={PATH.learn}>
+                      <SuperButton className={s.superButton} onClick={handleClose}>
+                        <div className={s.icon}>
+                          <SchoolIcon sx={{ marginRight: '5px' }} /> Learn
+                        </div>
+                      </SuperButton>
+                    </Link>
+                    <SuperButton onClick={() => {}} className={s.superButton}>
+                      <div className={s.icon}>
+                        <EditIcon /> Edit
+                      </div>
+                    </SuperButton>
+                    <SuperButton onClick={() => {}} className={s.superButton}>
+                      <div className={s.icon}>
+                        <DeleteIcon /> Delete
+                      </div>
+                    </SuperButton>
                   </div>
-                </SuperButton>
-                <SuperButton onClick={() => {}} className={s.superButton}>
-                  <div className={s.icon}>
-                    <LogoutIcon /> Delete
-                  </div>
-                </SuperButton>
+                </Popover>
               </div>
-            </Popover>
+            )}
           </div>
           <img
             className={s.packDeckCover}
