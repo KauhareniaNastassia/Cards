@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import SchoolIcon from '@mui/icons-material/School'
-import { Popover } from '@mui/material'
+import { debounce, Popover } from '@mui/material'
 import Button from '@mui/material/Button'
 import Paper from '@mui/material/Paper'
 import styled from '@mui/material/styles/styled'
@@ -66,36 +66,55 @@ export const CardsList = () => {
 
   const pageUrl = searchParams.get('page') ? searchParams.get('page') + '' : '1'
   const pageCountUrl = searchParams.get('pageCount') ? searchParams.get('pageCount') + '' : '5'
+  const cardQuestionUrl = searchParams.get('cardQuestion')
+    ? searchParams.get('cardQuestion') + ''
+    : ''
 
   const [openAddCardModal, setOpenAddCardModal] = useState(false)
+  const [cardQuestion, setCardQuestion] = useState<string>(cardQuestionUrl ? cardQuestionUrl : '')
   const [params, setParams] = useState({
     page: 1,
     pageCount: 5,
+    cardQuestion: '',
   })
   const paginationPages = Math.ceil(cardsTotalCount / params.pageCount)
 
   useEffect(() => {
-    setSearchParams({ page: pageUrl, pageCount: pageCountUrl })
-    setParams({ page: +pageUrl, pageCount: +pageCountUrl })
-    dispatch(setCardsTC({ cardsPack_id: packID, page: +pageUrl, pageCount: +pageCountUrl }))
-  }, [dispatch, pageUrl, pageCountUrl])
+    setSearchParams({ page: pageUrl, pageCount: pageCountUrl, cardQuestion: cardQuestionUrl })
+    setParams({ page: +pageUrl, pageCount: +pageCountUrl, cardQuestion: cardQuestionUrl })
+    dispatch(
+      setCardsTC({
+        cardsPack_id: packID,
+        page: +pageUrl,
+        pageCount: +pageCountUrl,
+        cardQuestion: cardQuestionUrl,
+      })
+    )
+  }, [dispatch, pageUrl, pageCountUrl, cardQuestionUrl])
 
   const handleChangePage = (page: number) => {
     setParams({ ...params, page })
     setSearchParams({ page: page + '' })
   }
 
+  const pageCountHandler = (value: string) => {
+    setParams({ ...params, pageCount: +value })
+    setSearchParams({ pageCount: value })
+  }
+
+  const debouncedChangeHandler = useCallback(
+    debounce((value: string) => {
+      setParams({ ...params, cardQuestion: value })
+      setSearchParams({ cardQuestion: value })
+    }, 1000),
+    []
+  )
   const addCard = (question: string, answer: string, questionImg: string, answerImg: string) => {
     //dispatch(addNewCardTC(cardsPack_id, pageCount, question, answer, questionImg, answerImg))
   }
 
   const addCardButtonClickHandler = () => {
     setOpenAddCardModal(true)
-  }
-
-  const pageCountHandler = (value: string) => {
-    setParams({ ...params, pageCount: +value })
-    setSearchParams({ pageCount: value })
   }
 
   return (
@@ -148,6 +167,7 @@ export const CardsList = () => {
             src={packDeckCover ? packDeckCover : defaultPackCover}
             alt={'deck cover'}
           />
+          <SearchForCards onChange={debouncedChangeHandler} />
         </div>
         {cards.length === 0 ? (
           <div className={s.div}>
@@ -179,7 +199,6 @@ export const CardsList = () => {
           </div>
         ) : (
           <div>
-            <SearchForCards />
             <TableContainer className={s.table} component={Paper}>
               <Table sx={{ minWidth: 650, fontFamily: 'Montserrat' }} aria-label="simple table">
                 <TableHead>

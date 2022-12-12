@@ -1,9 +1,9 @@
-import React, { ChangeEvent, useCallback, useState } from 'react'
+import React, { ChangeEvent, useCallback, useEffect, useState } from 'react'
 
 import SearchIcon from '@mui/icons-material/Search'
 import { Button, debounce, InputBase } from '@mui/material'
 import { alpha, styled } from '@mui/material/styles'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 
 import { PATH } from '../../../app/App'
 import { AddCardModal } from '../../../common/Modals/CardModals/AddCardModal'
@@ -47,7 +47,10 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }))
 
-export const SearchForCards = () => {
+type PropsType = {
+  onChange: (value: string) => void
+}
+export const SearchForCards = (props: PropsType) => {
   const myID = useAppSelector(state => state.profile._id)
   const userID = useAppSelector(state => state.cards.packUserId)
   const dispatch = useAppDispatch()
@@ -55,6 +58,7 @@ export const SearchForCards = () => {
   const packName = useAppSelector(state => state.cards.packName)
   const [page, setPage] = useState(1)
   const pageCount = useAppSelector(state => state.cards.pageCount)
+
   const [openAddCardModal, setOpenAddCardModal] = useState(false)
 
   const addCard = (question: string, answer: string) => {
@@ -66,9 +70,9 @@ export const SearchForCards = () => {
   }
 
   const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    dispatch(setCardsTC({ cardQuestion: e.target.value }))
+    props.onChange(e.target.value)
   }
-  const debouncedChangeHandler = useCallback(debounce(changeHandler, 1000), [])
+
   const onClickLearnHandler = () => {
     dispatch(setCardsTC({ packName, cardsPack_id, page }))
   }
@@ -85,7 +89,7 @@ export const SearchForCards = () => {
             placeholder="Provide your text"
             inputProps={{ 'aria-label': 'search' }}
             type="text"
-            onChange={debouncedChangeHandler}
+            onChange={changeHandler}
           />
         </Search>
       </div>
