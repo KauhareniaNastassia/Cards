@@ -21,10 +21,8 @@ import defaultPackCover from '../../assets/picture/noImage.jpg'
 import { BackToPackList } from '../../common/BackArrow/BackToPackList'
 import SuperButton from '../../common/Button/SuperButton/SuperButton'
 import { AddCardModal } from '../../common/Modals/CardModals/AddCardModal'
-import { EditPackModal } from '../../common/Modals/PackModals/EditPackModal'
 import { PaginationBar } from '../../common/PaginationBar/PaginationBar'
 import { addNewCardTC, setCardsTC } from '../../redux/cards-reducer'
-import { updatePackTC } from '../../redux/pack-reducer'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks'
 import { SearchForCards } from '../PackList/SearchForCards/SearchForCards'
 
@@ -53,6 +51,7 @@ export const CardsList = () => {
   }
 
   const cards = useAppSelector(state => state.cards.cards)
+  const cardsPack_id = useAppSelector(state => state.cards.cardsPack_id)
 
   const packName = useAppSelector(state => state.cards.packName)
   const packDeckCover = useAppSelector(state => state.cards.packDeckCover)
@@ -71,7 +70,6 @@ export const CardsList = () => {
     : ''
 
   const [openAddCardModal, setOpenAddCardModal] = useState(false)
-  const [cardQuestion, setCardQuestion] = useState<string>(cardQuestionUrl ? cardQuestionUrl : '')
   const [params, setParams] = useState({
     page: 1,
     pageCount: 5,
@@ -109,8 +107,14 @@ export const CardsList = () => {
     }, 1000),
     []
   )
-  const addCard = (question: string, answer: string, questionImg: string, answerImg: string) => {
-    //dispatch(addNewCardTC(cardsPack_id, pageCount, question, answer, questionImg, answerImg))
+  const addCard = (
+    cardsPack_id: string,
+    question: string,
+    answer: string,
+    questionImg: string,
+    answerImg: string
+  ) => {
+    dispatch(addNewCardTC(cardsPack_id, question, answer, questionImg, answerImg))
   }
 
   const addCardButtonClickHandler = () => {

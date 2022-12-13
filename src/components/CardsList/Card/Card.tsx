@@ -55,17 +55,17 @@ export const Card = (props: CardPropsType) => {
   return (
     <TableRow key={props.card._id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
       <StyledTableCellRow component="th" scope="row">
-        {props.card.questionImg === '' ? (
-          props.card.question
+        {props.card.questionImg ? (
+          <img style={{ maxWidth: '105px' }} src={props.card.questionImg} alt={'question image'} />
         ) : (
-          <img src={props.card.questionImg} alt={'question image'} />
+          props.card.question
         )}
       </StyledTableCellRow>
       <StyledTableCellRow align="right">
-        {props.card.answerImg === '' ? (
-          props.card.question
+        {props.card.answerImg ? (
+          <img style={{ maxWidth: '105px' }} src={props.card.answerImg} alt={'answer image'} />
         ) : (
-          <img src={props.card.answerImg} alt={'answer image'} />
+          props.card.answer
         )}
       </StyledTableCellRow>
       <StyledTableCellRow align="right">

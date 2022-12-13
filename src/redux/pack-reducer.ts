@@ -5,8 +5,9 @@ import {
   PacksType,
   UpdatePackDataType,
 } from '../api/cards-API'
+import { handleServerNetworkError } from '../utils/error-handler'
 
-import { setAppStatusAC } from './app-reducer'
+import { setAppStatusAC, SetAppSuccessAC } from './app-reducer'
 import { AppThunkType } from './store'
 
 const initialState = {
@@ -162,8 +163,9 @@ export const addNewPackTC =
 
       dispatch(addNewPackAC(newPack))
       dispatch(setAppStatusAC('succeed'))
+      dispatch(SetAppSuccessAC(`${name} was successfully added`))
     } catch (e) {
-      console.log(e)
+      handleServerNetworkError(e as { errorMessage: string }, dispatch)
     }
   }
 export const deletePackTC =
@@ -176,7 +178,7 @@ export const deletePackTC =
       dispatch(getPacksTC())
       dispatch(setAppStatusAC('succeed'))
     } catch (e) {
-      console.log(e)
+      handleServerNetworkError(e as { errorMessage: string }, dispatch)
     }
   }
 export const updatePackTC =

@@ -40,7 +40,15 @@ export const LearnCard = (props: LearnCardPropsType) => {
     <div className={s.card}>
       <div className={s.question}>
         Question:
-        <span className={s.questionText}>{props.card.question}</span>
+        {props.card.questionImg ? (
+          <img
+            style={{ maxWidth: '375px', maxHeight: '120px' }}
+            src={props.card.questionImg}
+            alt={'question image'}
+          />
+        ) : (
+          <span className={s.questionText}>{props.card.question}</span>
+        )}
       </div>
       <div className={s.count}>Количество попыток ответа на вопрос: {props.card.shots}</div>
 
@@ -56,7 +64,16 @@ export const LearnCard = (props: LearnCardPropsType) => {
       {answer && (
         <>
           <div className={s.question}>
-            Answer: <span className={s.questionText}> {props.card.answer}</span>
+            Answer:{' '}
+            {props.card.answerImg ? (
+              <img
+                style={{ maxWidth: '375px', maxHeight: '120px' }}
+                src={props.card.answerImg}
+                alt={'answer image'}
+              />
+            ) : (
+              <span className={s.questionText}> {props.card.answer}</span>
+            )}
           </div>
           <div>
             <span>Rate yourself:</span>

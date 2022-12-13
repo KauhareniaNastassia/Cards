@@ -107,8 +107,6 @@ export const createLearnCardsTC =
 export const addNewCardTC =
   (
     cardsPack_id: string,
-    page: number,
-    pageCount: number,
     question?: string,
     answer?: string,
     questionImg?: string,
@@ -125,7 +123,7 @@ export const addNewCardTC =
         answerImg,
       })
 
-      dispatch(setCardsTC({ cardsPack_id, page, pageCount }))
+      dispatch(setCardsTC({ cardsPack_id }))
       dispatch(setAppStatusAC('succeed'))
     } catch (e) {
       console.log(e)

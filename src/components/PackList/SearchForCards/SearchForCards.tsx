@@ -40,9 +40,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: 'inherit',
   '& .MuiInputBase-input': {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    /*transition: theme.transitions.create('width'),*/
     width: '300px',
   },
 }))
@@ -55,14 +53,17 @@ export const SearchForCards = (props: PropsType) => {
   const userID = useAppSelector(state => state.cards.packUserId)
   const dispatch = useAppDispatch()
   const cardsPack_id = useAppSelector(state => state.cards.cardsPack_id)
-  const packName = useAppSelector(state => state.cards.packName)
-  const [page, setPage] = useState(1)
-  const pageCount = useAppSelector(state => state.cards.pageCount)
 
   const [openAddCardModal, setOpenAddCardModal] = useState(false)
 
-  const addCard = (question: string, answer: string) => {
-    dispatch(addNewCardTC(cardsPack_id, page, pageCount, question, answer))
+  const addCard = (
+    cardsPack_id: string,
+    question: string,
+    answer: string,
+    questionImg: string,
+    answerImg: string
+  ) => {
+    dispatch(addNewCardTC(cardsPack_id, question, answer, questionImg, answerImg))
   }
 
   const addCardButtonClickHandler = () => {
@@ -71,10 +72,6 @@ export const SearchForCards = (props: PropsType) => {
 
   const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     props.onChange(e.target.value)
-  }
-
-  const onClickLearnHandler = () => {
-    dispatch(setCardsTC({ packName, cardsPack_id, page }))
   }
 
   return (
@@ -118,7 +115,6 @@ export const SearchForCards = (props: PropsType) => {
             to={`${PATH.learn}${cardsPack_id}`}
           >
             <Button
-              onClick={onClickLearnHandler}
               type="submit"
               variant="contained"
               style={{ borderRadius: '20px', marginTop: '40px' }}

@@ -4,7 +4,9 @@ import { MenuItem, Select, SelectChangeEvent } from '@mui/material'
 import FormControl from '@mui/material/FormControl/FormControl'
 import InputLabel from '@mui/material/InputLabel/InputLabel'
 import TextField from '@mui/material/TextField/TextField'
+import { useParams } from 'react-router-dom'
 
+import { useAppSelector } from '../../../utils/hooks'
 import { InputTypeFile } from '../../../utils/uploadImages/InputTypeFile'
 import { BasicModal } from '../Basic Modal/BasicModal'
 import { ButtonBlockForModals } from '../ButtonBlockForModals/ButtonBlockForModals'
@@ -13,15 +15,23 @@ type AddCardModalPropsType = {
   title: string
   open: boolean
   toggleOpenMode: (value: boolean) => void
-  addItem: (question: string, answer: string, questionImg: string, answerImg: string) => void
+  addItem: (
+    cardsPack_id: string,
+    question: string,
+    answer: string,
+    questionImg: string,
+    answerImg: string
+  ) => void
 }
 
 export const AddCardModal = (props: AddCardModalPropsType) => {
+  const { packID } = useParams()
   const [question, setQuestion] = useState('')
   const [answer, setAnswer] = useState('')
   const [typeOfQuestion, setTypeOfQuestion] = useState('Text')
   const [questionImg, setQuestionImg] = useState('')
   const [answerImg, setAnswerImg] = useState('')
+  const cardsPack_id = useAppSelector(state => state.cards.cardsPack_id)
 
   const onCloseModalHandler = () => {
     props.toggleOpenMode(false)
@@ -49,10 +59,12 @@ export const AddCardModal = (props: AddCardModalPropsType) => {
   }
 
   const saveButtonHandler = () => {
-    // props.addItem(question && questionImg, answer && answerImg)
-    props.toggleOpenMode(false)
-    setQuestion('')
-    setAnswer('')
+    if (packID) {
+      props.addItem(packID, question, answer, questionImg, answerImg)
+      props.toggleOpenMode(false)
+      setQuestion('')
+      setAnswer('')
+    }
   }
 
   return (
