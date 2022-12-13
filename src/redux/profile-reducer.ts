@@ -29,6 +29,15 @@ export const profileReducer = (
   }
 }
 
+//actions
+export const setUserProfile = (profile: UserType) => {
+  return { type: 'SET-USER-PROFILE', profile } as const
+}
+
+export const updateProfile = (data: UpdateProfileResponseDataType) => {
+  return { type: 'UPDATE-PROFILE', data } as const
+}
+
 export const updateUserProfileTC =
   (name: string, avatar?: string): AppThunkType =>
   async dispatch => {
@@ -43,17 +52,6 @@ export const updateUserProfileTC =
       handleServerNetworkError(e as { errorMessage: string }, dispatch)
     }
   }
-
-//actions
-export const setUserProfile = (profile: UserType) => {
-  return { type: 'SET-USER-PROFILE', profile } as const
-}
-
-export const updateProfile = (
-  data: UpdateProfileResponseDataType /*name: string, avatar?: string*/
-) => {
-  return { type: 'UPDATE-PROFILE', data } as const
-}
 
 //types
 export type UserType = typeof initialState

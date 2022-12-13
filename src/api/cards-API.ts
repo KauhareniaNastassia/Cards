@@ -24,7 +24,7 @@ export const cardsAPI = {
     )
   },
   deletePack(packID: string) {
-    return instance.delete<AxiosResponse<DeletePackResponseType>>(`/cards/pack?id=${packID}`)
+    return instance.delete<DeletePackResponseType>(`/cards/pack?id=${packID}`)
   },
   updatePack(data: UpdatePackDataType) {
     return instance.put<UpdatePackDataType, AxiosResponse<UpdatePackResponseType>>(

@@ -129,7 +129,7 @@ export const getPacksTC = (): AppThunkType => async (dispatch, getState) => {
     dispatch(setTotalPacksCountAC(res.data.cardPacksTotalCount))
     dispatch(setAppStatusAC('succeed'))
   } catch (e) {
-    console.log(e)
+    handleServerNetworkError(e as { errorMessage: string }, dispatch)
   }
 }
 export const addNewPackTC =
@@ -177,6 +177,7 @@ export const deletePackTC =
 
       dispatch(getPacksTC())
       dispatch(setAppStatusAC('succeed'))
+      dispatch(SetAppSuccessAC(`${res.data.deletedCardsPack.name} was successfully removed !!!`))
     } catch (e) {
       handleServerNetworkError(e as { errorMessage: string }, dispatch)
     }
@@ -213,34 +214,10 @@ export const updatePackTC =
       dispatch(updatePackAC(updatedPack))
       dispatch(setAppStatusAC('succeed'))
     } catch (e) {
-      console.log(e)
+      handleServerNetworkError(e as { errorMessage: string }, dispatch)
     }
   }
 
-export const setShowPackCardsTC =
-  (userID?: string): AppThunkType =>
-  async (dispatch, getState) => {
-    dispatch(setAppStatusAC('loading'))
-    const params = getState().packs.params
-
-    try {
-      if (userID) {
-        const res = await cardsAPI.getPacks({ ...params })
-
-        dispatch(setPacksAC(res.data.cardPacks))
-        dispatch(setShowPackCardsAC('my'))
-        dispatch(setAppStatusAC('succeed'))
-      } else {
-        const res = await cardsAPI.getPacks({ ...params })
-
-        dispatch(setPacksAC(res.data.cardPacks))
-        dispatch(setShowPackCardsAC('all'))
-        dispatch(setAppStatusAC('succeed'))
-      }
-    } catch (e) {
-      console.log(e)
-    }
-  }
 //types
 export type PackReducerAT =
   | ReturnType<typeof setPacksAC>

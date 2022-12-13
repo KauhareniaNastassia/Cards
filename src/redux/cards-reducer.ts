@@ -7,6 +7,7 @@ import {
   UpdateCardDataType,
   UpdatedGradeCartType,
 } from '../api/cards-API'
+import { handleServerNetworkError } from '../utils/error-handler'
 
 import { setAppStatusAC } from './app-reducer'
 import { AppThunkType } from './store'
@@ -86,7 +87,7 @@ export const setCardsTC =
       dispatch(setAppStatusAC('succeed'))
       dispatch(setTotalCardsCountAC(res.data.cardsTotalCount))
     } catch (e) {
-      console.log(e)
+      handleServerNetworkError(e as { errorMessage: string }, dispatch)
     }
   }
 
@@ -99,7 +100,7 @@ export const createLearnCardsTC =
 
       dispatch(setCardsLearnDataAC(res.data.updatedGrade))
     } catch (e) {
-      console.log(e)
+      handleServerNetworkError(e as { errorMessage: string }, dispatch)
     } finally {
       dispatch(setAppStatusAC('idle'))
     }
@@ -126,7 +127,7 @@ export const addNewCardTC =
       dispatch(setCardsTC({ cardsPack_id }))
       dispatch(setAppStatusAC('succeed'))
     } catch (e) {
-      console.log(e)
+      handleServerNetworkError(e as { errorMessage: string }, dispatch)
     }
   }
 
@@ -140,7 +141,7 @@ export const deleteCardTC =
       dispatch(setCardsTC({ cardsPack_id: res.data.deletedCard.cardsPack_id }))
       dispatch(setAppStatusAC('succeed'))
     } catch (e) {
-      console.log(e)
+      handleServerNetworkError(e as { errorMessage: string }, dispatch)
     }
   }
 
@@ -154,7 +155,7 @@ export const updateCardTC =
       dispatch(setCardsTC({ cardsPack_id: res.data.updatedCard.cardsPack_id }))
       dispatch(setAppStatusAC('succeed'))
     } catch (e) {
-      console.log(e)
+      handleServerNetworkError(e as { errorMessage: string }, dispatch)
     }
   }
 //types

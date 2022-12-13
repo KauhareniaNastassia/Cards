@@ -1,3 +1,6 @@
 .App {
-  font-family: Montseratt;
+  min-width: 500px;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
