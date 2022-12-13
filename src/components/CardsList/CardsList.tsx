@@ -14,15 +14,18 @@ import TableCell, { tableCellClasses } from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
-import { Link, useParams, useSearchParams } from 'react-router-dom'
+import { Link, Navigate, useNavigate, useParams, useSearchParams } from 'react-router-dom'
 
 import { PATH } from '../../app/App'
 import defaultPackCover from '../../assets/picture/noImage.jpg'
 import { BackToPackList } from '../../common/BackArrow/BackToPackList'
 import SuperButton from '../../common/Button/SuperButton/SuperButton'
 import { AddCardModal } from '../../common/Modals/CardModals/AddCardModal'
+import { DeletePackModal } from '../../common/Modals/PackModals/DeletePackModal'
+import { EditPackModal } from '../../common/Modals/PackModals/EditPackModal'
 import { PaginationBar } from '../../common/PaginationBar/PaginationBar'
 import { addNewCardTC, setCardsTC } from '../../redux/cards-reducer'
+import { deletePackTC, updatePackTC } from '../../redux/pack-reducer'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks'
 import { SearchForCards } from '../PackList/SearchForCards/SearchForCards'
 
@@ -51,7 +54,7 @@ export const CardsList = () => {
   }
 
   const cards = useAppSelector(state => state.cards.cards)
-  const cardsPack_id = useAppSelector(state => state.cards.cardsPack_id)
+  // const cardsPack_id = useAppSelector(state => state.cards.cardsPack_id)
 
   const packName = useAppSelector(state => state.cards.packName)
   const packDeckCover = useAppSelector(state => state.cards.packDeckCover)
@@ -62,7 +65,7 @@ export const CardsList = () => {
   const dispatch = useAppDispatch()
   const [searchParams, setSearchParams] = useSearchParams()
   const { packID } = useParams()
-
+  const navigate = useNavigate()
   const pageUrl = searchParams.get('page') ? searchParams.get('page') + '' : '1'
   const pageCountUrl = searchParams.get('pageCount') ? searchParams.get('pageCount') + '' : '5'
   const cardQuestionUrl = searchParams.get('cardQuestion')
@@ -75,6 +78,9 @@ export const CardsList = () => {
     pageCount: 5,
     cardQuestion: '',
   })
+  const [openDeleteModal, setOpenDeleteModal] = useState(false)
+  const [openEditModal, setOpenEditModal] = useState(false)
+
   const paginationPages = Math.ceil(cardsTotalCount / params.pageCount)
 
   useEffect(() => {
@@ -120,6 +126,17 @@ export const CardsList = () => {
   const addCardButtonClickHandler = () => {
     setOpenAddCardModal(true)
   }
+  const deletePack = () => {
+    if (packID) {
+      dispatch(deletePackTC(packID))
+      navigate(`${PATH.packList}`)
+    }
+  }
+  const editPackItem = (name: string, deckCover: string) => {
+    if (packID) {
+      dispatch(updatePackTC({ cardsPack: { _id: packID, name, deckCover } }))
+    }
+  }
 
   return (
     <div>
@@ -151,21 +168,47 @@ export const CardsList = () => {
                         </div>
                       </SuperButton>
                     </Link>
-                    <SuperButton onClick={() => {}} className={s.superButton}>
+                    <SuperButton
+                      onClick={() => {
+                        setOpenEditModal(true)
+                      }}
+                      className={s.superButton}
+                    >
                       <div className={s.icon}>
                         <EditIcon /> Edit
                       </div>
                     </SuperButton>
-                    <SuperButton onClick={() => {}} className={s.superButton}>
+                    <SuperButton
+                      onClick={() => {
+                        setOpenDeleteModal(true)
+                      }}
+                      className={s.superButton}
+                    >
                       <div className={s.icon}>
                         <DeleteIcon /> Delete
                       </div>
                     </SuperButton>
                   </div>
                 </Popover>
+                <DeletePackModal
+                  title="Delete Pack"
+                  name={packName}
+                  open={openDeleteModal}
+                  toggleOpenMode={setOpenDeleteModal}
+                  deleteItem={deletePack}
+                />
+                <EditPackModal
+                  itemTitle={packName}
+                  title="Edit Pack"
+                  toggleOpenMode={setOpenEditModal}
+                  open={openEditModal}
+                  editItem={editPackItem}
+                  img={packDeckCover}
+                />
               </div>
             )}
           </div>
+
           <img
             className={s.packDeckCover}
             src={packDeckCover ? packDeckCover : defaultPackCover}

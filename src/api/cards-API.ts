@@ -6,8 +6,6 @@ import { instance } from './instance'
 
 export const cardsAPI = {
   getPacks(params: ParamsUrlType) {
-    debugger
-
     return instance.get<GetPacksResponseType>(`/cards/pack`, {
       params: {
         page: params.page,
@@ -20,8 +18,6 @@ export const cardsAPI = {
     })
   },
   addNewPack(data: AddNewPackDataType) {
-    debugger
-
     return instance.post<AddNewPackDataType, AddNewPackResponseType>('/cards/pack', {
       cardsPack: data,
     })
