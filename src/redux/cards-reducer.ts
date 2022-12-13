@@ -116,7 +116,7 @@ export const addNewCardTC =
   async dispatch => {
     dispatch(setAppStatusAC('loading'))
     try {
-      const res = await cardsAPI.addNewCard({
+      await cardsAPI.addNewCard({
         cardsPack_id,
         question,
         answer,

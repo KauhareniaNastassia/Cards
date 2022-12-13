@@ -46,8 +46,8 @@ export const Pack = memo((props: PacksType) => {
     setOpenEditModal(true)
   }
 
-  const editPackItem = (newName: string, newDeckCover: string) => {
-    dispatch(updatePackTC(props._id, newName, newDeckCover))
+  const editPackItem = (name: string, deckCover: string) => {
+    dispatch(updatePackTC({ cardsPack: { _id: props._id, name, deckCover } }))
   }
   const onClickLearnHandler = () => {
     dispatch(setCardsTC({ packName: props.name, cardsPack_id: props._id, page }))

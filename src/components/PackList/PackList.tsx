@@ -109,7 +109,7 @@ export const PackList = () => {
   }
 
   const addPack = (name: string, deckCover: string) => {
-    dispatch(addNewPackTC(name, deckCover))
+    dispatch(addNewPackTC({ name, deckCover }))
   }
   const pageCountHandler = (value: string) => {
     dispatch(updateUrlParamsAC({ ...paramsSearchState, pageCount: value, min: '', max: '' }))

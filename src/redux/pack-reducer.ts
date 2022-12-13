@@ -126,48 +126,31 @@ export const getPacksTC = (): AppThunkType => async (dispatch, getState) => {
     const res = await cardsAPI.getPacks({ ...params })
 
     dispatch(setPacksAC(res.data.cardPacks))
-    dispatch(setTotalPacksCountAC(res.data.cardPacksTotalCount))
+    dispatch(setTotalPacksCountAC(res.data.cardPacksTotalCount)) //TODO
     dispatch(setAppStatusAC('succeed'))
   } catch (e) {
     handleServerNetworkError(e as { errorMessage: string }, dispatch)
+  } finally {
+    dispatch(setAppStatusAC('idle'))
   }
 }
+
 export const addNewPackTC =
-  (name?: string, deckCover?: string): AppThunkType =>
+  (data: AddNewPackDataType): AppThunkType =>
   async dispatch => {
-    const newForPack: AddNewPackDataType = { cardsPack: { name, deckCover } }
-
     dispatch(setAppStatusAC('loading'))
-
     try {
-      const res = await cardsAPI.addNewPack(newForPack)
+      const res = await cardsAPI.addNewPack(data)
 
-      const newPack: PacksType = {
-        _id: res.data.newCardsPack._id,
-        user_name: res.data.newCardsPack.user_name,
-        user_id: res.data.newCardsPack.user_id,
-        updated: res.data.newCardsPack.updated,
-        name: res.data.newCardsPack.name,
-        cardsCount: res.data.newCardsPack.cardsCount,
-        deckCover: deckCover ? deckCover : '',
-        __v: res.data.newCardsPack.__v,
-        type: res.data.newCardsPack.type,
-        created: res.data.newCardsPack.created,
-        grade: res.data.newCardsPack.grade,
-        more_id: res.data.newCardsPack.more_id,
-        path: res.data.newCardsPack.path,
-        private: res.data.newCardsPack.private,
-        rating: res.data.newCardsPack.rating,
-        shots: res.data.newCardsPack.shots,
-      }
-
-      dispatch(addNewPackAC(newPack))
-      dispatch(setAppStatusAC('succeed'))
-      dispatch(SetAppSuccessAC(`${name} was successfully added`))
+      dispatch(getPacksTC())
+      dispatch(SetAppSuccessAC(`${res.newCardsPack.name} was successfully added`))
     } catch (e) {
       handleServerNetworkError(e as { errorMessage: string }, dispatch)
+    } finally {
+      dispatch(setAppStatusAC('idle'))
     }
   }
+
 export const deletePackTC =
   (packID: string): AppThunkType =>
   async dispatch => {
@@ -176,45 +159,26 @@ export const deletePackTC =
       const res = await cardsAPI.deletePack(packID)
 
       dispatch(getPacksTC())
-      dispatch(setAppStatusAC('succeed'))
       dispatch(SetAppSuccessAC(`${res.data.deletedCardsPack.name} was successfully removed !!!`))
     } catch (e) {
       handleServerNetworkError(e as { errorMessage: string }, dispatch)
+    } finally {
+      dispatch(setAppStatusAC('idle'))
     }
   }
-export const updatePackTC =
-  (packID: string, newName: string, newDeckCover?: string): AppThunkType =>
-  async dispatch => {
-    const updatedForPack: UpdatePackDataType = {
-      cardsPack: { _id: packID, name: newName, deckCover: newDeckCover },
-    }
 
+export const updatePackTC =
+  (data: UpdatePackDataType): AppThunkType =>
+  async dispatch => {
     dispatch(setAppStatusAC('loading'))
     try {
-      const res = await cardsAPI.updatePack(updatedForPack)
-      const updatedPack: PacksType = {
-        _id: res.data.updatedCardsPack._id,
-        name: res.data.updatedCardsPack.name,
-        user_name: res.data.updatedCardsPack.user_name,
-        user_id: res.data.updatedCardsPack.user_id,
-        updated: res.data.updatedCardsPack.updated,
-        cardsCount: res.data.updatedCardsPack.cardsCount,
-        deckCover: res.data.updatedCardsPack.deckCover,
-        __v: res.data.updatedCardsPack.__v,
-        type: res.data.updatedCardsPack.type,
-        created: res.data.updatedCardsPack.created,
-        shots: res.data.updatedCardsPack.shots,
-        rating: res.data.updatedCardsPack.rating,
-        private: res.data.updatedCardsPack.private,
-        path: res.data.updatedCardsPack.path,
-        more_id: res.data.updatedCardsPack.more_id,
-        grade: res.data.updatedCardsPack.grade,
-      }
-
-      dispatch(updatePackAC(updatedPack))
-      dispatch(setAppStatusAC('succeed'))
+      await cardsAPI.updatePack(data)
+      dispatch(getPacksTC())
+      dispatch(SetAppSuccessAC(`Your Pack was successfully modified!!!`))
     } catch (e) {
       handleServerNetworkError(e as { errorMessage: string }, dispatch)
+    } finally {
+      dispatch(setAppStatusAC('idle'))
     }
   }
 

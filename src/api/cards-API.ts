@@ -6,6 +6,8 @@ import { instance } from './instance'
 
 export const cardsAPI = {
   getPacks(params: ParamsUrlType) {
+    debugger
+
     return instance.get<GetPacksResponseType>(`/cards/pack`, {
       params: {
         page: params.page,
@@ -18,10 +20,11 @@ export const cardsAPI = {
     })
   },
   addNewPack(data: AddNewPackDataType) {
-    return instance.post<AddNewPackDataType, AxiosResponse<AddNewPackResponseType>>(
-      '/cards/pack',
-      data
-    )
+    debugger
+
+    return instance.post<AddNewPackDataType, AddNewPackResponseType>('/cards/pack', {
+      cardsPack: data,
+    })
   },
   deletePack(packID: string) {
     return instance.delete<DeletePackResponseType>(`/cards/pack?id=${packID}`)
@@ -220,11 +223,9 @@ export type PacksType = {
 }
 
 export type AddNewPackDataType = {
-  cardsPack: {
-    name?: string
-    deckCover?: string
-    private?: boolean
-  }
+  name: string
+  deckCover?: string
+  private?: boolean
 }
 export type AddNewPackResponseType = {
   newCardsPack: PackResponseType
