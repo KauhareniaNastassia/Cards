@@ -173,44 +173,42 @@ export const PackList = () => {
 
   return (
     <section>
-      <div className="container">
-        <div className={s.headerWrapper}>
-          <h2 className={s.title}>Pack list</h2>
-          <Button
-            variant="contained"
-            style={{ borderRadius: '20px' }}
-            onClick={addButtonClickHandler}
-          >
-            Add new Pack
-          </Button>
-        </div>
-        <AddPackModal
-          title="Add new pack"
-          open={openAddModal}
-          toggleOpenMode={setOpenAddModal}
-          addItem={addPack}
-        />
-        <FilterBar
-          onClickButtonMy={onClickButtonMyHandler}
-          onClickButtonAll={onClickButtonAllHandler}
-          onChangeCommittedRange={onChangeCommittedRangeHandler}
-          setResetFilter={setResetFilterHandler}
-          valueSearch={packName}
-          searchValueText={searchValueTextHandler}
-          minRangeURL={minRangeURL}
-          maxRangeURL={maxRangeURL}
-          urlUserID={userIDURL}
-        />
-        <TableContainerPacks />
-        <PaginationBar
-          handleChangePage={changePageHandle}
-          pageCountHandler={pageCountHandler}
-          page={+(page ? page : 1)}
-          pageCount={+(pageCount ? pageCount : 5)}
-          paginationPages={paginationPages}
-          selectOption={[5, 10, 20]}
-        />
+      <div className={s.headerWrapper}>
+        <h2 className={s.title}>Pack list</h2>
+        <Button
+          variant="contained"
+          style={{ borderRadius: '20px' }}
+          onClick={addButtonClickHandler}
+        >
+          Add new Pack
+        </Button>
       </div>
+      <AddPackModal
+        title="Add new pack"
+        open={openAddModal}
+        toggleOpenMode={setOpenAddModal}
+        addItem={addPack}
+      />
+      <FilterBar
+        onClickButtonMy={onClickButtonMyHandler}
+        onClickButtonAll={onClickButtonAllHandler}
+        onChangeCommittedRange={onChangeCommittedRangeHandler}
+        setResetFilter={setResetFilterHandler}
+        valueSearch={packName}
+        searchValueText={searchValueTextHandler}
+        minRangeURL={minRangeURL}
+        maxRangeURL={maxRangeURL}
+        urlUserID={userIDURL}
+      />
+      <TableContainerPacks />
+      <PaginationBar
+        handleChangePage={changePageHandle}
+        pageCountHandler={pageCountHandler}
+        page={+(page ? page : 1)}
+        pageCount={+(pageCount ? pageCount : 5)}
+        paginationPages={paginationPages}
+        selectOption={[5, 10, 20]}
+      />
     </section>
   )
 }

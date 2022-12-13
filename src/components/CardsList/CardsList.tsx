@@ -14,8 +14,9 @@ import TableCell, { tableCellClasses } from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
-import { Link, Navigate, useNavigate, useParams, useSearchParams } from 'react-router-dom'
+import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom'
 
+import { cardsAPI } from '../../api/cards-API'
 import { PATH } from '../../app/App'
 import defaultPackCover from '../../assets/picture/noImage.jpg'
 import { BackToPackList } from '../../common/BackArrow/BackToPackList'
@@ -25,7 +26,6 @@ import { DeletePackModal } from '../../common/Modals/PackModals/DeletePackModal'
 import { EditPackModal } from '../../common/Modals/PackModals/EditPackModal'
 import { PaginationBar } from '../../common/PaginationBar/PaginationBar'
 import { addNewCardTC, setCardsTC } from '../../redux/cards-reducer'
-import { deletePackTC, updatePackTC } from '../../redux/pack-reducer'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks'
 import { SearchForCards } from '../PackList/SearchForCards/SearchForCards'
 
@@ -54,7 +54,6 @@ export const CardsList = () => {
   }
 
   const cards = useAppSelector(state => state.cards.cards)
-  // const cardsPack_id = useAppSelector(state => state.cards.cardsPack_id)
 
   const packName = useAppSelector(state => state.cards.packName)
   const packDeckCover = useAppSelector(state => state.cards.packDeckCover)
@@ -126,20 +125,21 @@ export const CardsList = () => {
   const addCardButtonClickHandler = () => {
     setOpenAddCardModal(true)
   }
-  const deletePack = () => {
+  const deletePack = async () => {
     if (packID) {
-      dispatch(deletePackTC(packID))
+      await cardsAPI.deletePack(packID)
       navigate(`${PATH.packList}`)
     }
   }
-  const editPackItem = (name: string, deckCover: string) => {
+  const editPackItem = async (name: string, deckCover: string) => {
     if (packID) {
-      dispatch(updatePackTC({ cardsPack: { _id: packID, name, deckCover } }))
+      await cardsAPI.updatePack({ cardsPack: { _id: packID, name, deckCover } })
+      dispatch(setCardsTC({ cardsPack_id: packID }))
     }
   }
 
   return (
-    <div>
+    <section>
       <BackToPackList />
       <div>
         <div className={s.headerWrapper}>
@@ -276,6 +276,6 @@ export const CardsList = () => {
           selectOption={[5, 10, 20, 40, 100]}
         />
       </div>
-    </div>
+    </section>
   )
 }

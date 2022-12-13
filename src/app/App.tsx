@@ -56,20 +56,22 @@ function App() {
     <div className="App">
       <Header />
       {loading === 'loading' ? <LinearProgress /> : <div style={{ height: '4px' }} />}
-      <Routes>
-        <Route path={PATH.home} element={<Home />} />
-        <Route path={PATH.login} element={<Login />} />
-        <Route path={PATH.registration} element={<SignUp />} />
-        <Route path={PATH.profile} element={<ProfileCard />} />
-        <Route path={PATH.error404} element={<Error404 />} />
-        <Route path={PATH.passwordRecovery} element={<PasswordRecovery />} />
-        <Route path={PATH.learn} element={<Learn />} />
-        <Route path={PATH.createNewPassword} element={<CreateNewPassword />} />
-        <Route path={PATH.checkEmail} element={<CheckEmail />} />
-        <Route path={PATH.packList} element={<PackList />} />
-        <Route path={PATH.pack} element={<CardsList />} />
-      </Routes>
-      <NotificationBar />
+      <div className="container">
+        <Routes>
+          <Route path={PATH.home} element={<Home />} />
+          <Route path={PATH.login} element={<Login />} />
+          <Route path={PATH.registration} element={<SignUp />} />
+          <Route path={PATH.profile} element={<ProfileCard />} />
+          <Route path={PATH.error404} element={<Error404 />} />
+          <Route path={PATH.passwordRecovery} element={<PasswordRecovery />} />
+          <Route path={PATH.learn} element={<Learn />} />
+          <Route path={PATH.createNewPassword} element={<CreateNewPassword />} />
+          <Route path={PATH.checkEmail} element={<CheckEmail />} />
+          <Route path={PATH.packList} element={<PackList />} />
+          <Route path={PATH.pack} element={<CardsList />} />
+        </Routes>
+        <NotificationBar />
+      </div>
     </div>
   )
 }

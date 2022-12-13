@@ -34,55 +34,57 @@ export const Header = () => {
 
   return (
     <div className={s.header}>
-      <div className={s.headerWrapper}>
-        <a href="https://it-incubator.io/" target="_blank" className={s.logo} rel="noreferrer">
-          <img src={incubatorLogo} alt="incubatorLogo" />
-        </a>
+      <div className="container">
+        <div className={s.headerWrapper}>
+          <a href="https://it-incubator.io/" target="_blank" className={s.logo} rel="noreferrer">
+            <img src={incubatorLogo} alt="incubatorLogo" />
+          </a>
 
-        {isLoggedIn ? (
-          <div className={s.userInfo}>
-            <a className={s.userName}>
-              <button className={s.button} onClick={handleClick}>
-                {' '}
-                {profile.name}
-              </button>
-            </a>
-            <Popover
-              id={id}
-              open={open}
-              anchorEl={anchorEl}
-              onClose={handleClose}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-            >
-              <div className={s.profilePopover}>
-                <Link to={PATH.profile}>
-                  <SuperButton className={s.superButton} onClick={handleClose}>
-                    <AccountBoxIcon /> Profile
+          {isLoggedIn ? (
+            <div className={s.userInfo}>
+              <a className={s.userName}>
+                <button className={s.button} onClick={handleClick}>
+                  {' '}
+                  {profile.name}
+                </button>
+              </a>
+              <Popover
+                id={id}
+                open={open}
+                anchorEl={anchorEl}
+                onClose={handleClose}
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'left',
+                }}
+              >
+                <div className={s.profilePopover}>
+                  <Link to={PATH.profile}>
+                    <SuperButton className={s.superButton} onClick={handleClose}>
+                      <AccountBoxIcon /> Profile
+                    </SuperButton>
+                  </Link>
+                  <SuperButton onClick={logOutHandler} className={s.superButton}>
+                    <LogoutIcon /> Log out
                   </SuperButton>
-                </Link>
-                <SuperButton onClick={logOutHandler} className={s.superButton}>
-                  <LogoutIcon /> Log out
-                </SuperButton>
-              </div>
-            </Popover>
-            <Stack direction="row" spacing={2}>
-              <Avatar
-                sx={{ width: 36, height: 36 }}
-                alt={'User Name'}
-                src={profile.avatar === '' ? customAvatar : profile.avatar}
-              />
-            </Stack>
-          </div>
-        ) : (
-          <Link to={PATH.login} className={s.signInButtonLink}>
-            <Button type="submit" variant="contained" style={{ borderRadius: '20px' }}>
-              Sign In
-            </Button>
-          </Link>
-        )}
+                </div>
+              </Popover>
+              <Stack direction="row" spacing={2}>
+                <Avatar
+                  sx={{ width: 36, height: 36 }}
+                  alt={'User Name'}
+                  src={profile.avatar === '' ? customAvatar : profile.avatar}
+                />
+              </Stack>
+            </div>
+          ) : (
+            <Link to={PATH.login} className={s.signInButtonLink}>
+              <Button type="submit" variant="contained" style={{ borderRadius: '20px' }}>
+                Sign In
+              </Button>
+            </Link>
+          )}
+        </div>
       </div>
     </div>
   )

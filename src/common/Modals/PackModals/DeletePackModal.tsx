@@ -27,7 +27,7 @@ export const DeletePackModal = (props: DeleteModalPropsType) => {
       onCloseModal={onCloseModalHandler}
     >
       <p>
-        Do you want to delete <b>{props.name}</b>? All cards will be deleted.
+        Do you really want to delete <b>{props.name}</b>? All cards will be deleted as well.
       </p>
       <ButtonBlockForModals
         onCloseModalHandler={onCloseModalHandler}
