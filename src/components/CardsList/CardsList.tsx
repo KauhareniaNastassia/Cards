@@ -214,7 +214,7 @@ export const CardsList = () => {
             src={packDeckCover ? packDeckCover : defaultPackCover}
             alt={'deck cover'}
           />
-          <SearchForCards onChange={debouncedChangeHandler} />
+          {cards.length >= 1 && <SearchForCards onChange={debouncedChangeHandler} />}
         </div>
         {cards.length === 0 ? (
           <div className={s.div}>

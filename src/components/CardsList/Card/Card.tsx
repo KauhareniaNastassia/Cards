@@ -27,6 +27,20 @@ export const Card = (props: CardPropsType) => {
   const [openDeleteCardModal, setOpenDeleteCardModal] = useState(false)
   const [openEditCardModal, setOpenEditCardModal] = useState(false)
   const dispatch = useAppDispatch()
+  let question = () => {
+    return props.card.question.length > 300 ? (
+      <img style={{ maxWidth: '105px' }} src={props.card.question} alt={'question image'} />
+    ) : (
+      props.card.question
+    )
+  }
+  let answer = () => {
+    return props.card.answer.length > 300 ? (
+      <img style={{ maxWidth: '105px' }} src={props.card.answer} alt={'answer image'} />
+    ) : (
+      props.card.answer
+    )
+  }
 
   const deleteCardButtonClickHandler = () => {
     setOpenDeleteCardModal(true)
@@ -58,14 +72,14 @@ export const Card = (props: CardPropsType) => {
         {props.card.questionImg ? (
           <img style={{ maxWidth: '105px' }} src={props.card.questionImg} alt={'question image'} />
         ) : (
-          props.card.question
+          question()
         )}
       </StyledTableCellRow>
       <StyledTableCellRow align="right">
         {props.card.answerImg ? (
           <img style={{ maxWidth: '105px' }} src={props.card.answerImg} alt={'answer image'} />
         ) : (
-          props.card.answer
+          answer()
         )}
       </StyledTableCellRow>
       <StyledTableCellRow align="right">
