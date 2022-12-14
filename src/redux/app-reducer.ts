@@ -1,10 +1,12 @@
 import { authAPI } from '../api/auth-API'
+import { handleServerNetworkError } from '../utils/error-handler'
 
 import { isLoggedInAC } from './auth-reducer'
 import { setUserProfile } from './profile-reducer'
 import { AppThunkType } from './store'
 
 export type AppStatusType = 'idle' | 'loading' | 'succeed' | 'failed'
+export type AppThemeType = 'light' | 'dark'
 
 type AppReducerStateType = typeof initialState
 
@@ -13,6 +15,7 @@ const initialState = {
   errorMessage: null as null | string,
   successMessage: null as null | string,
   isInitialized: false,
+  theme: 'light' as AppThemeType,
 }
 
 export const appReducer = (state = initialState, action: AppReducerAT): AppReducerStateType => {
@@ -25,6 +28,8 @@ export const appReducer = (state = initialState, action: AppReducerAT): AppReduc
       return { ...state, errorMessage: action.errorMessage }
     case 'APP/SET-APP-SUCCESS-MESSAGE':
       return { ...state, successMessage: action.successMessage }
+    case 'APP/SET-APP-THEME':
+      return { ...state, theme: action.theme }
     default:
       return state
   }
@@ -36,6 +41,7 @@ export type AppReducerAT =
   | ReturnType<typeof setAppStatusAC>
   | ReturnType<typeof SetAppErrorAC>
   | ReturnType<typeof SetAppSuccessAC>
+  | ReturnType<typeof SetAppThemeAC>
 
 //actions
 export const IsInitializedAC = (value: boolean) => ({
@@ -58,6 +64,11 @@ export const SetAppSuccessAC = (successMessage: string | null) => ({
   successMessage,
 })
 
+export const SetAppThemeAC = (theme: AppThemeType) => ({
+  type: 'APP/SET-APP-THEME' as const,
+  theme,
+})
+
 //thunks
 export const initializeAppTC = (): AppThunkType => async dispatch => {
   dispatch(setAppStatusAC('loading'))
@@ -70,7 +81,8 @@ export const initializeAppTC = (): AppThunkType => async dispatch => {
     dispatch(setAppStatusAC('succeed'))
   } catch (e) {
     dispatch(IsInitializedAC(true))
-    dispatch(setAppStatusAC('failed'))
-    console.log(e)
+    handleServerNetworkError(e as { errorMessage: string }, dispatch)
+  } finally {
+    dispatch(setAppStatusAC('idle'))
   }
 }

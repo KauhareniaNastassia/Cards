@@ -4,6 +4,7 @@ import thunk, { ThunkAction, ThunkDispatch } from 'redux-thunk'
 import { appReducer, AppReducerAT } from './app-reducer'
 import { authReducer, AuthReducerAT } from './auth-reducer'
 import { cardsReducer, CardsReducerAT } from './cards-reducer'
+import { loadState, saveState } from './localStorage.'
 import { packReducer, PackReducerAT } from './pack-reducer'
 import { profileReducer, ProfileReducerAT } from './profile-reducer'
 
@@ -15,7 +16,11 @@ const RootReducer = combineReducers({
   cards: cardsReducer,
 })
 
-export const store = createStore(RootReducer, applyMiddleware(thunk))
+export const store = createStore(RootReducer, loadState(), applyMiddleware(thunk))
+
+store.subscribe(() => {
+  saveState(store.getState().app.theme)
+})
 
 export type AppRootStateType = ReturnType<typeof RootReducer>
 export type AppActionsType =

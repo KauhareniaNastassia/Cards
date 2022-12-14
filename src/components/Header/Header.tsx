@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom'
 import { PATH } from '../../app/App'
 import incubatorLogo from '../../assets/picture/incubatorLogo.png'
 import SuperButton from '../../common/Button/SuperButton/SuperButton'
+import { ToggleThemeButton } from '../../common/ToggleThemeButton/ToggleThemeButton'
 import { logOutTC } from '../../redux/auth-reducer'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks'
 import { customAvatar } from '../ProfileCard/ProfileCard'
@@ -35,11 +36,11 @@ export const Header = () => {
   return (
     <div className={s.header}>
       <div className="container">
-        <div className={s.headerWrapper}>
+        <header className={s.headerWrapper}>
           <a href="https://it-incubator.io/" target="_blank" className={s.logo} rel="noreferrer">
             <img src={incubatorLogo} alt="incubatorLogo" />
           </a>
-
+          <ToggleThemeButton />
           {isLoggedIn ? (
             <div className={s.userInfo}>
               <a className={s.userName}>
@@ -84,7 +85,7 @@ export const Header = () => {
               </Button>
             </Link>
           )}
-        </div>
+        </header>
       </div>
     </div>
   )
