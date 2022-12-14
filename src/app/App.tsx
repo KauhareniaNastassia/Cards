@@ -5,6 +5,7 @@ import './App.css'
 import { CircularProgress, LinearProgress } from '@mui/material'
 import { Route, Routes } from 'react-router-dom'
 
+import t from '../assets/styles/ThemeStyles.module.css'
 import NotificationBar from '../common/Notification/NotificationBar'
 import { CardsList } from '../components/CardsList/CardsList'
 import { CheckEmail } from '../components/CheckEmail/CheckEmail'
@@ -18,7 +19,8 @@ import { PackList } from '../components/PackList/PackList'
 import { PasswordRecovery } from '../components/PasswordRecovery/PasswordRecovery'
 import { ProfileCard } from '../components/ProfileCard/ProfileCard'
 import { SignUp } from '../components/SignUp/SignUp'
-import { initializeAppTC } from '../redux/app-reducer'
+import { AppThemeType, initializeAppTC, SetAppThemeAC } from '../redux/app-reducer'
+import { loadState } from '../redux/localStorage.'
 import { useAppDispatch, useAppSelector } from '../utils/hooks'
 
 export const PATH = {
@@ -38,10 +40,12 @@ export const PATH = {
 function App() {
   const isInitialized = useAppSelector(state => state.app.isInitialized)
   const loading = useAppSelector(state => state.app.status)
+  const theme = useAppSelector(state => state.app.theme)
   const dispatch = useAppDispatch()
 
   useEffect(() => {
     dispatch(initializeAppTC())
+    dispatch(SetAppThemeAC(loadState() as AppThemeType))
   }, [])
 
   if (!isInitialized) {
@@ -53,7 +57,7 @@ function App() {
   }
 
   return (
-    <div className="App">
+    <div className={`App ${t[theme]}`}>
       <Header />
       {loading === 'loading' ? <LinearProgress /> : <div style={{ height: '4px' }} />}
       <div className="container">

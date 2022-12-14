@@ -16,11 +16,7 @@ const RootReducer = combineReducers({
   cards: cardsReducer,
 })
 
-export const store = createStore(RootReducer, loadState(), applyMiddleware(thunk))
-
-store.subscribe(() => {
-  saveState(store.getState().app.theme)
-})
+export const store = createStore(RootReducer, applyMiddleware(thunk))
 
 export type AppRootStateType = ReturnType<typeof RootReducer>
 export type AppActionsType =
