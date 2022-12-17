@@ -2,11 +2,9 @@ import React from 'react'
 
 import {
   Paper,
-  styled,
   Table,
   TableBody,
   TableCell,
-  tableCellClasses,
   TableContainer,
   TableHead,
   TableRow,
@@ -17,35 +15,33 @@ import { Pack } from '../Pack/Pack'
 
 import s from './TableContainer.module.css'
 
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.grey['200'],
-    color: theme.palette.common.black,
-    fontFamily: 'Montseratt',
-    fontWeight: 'bold',
-    fontSize: '15px',
-  },
-}))
-
 export const TableContainerPacks = () => {
   const packs = useAppSelector(state => state.packs.cardPacks)
+  const theme = useAppSelector(state => state.app.theme)
+  const classTheme = theme === 'dark' ? s.headText : s.headTextLight
+  const tableHeadNamesArray = [
+    { text: 'Cover' },
+    { text: 'Name' },
+    { text: 'Cards' },
+    { text: 'Last updated' },
+    { text: 'Created by' },
+    { text: 'Actions' },
+  ]
 
   return (
     <TableContainer className={s.table} component={Paper}>
       <Table sx={{ fontFamily: 'Montserrat' }} aria-label="simple table">
         <TableHead>
-          <TableRow className={s.tableHead}>
-            <StyledTableCell align="left">Cover</StyledTableCell>
-            <StyledTableCell align="left">Name</StyledTableCell>
-            <StyledTableCell align="center">Cards</StyledTableCell>
-            <StyledTableCell className={s.lastUpdated} align="center">
-              Last updated
-            </StyledTableCell>
-            <StyledTableCell align="center">Created by</StyledTableCell>
-            <StyledTableCell align="center">Actions</StyledTableCell>
+          <TableRow className={theme === 'dark' ? s.tableHeadDark : s.tableHeadLight}>
+            {tableHeadNamesArray.map(name => {
+              return (
+                <TableCell align="center" key={name.text} className={classTheme}>
+                  {name.text}
+                </TableCell>
+              )
+            })}
           </TableRow>
         </TableHead>
-
         <TableBody>
           {packs.map(pack => (
             <Pack

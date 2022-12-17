@@ -4,7 +4,7 @@ import thunk, { ThunkAction, ThunkDispatch } from 'redux-thunk'
 import { appReducer, AppReducerAT } from './app-reducer'
 import { authReducer, AuthReducerAT } from './auth-reducer'
 import { cardsReducer, CardsReducerAT } from './cards-reducer'
-import { loadState, saveState } from './localStorage.'
+import { loadState, saveState } from './localStorage'
 import { packReducer, PackReducerAT } from './pack-reducer'
 import { profileReducer, ProfileReducerAT } from './profile-reducer'
 

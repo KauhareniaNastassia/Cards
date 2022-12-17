@@ -1,11 +1,13 @@
-.dark{
-    color: white;
+.dark {
+    color:  white ;
 
-    background: black;
+    background: #1b1b1d;
+
 }
 
+
 .light {
-    color: black;
+    color: #1b1b1d;
 
     background: white
 }

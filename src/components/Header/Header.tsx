@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom'
 
 import { PATH } from '../../app/App'
 import incubatorLogo from '../../assets/picture/incubatorLogo.png'
+import incubatorLogoWhite from '../../assets/picture/output-onlinepngtools.png'
 import SuperButton from '../../common/Button/SuperButton/SuperButton'
 import { ToggleThemeButton } from '../../common/ToggleThemeButton/ToggleThemeButton'
 import { logOutTC } from '../../redux/auth-reducer'
@@ -18,6 +19,7 @@ import s from './Header.module.css'
 export const Header = () => {
   const dispatch = useAppDispatch()
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
+  const theme = useAppSelector(state => state.app.theme)
   const profile = useAppSelector(state => state.profile)
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null)
   const open = Boolean(anchorEl)
@@ -38,7 +40,7 @@ export const Header = () => {
       <div className="container">
         <header className={s.headerWrapper}>
           <a href="https://it-incubator.io/" target="_blank" className={s.logo} rel="noreferrer">
-            <img src={incubatorLogo} alt="incubatorLogo" />
+            <img src={theme === 'dark' ? incubatorLogoWhite : incubatorLogo} alt="incubatorLogo" />
           </a>
           <ToggleThemeButton />
           {isLoggedIn ? (

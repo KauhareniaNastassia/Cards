@@ -18,7 +18,8 @@ import { EditPackModal } from '../../../common/Modals/PackModals/EditPackModal'
 import { setCardsTC } from '../../../redux/cards-reducer'
 import { deletePackTC, updatePackTC } from '../../../redux/pack-reducer'
 import { useAppDispatch, useAppSelector } from '../../../utils/hooks'
-import s from '../PackList.module.css'
+
+import s from './Pack.module.css'
 
 const StyledTableCellRow = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.body}`]: {
@@ -26,9 +27,19 @@ const StyledTableCellRow = styled(TableCell)(({ theme }) => ({
     fontSize: '15px',
   },
 }))
+const StyledTableCellRowBlack = styled(TableCell)(({ theme }) => ({
+  [`&.${tableCellClasses.body}`]: {
+    fontFamily: 'Montseratt',
+    fontSize: '15px',
+    color: 'white',
+    background: '#1b1b1d',
+    border: '1px solid white',
+  },
+}))
 
 export const Pack = memo((props: PacksType) => {
   const page = useAppSelector(state => state.cards.page)
+  const theme = useAppSelector(state => state.app.theme)
   const [openDeleteModal, setOpenDeleteModal] = useState(false)
   const [openEditModal, setOpenEditModal] = useState(false)
   const dispatch = useAppDispatch()
@@ -59,35 +70,61 @@ export const Pack = memo((props: PacksType) => {
       key={props._id}
       sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
     >
-      <StyledTableCellRow className={s.deckCoverColumn} align="center">
+      <TableCell
+        className={theme === 'dark' ? s.deckCoverColumnBlack : s.deckCoverColumn}
+        align="center"
+      >
         <img
           style={{ width: '57px', height: '36px' }}
           src={props.deckCover ? props.deckCover : defaultPackCover}
           alt="img"
         />
-      </StyledTableCellRow>
-      <StyledTableCellRow className={s.nameColumn}>
-        <Link style={{ textDecoration: 'none', color: 'black' }} to={`/pack/${props._id}`}>
-          {props.name}
+      </TableCell>
+      <TableCell className={theme === 'dark' ? s.packNameBlack : s.packName}>
+        <Link className={theme === 'dark' ? s.linkBlack : s.link} to={`/pack/${props._id}`}>
+          {props.name.length >= 25
+            ? props.name.split('').slice(0, 25).join('') + `...`
+            : props.name}
         </Link>
-      </StyledTableCellRow>
-      <StyledTableCellRow align="center">{props.cardsCount}</StyledTableCellRow>
-      <StyledTableCellRow className={s.lastUpdated} align="center">
-        {String(dayjs(`${props.updated}`).format('DD.MM.YYYY'))}
-      </StyledTableCellRow>
-      <StyledTableCellRow align="center">{props.user_name}</StyledTableCellRow>
-      <StyledTableCellRow align="center">
+      </TableCell>
+      <TableCell align="center" className={theme === 'dark' ? s.cardsCountBlack : s.cardsCount}>
+        {props.cardsCount}
+      </TableCell>
+      {theme === 'light' ? (
+        <StyledTableCellRow className={s.lastUpdated} align="center">
+          {String(dayjs(`${props.updated}`).format('DD.MM.YYYY'))}
+        </StyledTableCellRow>
+      ) : (
+        <StyledTableCellRowBlack className={s.lastUpdated} align="center">
+          {String(dayjs(`${props.updated}`).format('DD.MM.YYYY'))}
+        </StyledTableCellRowBlack>
+      )}
+      {theme === 'light' ? (
+        <StyledTableCellRow align="center">{props.user_name}</StyledTableCellRow>
+      ) : (
+        <StyledTableCellRowBlack align="center">{props.user_name}</StyledTableCellRowBlack>
+      )}
+      <TableCell align="center" className={theme === 'dark' ? s.actionsBlack : s.actions}>
         <IconButton>
-          <Link style={{ textDecoration: 'none', color: 'gray' }} to={`${PATH.learn}${props._id}`}>
+          <Link
+            className={theme === 'dark' ? s.iconBlack : s.icon}
+            to={`${PATH.learn}${props._id}`}
+          >
             <SchoolIcon onClick={onClickLearnHandler}></SchoolIcon>
           </Link>
         </IconButton>
         {myID === props.user_id && (
           <span>
-            <IconButton onClick={editButtonClickHandler}>
+            <IconButton
+              className={theme === 'dark' ? s.iconBlack : s.icon}
+              onClick={editButtonClickHandler}
+            >
               <EditIcon></EditIcon>
             </IconButton>
-            <IconButton onClick={deleteButtonClickHandler}>
+            <IconButton
+              className={theme === 'dark' ? s.iconBlack : s.icon}
+              onClick={deleteButtonClickHandler}
+            >
               <DeleteIcon></DeleteIcon>
             </IconButton>
           </span>
@@ -107,7 +144,40 @@ export const Pack = memo((props: PacksType) => {
           editItem={editPackItem}
           img={props.deckCover}
         />
-      </StyledTableCellRow>
+      </TableCell>
+
+      {/*<StyledTableCellRow align="center">*/}
+      {/*  <IconButton>*/}
+      {/*    <Link style={{ textDecoration: 'none', color: 'gray' }} to={`${PATH.learn}${props._id}`}>*/}
+      {/*      <SchoolIcon onClick={onClickLearnHandler}></SchoolIcon>*/}
+      {/*    </Link>*/}
+      {/*  </IconButton>*/}
+      {/*  {myID === props.user_id && (*/}
+      {/*    <span>*/}
+      {/*      <IconButton onClick={editButtonClickHandler}>*/}
+      {/*        <EditIcon></EditIcon>*/}
+      {/*      </IconButton>*/}
+      {/*      <IconButton onClick={deleteButtonClickHandler}>*/}
+      {/*        <DeleteIcon></DeleteIcon>*/}
+      {/*      </IconButton>*/}
+      {/*    </span>*/}
+      {/*  )}*/}
+      {/*  <DeletePackModal*/}
+      {/*    title="Delete Pack"*/}
+      {/*    name={props.name}*/}
+      {/*    open={openDeleteModal}*/}
+      {/*    toggleOpenMode={setOpenDeleteModal}*/}
+      {/*    deleteItem={deletePack}*/}
+      {/*  />*/}
+      {/*  <EditPackModal*/}
+      {/*    itemTitle={props.name}*/}
+      {/*    title="Edit Pack"*/}
+      {/*    toggleOpenMode={setOpenEditModal}*/}
+      {/*    open={openEditModal}*/}
+      {/*    editItem={editPackItem}*/}
+      {/*    img={props.deckCover}*/}
+      {/*  />*/}
+      {/*</StyledTableCellRow>*/}
     </TableRow>
   )
 })
