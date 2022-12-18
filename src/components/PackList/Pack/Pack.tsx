@@ -145,39 +145,6 @@ export const Pack = memo((props: PacksType) => {
           img={props.deckCover}
         />
       </TableCell>
-
-      {/*<StyledTableCellRow align="center">*/}
-      {/*  <IconButton>*/}
-      {/*    <Link style={{ textDecoration: 'none', color: 'gray' }} to={`${PATH.learn}${props._id}`}>*/}
-      {/*      <SchoolIcon onClick={onClickLearnHandler}></SchoolIcon>*/}
-      {/*    </Link>*/}
-      {/*  </IconButton>*/}
-      {/*  {myID === props.user_id && (*/}
-      {/*    <span>*/}
-      {/*      <IconButton onClick={editButtonClickHandler}>*/}
-      {/*        <EditIcon></EditIcon>*/}
-      {/*      </IconButton>*/}
-      {/*      <IconButton onClick={deleteButtonClickHandler}>*/}
-      {/*        <DeleteIcon></DeleteIcon>*/}
-      {/*      </IconButton>*/}
-      {/*    </span>*/}
-      {/*  )}*/}
-      {/*  <DeletePackModal*/}
-      {/*    title="Delete Pack"*/}
-      {/*    name={props.name}*/}
-      {/*    open={openDeleteModal}*/}
-      {/*    toggleOpenMode={setOpenDeleteModal}*/}
-      {/*    deleteItem={deletePack}*/}
-      {/*  />*/}
-      {/*  <EditPackModal*/}
-      {/*    itemTitle={props.name}*/}
-      {/*    title="Edit Pack"*/}
-      {/*    toggleOpenMode={setOpenEditModal}*/}
-      {/*    open={openEditModal}*/}
-      {/*    editItem={editPackItem}*/}
-      {/*    img={props.deckCover}*/}
-      {/*  />*/}
-      {/*</StyledTableCellRow>*/}
     </TableRow>
   )
 })
