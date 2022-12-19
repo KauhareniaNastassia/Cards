@@ -1,12 +1,14 @@
-import React, { ChangeEvent, DetailedHTMLProps, InputHTMLAttributes, useState } from 'react'
+import React, { DetailedHTMLProps, InputHTMLAttributes, useState } from 'react'
 
 import { Visibility, VisibilityOff } from '@mui/icons-material'
-import { FormHelperText } from '@mui/material'
 import FormControl from '@mui/material/FormControl/FormControl'
 import IconButton from '@mui/material/IconButton/IconButton'
 import InputAdornment from '@mui/material/InputAdornment'
 import InputLabel from '@mui/material/InputLabel/InputLabel'
 import OutlinedInput, { OutlinedInputProps } from '@mui/material/OutlinedInput/OutlinedInput'
+
+import t from '../../assets/styles/ThemeStyles.module.css'
+import { useAppSelector } from '../../utils/hooks'
 
 // тип пропсов обычного инпута
 type DefaultInputPropsType = DetailedHTMLProps<
@@ -22,6 +24,8 @@ type inputPropsType = DefaultInputPropsType &
 const InputPassword: React.FC<inputPropsType> = ({ nameField, value, onChange, ...restProps }) => {
   const [eye, setEye] = useState<boolean>(false)
 
+  const theme = useAppSelector(state => state.app.theme)
+
   const handleClickShowPassword = () => {
     setEye(!eye)
   }
@@ -31,12 +35,14 @@ const InputPassword: React.FC<inputPropsType> = ({ nameField, value, onChange, .
   }
 
   return (
-    <FormControl variant="outlined">
-      <InputLabel htmlFor="outlined-adornment-password">{nameField}</InputLabel>
+    <FormControl variant="outlined" className={t[theme]}>
+      <InputLabel className={t[theme]} htmlFor="outlined-adornment-password">
+        {nameField}
+      </InputLabel>
       <OutlinedInput
-        // name={nameField}
         type={eye ? 'text' : 'password'}
         value={value}
+        className={t[theme]}
         onChange={onChange}
         endAdornment={
           <InputAdornment position="end">
@@ -46,7 +52,7 @@ const InputPassword: React.FC<inputPropsType> = ({ nameField, value, onChange, .
               onMouseDown={handleMouseDownPassword}
               edge="end"
             >
-              {eye ? <VisibilityOff /> : <Visibility />}
+              {eye ? <VisibilityOff className={t[theme]} /> : <Visibility className={t[theme]} />}
             </IconButton>
           </InputAdornment>
         }

@@ -1,11 +1,13 @@
 .dark{
-    color: white;
+    color: white !important;
 
-    background: black;
+    background: black!important;
+border: white
 }
 
 .light {
-    color: black;
+    color: black!important;
 
-    background: white
+
+    background: white!important
 }

@@ -20,20 +20,32 @@ import { deletePackTC, updatePackTC } from '../../../redux/pack-reducer'
 import { useAppDispatch, useAppSelector } from '../../../utils/hooks'
 import s from '../PackList.module.css'
 
-const StyledTableCellRow = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.body}`]: {
-    fontFamily: 'Montseratt',
-    fontSize: '15px',
-  },
-}))
-
 export const Pack = memo((props: PacksType) => {
   const page = useAppSelector(state => state.cards.page)
   const [openDeleteModal, setOpenDeleteModal] = useState(false)
   const [openEditModal, setOpenEditModal] = useState(false)
   const dispatch = useAppDispatch()
   const myID = useAppSelector(state => state.profile._id)
+  const theme = useAppSelector(state => state.app.theme)
 
+  const StyledTableCellRow = styled(TableCell)(({ theme }) => ({
+    [`&.${tableCellClasses.body}`]: {
+      fontFamily: 'Montseratt',
+      fontSize: '15px',
+      maxWidth: '100px',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+      whiteSpace: 'nowrap',
+    },
+    // [`&.${tableCellClasses.body}`]: {
+    //   fontFamily: 'Montseratt',
+    //   fontSize: '15px',
+    //   maxWidth: '100px',
+    //   overflow: 'hidden',
+    //   textOverflow: 'ellipsis',
+    //   whiteSpace: 'nowrap',
+    // },
+  }))
   const deleteButtonClickHandler = () => {
     setOpenDeleteModal(true)
   }

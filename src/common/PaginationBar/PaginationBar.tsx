@@ -3,6 +3,9 @@ import React, { ChangeEvent } from 'react'
 import NativeSelect from '@mui/material/NativeSelect'
 import Pagination from '@mui/material/Pagination'
 
+import t from '../../assets/styles/ThemeStyles.module.css'
+import { useAppSelector } from '../../utils/hooks'
+
 import s from './paginationBar.module.css'
 
 type PropsType = {
@@ -15,6 +18,7 @@ type PropsType = {
 }
 
 export const PaginationBar = (props: PropsType) => {
+  const theme = useAppSelector(state => state.app.theme)
   const pageCountHandler = (e: ChangeEvent<HTMLSelectElement>) => {
     props.pageCountHandler(e.currentTarget.value)
   }

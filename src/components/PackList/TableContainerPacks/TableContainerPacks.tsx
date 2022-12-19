@@ -24,6 +24,9 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     fontFamily: 'Montseratt',
     fontWeight: 'bold',
     fontSize: '15px',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
   },
 }))
 
@@ -35,8 +38,8 @@ export const TableContainerPacks = () => {
       <Table sx={{ fontFamily: 'Montserrat' }} aria-label="simple table">
         <TableHead>
           <TableRow className={s.tableHead}>
-            <StyledTableCell align="left">Cover</StyledTableCell>
-            <StyledTableCell align="left">Name</StyledTableCell>
+            <StyledTableCell align="center">Cover</StyledTableCell>
+            <StyledTableCell align="center">Name</StyledTableCell>
             <StyledTableCell align="center">Cards</StyledTableCell>
             <StyledTableCell className={s.lastUpdated} align="center">
               Last updated

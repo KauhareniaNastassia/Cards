@@ -3,11 +3,11 @@ import React from 'react'
 import { Button, Checkbox, FormControlLabel, FormHelperText } from '@mui/material'
 import TextField from '@mui/material/TextField/TextField'
 import { useFormik } from 'formik'
-import { Simulate } from 'react-dom/test-utils'
 import { Link, Navigate } from 'react-router-dom'
 
 import { LogInRequestDataType } from '../../api/auth-API'
 import { PATH } from '../../app/App'
+import t from '../../assets/styles/ThemeStyles.module.css'
 import InputPassword from '../../common/inputsFromMateUI/InputPassword'
 import { loginTC } from '../../redux/auth-reducer'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks'
@@ -15,13 +15,11 @@ import { validateUtil } from '../../utils/validate'
 
 import s from './Login.module.css'
 
-import error = Simulate.error
-
 export const Login = () => {
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
   const loading = useAppSelector(state => state.app.status)
   const dispatch = useAppDispatch()
-
+  const theme = useAppSelector(state => state.app.theme)
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -78,7 +76,7 @@ export const Login = () => {
           />
 
           <div className={s.passwordRecoveryLinkBlock}>
-            <Link className={s.passwordRecoveryLink} to={PATH.passwordRecovery}>
+            <Link className={`${s.passwordRecoveryLink} ${t[theme]}`} to={PATH.passwordRecovery}>
               Forgot password?
             </Link>
           </div>
