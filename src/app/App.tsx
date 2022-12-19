@@ -2,9 +2,10 @@ import React, { useEffect } from 'react'
 
 import './App.css'
 
-import { CircularProgress, LinearProgress } from '@mui/material'
+import { CircularProgress, LinearProgress, ThemeProvider } from '@mui/material'
 import { Route, Routes } from 'react-router-dom'
 
+import { darkTheme, LightTheme } from '../assets/styles/theme'
 import t from '../assets/styles/ThemeStyles.module.css'
 import NotificationBar from '../common/Notification/NotificationBar'
 import { CardsList } from '../components/CardsList/CardsList'
@@ -58,24 +59,26 @@ function App() {
 
   return (
     <div className={`App ${t[theme]}`}>
-      <Header />
-      {loading === 'loading' ? <LinearProgress /> : <div style={{ height: '4px' }} />}
-      <div className="container">
-        <Routes>
-          <Route path={PATH.home} element={<Home />} />
-          <Route path={PATH.login} element={<Login />} />
-          <Route path={PATH.registration} element={<SignUp />} />
-          <Route path={PATH.profile} element={<ProfileCard />} />
-          <Route path={PATH.error404} element={<Error404 />} />
-          <Route path={PATH.passwordRecovery} element={<PasswordRecovery />} />
-          <Route path={PATH.learn} element={<Learn />} />
-          <Route path={PATH.createNewPassword} element={<CreateNewPassword />} />
-          <Route path={PATH.checkEmail} element={<CheckEmail />} />
-          <Route path={PATH.packList} element={<PackList />} />
-          <Route path={PATH.pack} element={<CardsList />} />
-        </Routes>
-        <NotificationBar />
-      </div>
+      <ThemeProvider theme={theme === 'light' ? LightTheme : darkTheme}>
+        <Header />
+        {loading === 'loading' ? <LinearProgress /> : <div style={{ height: '4px' }} />}
+        <div className="container">
+          <Routes>
+            <Route path={PATH.home} element={<Home />} />
+            <Route path={PATH.login} element={<Login />} />
+            <Route path={PATH.registration} element={<SignUp />} />
+            <Route path={PATH.profile} element={<ProfileCard />} />
+            <Route path={PATH.error404} element={<Error404 />} />
+            <Route path={PATH.passwordRecovery} element={<PasswordRecovery />} />
+            <Route path={PATH.learn} element={<Learn />} />
+            <Route path={PATH.createNewPassword} element={<CreateNewPassword />} />
+            <Route path={PATH.checkEmail} element={<CheckEmail />} />
+            <Route path={PATH.packList} element={<PackList />} />
+            <Route path={PATH.pack} element={<CardsList />} />
+          </Routes>
+          <NotificationBar />
+        </div>
+      </ThemeProvider>
     </div>
   )
 }
