@@ -28,24 +28,24 @@ export const Pack = memo((props: PacksType) => {
   const myID = useAppSelector(state => state.profile._id)
   const theme = useAppSelector(state => state.app.theme)
 
-  const StyledTableCellRow = styled(TableCell)(({ theme }) => ({
-    [`&.${tableCellClasses.body}`]: {
-      fontFamily: 'Montseratt',
-      fontSize: '15px',
-      maxWidth: '100px',
-      overflow: 'hidden',
-      textOverflow: 'ellipsis',
-      whiteSpace: 'nowrap',
-    },
-    // [`&.${tableCellClasses.body}`]: {
-    //   fontFamily: 'Montseratt',
-    //   fontSize: '15px',
-    //   maxWidth: '100px',
-    //   overflow: 'hidden',
-    //   textOverflow: 'ellipsis',
-    //   whiteSpace: 'nowrap',
-    // },
-  }))
+  // const StyledTableCellRow = styled(TableCell)(({ theme }) => ({
+  //   [`&.${tableCellClasses.body}`]: {
+  //     fontFamily: 'Montseratt',
+  //     fontSize: '15px',
+  //     maxWidth: '100px',
+  //     overflow: 'hidden',
+  //     textOverflow: 'ellipsis',
+  //     whiteSpace: 'nowrap',
+  //   },
+  // [`&.${tableCellClasses.body}`]: {
+  //   fontFamily: 'Montseratt',
+  //   fontSize: '15px',
+  //   maxWidth: '100px',
+  //   overflow: 'hidden',
+  //   textOverflow: 'ellipsis',
+  //   whiteSpace: 'nowrap',
+  // },
+  // }))
   const deleteButtonClickHandler = () => {
     setOpenDeleteModal(true)
   }
@@ -71,24 +71,24 @@ export const Pack = memo((props: PacksType) => {
       key={props._id}
       sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
     >
-      <StyledTableCellRow className={s.deckCoverColumn} align="center">
+      <TableCell className={s.deckCoverColumn} align="center">
         <img
           style={{ width: '57px', height: '36px' }}
           src={props.deckCover ? props.deckCover : defaultPackCover}
           alt="img"
         />
-      </StyledTableCellRow>
-      <StyledTableCellRow className={s.nameColumn}>
+      </TableCell>
+      <TableCell className={s.nameColumn}>
         <Link style={{ textDecoration: 'none', color: 'black' }} to={`/pack/${props._id}`}>
           {props.name}
         </Link>
-      </StyledTableCellRow>
-      <StyledTableCellRow align="center">{props.cardsCount}</StyledTableCellRow>
-      <StyledTableCellRow className={s.lastUpdated} align="center">
+      </TableCell>
+      <TableCell align="center">{props.cardsCount}</TableCell>
+      <TableCell className={s.lastUpdated} align="center">
         {String(dayjs(`${props.updated}`).format('DD.MM.YYYY'))}
-      </StyledTableCellRow>
-      <StyledTableCellRow align="center">{props.user_name}</StyledTableCellRow>
-      <StyledTableCellRow align="center">
+      </TableCell>
+      <TableCell align="center">{props.user_name}</TableCell>
+      <TableCell align="center">
         <IconButton>
           <Link style={{ textDecoration: 'none', color: 'gray' }} to={`${PATH.learn}${props._id}`}>
             <SchoolIcon onClick={onClickLearnHandler}></SchoolIcon>
@@ -119,7 +119,7 @@ export const Pack = memo((props: PacksType) => {
           editItem={editPackItem}
           img={props.deckCover}
         />
-      </StyledTableCellRow>
+      </TableCell>
     </TableRow>
   )
 })

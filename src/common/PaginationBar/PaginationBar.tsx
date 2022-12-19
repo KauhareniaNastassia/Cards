@@ -18,7 +18,6 @@ type PropsType = {
 }
 
 export const PaginationBar = (props: PropsType) => {
-  const theme = useAppSelector(state => state.app.theme)
   const pageCountHandler = (e: ChangeEvent<HTMLSelectElement>) => {
     props.pageCountHandler(e.currentTarget.value)
   }

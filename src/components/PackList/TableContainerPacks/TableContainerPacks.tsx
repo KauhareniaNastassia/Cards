@@ -17,18 +17,18 @@ import { Pack } from '../Pack/Pack'
 
 import s from './TableContainer.module.css'
 
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.grey['200'],
-    color: theme.palette.common.black,
-    fontFamily: 'Montseratt',
-    fontWeight: 'bold',
-    fontSize: '15px',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    whiteSpace: 'nowrap',
-  },
-}))
+// const StyledTableCell = styled(TableCell)(({ theme }) => ({
+//   [`&.${tableCellClasses.head}`]: {
+//     backgroundColor: theme.palette.grey['200'],
+//     color: theme.palette.common.black,
+//     fontFamily: 'Montseratt',
+//     fontWeight: 'bold',
+//     fontSize: '15px',
+//     overflow: 'hidden',
+//     textOverflow: 'ellipsis',
+//     whiteSpace: 'nowrap',
+//   },
+// }))
 
 export const TableContainerPacks = () => {
   const packs = useAppSelector(state => state.packs.cardPacks)
@@ -38,14 +38,14 @@ export const TableContainerPacks = () => {
       <Table sx={{ fontFamily: 'Montserrat' }} aria-label="simple table">
         <TableHead>
           <TableRow className={s.tableHead}>
-            <StyledTableCell align="center">Cover</StyledTableCell>
-            <StyledTableCell align="center">Name</StyledTableCell>
-            <StyledTableCell align="center">Cards</StyledTableCell>
-            <StyledTableCell className={s.lastUpdated} align="center">
+            <TableCell align="center">Cover</TableCell>
+            <TableCell align="center">Name</TableCell>
+            <TableCell align="center">Cards</TableCell>
+            <TableCell className={s.lastUpdated} align="center">
               Last updated
-            </StyledTableCell>
-            <StyledTableCell align="center">Created by</StyledTableCell>
-            <StyledTableCell align="center">Actions</StyledTableCell>
+            </TableCell>
+            <TableCell align="center">Created by</TableCell>
+            <TableCell align="center">Actions</TableCell>
           </TableRow>
         </TableHead>
 
