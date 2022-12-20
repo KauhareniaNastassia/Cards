@@ -21,7 +21,7 @@ import { PasswordRecovery } from '../components/PasswordRecovery/PasswordRecover
 import { ProfileCard } from '../components/ProfileCard/ProfileCard'
 import { SignUp } from '../components/SignUp/SignUp'
 import { AppThemeType, initializeAppTC, SetAppThemeAC } from '../redux/app-reducer'
-import { loadState } from '../redux/localStorage.'
+import { loadState } from '../redux/localStorage'
 import { useAppDispatch, useAppSelector } from '../utils/hooks'
 
 export const PATH = {

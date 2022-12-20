@@ -1,5 +1,7 @@
+import { createMuiTheme, createTheme } from '@mui/material'
+
 import { SetAppThemeAC } from '../../redux/app-reducer'
-import { saveState } from '../../redux/localStorage.'
+import { saveState } from '../../redux/localStorage'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks'
 
 import s from './ToggleThemeButton.module.css'

@@ -41,13 +41,15 @@ export const LearnCard = (props: LearnCardPropsType) => {
       <div className={s.question}>
         Question:
         {props.card.questionImg ? (
-          <img
-            style={{ maxWidth: '375px', maxHeight: '120px' }}
-            src={props.card.questionImg}
-            alt={'question image'}
-          />
+          <div style={{ maxWidth: '750px', display: 'flex', justifyContent: 'center' }}>
+            <img
+              style={{ maxWidth: '375px', maxHeight: '120px' }}
+              src={props.card.questionImg}
+              alt={'question image'}
+            />
+          </div>
         ) : (
-          <span className={s.questionText}>{props.card.question}</span>
+          <div className={s.questionText}>{props.card.question}</div>
         )}
       </div>
       <div className={s.count}>Количество попыток ответа на вопрос: {props.card.shots}</div>

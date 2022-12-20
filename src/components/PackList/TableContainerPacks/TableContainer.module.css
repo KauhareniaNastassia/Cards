@@ -1,3 +1,26 @@
+.tableHeadDark{
+    background: #1b1b1d;
+}
+.tableHeadLight{
+    background: white;
+}
+.headText {
+    font-family: Montseratt, sans-serif !important;
+    font-size: medium !important;
+    font-weight: bold !important;
+    color: white !important;
+
+    border: 1px solid white !important;
+}
+.headTextLight{
+    font-family: Montseratt, sans-serif !important;
+    font-size: medium !important;
+    font-weight: bold !important;
+    color: black !important;
+
+    border-bottom: 1px solid rgba(128, 128, 128, 0.19) !important;
+}
+
 @media only screen and (max-width: 890px) {
     .tableHead > th {
         max-width: 30px;
