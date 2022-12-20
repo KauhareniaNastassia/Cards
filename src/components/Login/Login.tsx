@@ -29,7 +29,6 @@ export const Login = () => {
     validate: validateUtil,
     onSubmit: (values: LogInRequestDataType) => {
       dispatch(loginTC(values))
-      formik.resetForm()
     },
   })
 

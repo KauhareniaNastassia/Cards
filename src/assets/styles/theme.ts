@@ -1,6 +1,8 @@
 import { createTheme } from '@mui/material'
 import { red, blue, grey, common } from '@mui/material/colors'
 
+//https://mui.com/material-ui/customization/theme-components/#global-style-overrides
+
 export const LightTheme = createTheme({
   palette: {
     primary: {
@@ -57,6 +59,21 @@ export const darkTheme = createTheme({
       defaultProps: {
         style: {
           color: common.white,
+        },
+      },
+    },
+    MuiCheckbox: {
+      defaultProps: {
+        style: {
+          color: common.white,
+        },
+      },
+    },
+    MuiOutlinedInput: {
+      defaultProps: {
+        style: {
+          color: common.white,
+          backgroundColor: grey[500],
         },
       },
     },

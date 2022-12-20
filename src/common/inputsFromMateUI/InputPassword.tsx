@@ -35,14 +35,11 @@ const InputPassword: React.FC<inputPropsType> = ({ nameField, value, onChange, .
   }
 
   return (
-    <FormControl variant="outlined" className={t[theme]}>
-      <InputLabel className={t[theme]} htmlFor="outlined-adornment-password">
-        {nameField}
-      </InputLabel>
+    <FormControl variant="outlined">
+      <InputLabel htmlFor="outlined-adornment-password">{nameField}</InputLabel>
       <OutlinedInput
         type={eye ? 'text' : 'password'}
         value={value}
-        className={t[theme]}
         onChange={onChange}
         endAdornment={
           <InputAdornment position="end">
@@ -52,7 +49,7 @@ const InputPassword: React.FC<inputPropsType> = ({ nameField, value, onChange, .
               onMouseDown={handleMouseDownPassword}
               edge="end"
             >
-              {eye ? <VisibilityOff className={t[theme]} /> : <Visibility className={t[theme]} />}
+              {eye ? <VisibilityOff /> : <Visibility />}
             </IconButton>
           </InputAdornment>
         }

@@ -3,9 +3,6 @@ import React, { ChangeEvent } from 'react'
 import NativeSelect from '@mui/material/NativeSelect'
 import Pagination from '@mui/material/Pagination'
 
-import t from '../../assets/styles/ThemeStyles.module.css'
-import { useAppSelector } from '../../utils/hooks'
-
 import s from './paginationBar.module.css'
 
 type PropsType = {
