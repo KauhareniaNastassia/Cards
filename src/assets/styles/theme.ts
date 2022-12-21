@@ -32,6 +32,13 @@ export const darkTheme = createTheme({
     },
   },
   components: {
+    MuiModal: {
+      defaultProps: {
+        style: {
+          backgroundColor: '#28282B',
+        },
+      },
+    },
     MuiIconButton: {
       defaultProps: {
         style: {

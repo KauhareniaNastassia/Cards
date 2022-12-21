@@ -26,9 +26,16 @@ export const FilterBar = memo((props: propsType) => {
 
   const minCardsCount = useAppSelector(state => state.packs.minCardsCount)
   const maxCardsCount = useAppSelector(state => state.packs.maxCardsCount)
+  const theme = useAppSelector(state => state.app.theme)
 
   const [minRange, setMinRange] = useState<number>(minCardsCount)
   const [maxRange, setMaxRange] = useState<number>(maxCardsCount)
+
+  const style = (theme: 'light' | 'dark') => {
+    return theme === 'light'
+      ? { height: '25px', width: '25px' }
+      : { height: '25px', width: '25px', color: '#28282B' }
+  }
 
   useEffect(() => {
     setMinRange(props.minRangeURL ? +props.minRangeURL : minCardsCount)
@@ -93,7 +100,7 @@ export const FilterBar = memo((props: propsType) => {
       </div>
       <div className={s.clearFilters}>
         <IconButton onClick={onClickClearFiltersHandler}>
-          <FilterAltOffOutlinedIcon sx={{ height: '25px', width: '25px' }} />
+          <FilterAltOffOutlinedIcon sx={style(theme)} />
         </IconButton>
       </div>
     </div>
