@@ -27,25 +27,12 @@ export const Pack = memo((props: PacksType) => {
   const dispatch = useAppDispatch()
   const myID = useAppSelector(state => state.profile._id)
   const theme = useAppSelector(state => state.app.theme)
+  const style = (theme: 'dark' | 'light') => {
+    return theme === 'dark'
+      ? { textDecoration: 'none', color: 'white' }
+      : { textDecoration: 'none', color: 'black' }
+  }
 
-  // const StyledTableCellRow = styled(TableCell)(({ theme }) => ({
-  //   [`&.${tableCellClasses.body}`]: {
-  //     fontFamily: 'Montseratt',
-  //     fontSize: '15px',
-  //     maxWidth: '100px',
-  //     overflow: 'hidden',
-  //     textOverflow: 'ellipsis',
-  //     whiteSpace: 'nowrap',
-  //   },
-  // [`&.${tableCellClasses.body}`]: {
-  //   fontFamily: 'Montseratt',
-  //   fontSize: '15px',
-  //   maxWidth: '100px',
-  //   overflow: 'hidden',
-  //   textOverflow: 'ellipsis',
-  //   whiteSpace: 'nowrap',
-  // },
-  // }))
   const deleteButtonClickHandler = () => {
     setOpenDeleteModal(true)
   }
@@ -79,7 +66,7 @@ export const Pack = memo((props: PacksType) => {
         />
       </TableCell>
       <TableCell className={s.nameColumn}>
-        <Link style={{ textDecoration: 'none', color: 'black' }} to={`/pack/${props._id}`}>
+        <Link style={style(theme)} to={`/pack/${props._id}`}>
           {props.name}
         </Link>
       </TableCell>

@@ -80,7 +80,7 @@ export const FilterBar = memo((props: propsType) => {
       <div>
         <h3>Number of cards</h3>
         <div className={s.sliderWrap}>
-          <span className={s.sliderValues}>{minRange}</span>
+          <div className={s.sliderValues}>{minRange}</div>
           <SliderFromMateUI
             value={[minRange, maxRange]}
             min={minCardsCount}
@@ -88,7 +88,7 @@ export const FilterBar = memo((props: propsType) => {
             onChangeRange={onChangeRangeHandler}
             onChangeCommitted={onChangeCommittedHandler}
           />
-          <span className={s.sliderValues}>{maxRange}</span>
+          <div className={s.sliderValues}>{maxRange}</div>
         </div>
       </div>
       <div className={s.clearFilters}>

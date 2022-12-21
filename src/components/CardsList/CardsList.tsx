@@ -54,6 +54,7 @@ export const CardsList = () => {
   }
 
   const cards = useAppSelector(state => state.cards.cards)
+  const theme = useAppSelector(state => state.app.theme)
 
   const packName = useAppSelector(state => state.cards.packName)
   const packDeckCover = useAppSelector(state => state.cards.packDeckCover)
@@ -148,7 +149,7 @@ export const CardsList = () => {
             {myID === userID && (
               <div>
                 <button className={s.button} onClick={handleClick}>
-                  <MoreVertIcon className={s.moreIcon} />
+                  <MoreVertIcon className={theme === 'dark' ? s.moreIconBlack : s.moreIcon} />
                 </button>
                 <Popover
                   id={id}

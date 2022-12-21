@@ -1,3 +1,4 @@
+import MoreVertIcon from '@mui/icons-material/MoreVert'
 import { createTheme } from '@mui/material'
 import { red, blue, grey, common } from '@mui/material/colors'
 
@@ -34,10 +35,26 @@ export const darkTheme = createTheme({
     },
   },
   components: {
+    MuiIconButton: {
+      defaultProps: {
+        style: {
+          color: '#7e7e7f',
+        },
+      },
+    },
+    MuiRating: {
+      defaultProps: {
+        style: {
+          textDecoration: common.white,
+          color: 'red',
+        },
+      },
+    },
+
     MuiTableCell: {
       defaultProps: {
         style: {
-          backgroundColor: common.black,
+          backgroundColor: '#28282B',
           color: common.white,
           fontFamily: 'Montseratt',
           fontWeight: 'bold',

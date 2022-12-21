@@ -6,7 +6,7 @@ import Radio from '@mui/material/Radio'
 
 import { CardPackType } from '../../../api/cards-API'
 import { createLearnCardsTC } from '../../../redux/cards-reducer'
-import { useAppDispatch } from '../../../utils/hooks'
+import { useAppDispatch, useAppSelector } from '../../../utils/hooks'
 import { getCard } from '../GetCardSmartRandom/getCardSmartRandom'
 import s from '../Learn.module.css'
 
@@ -19,6 +19,7 @@ type LearnCardPropsType = {
   setCard: (value: any) => void
 }
 export const LearnCard = (props: LearnCardPropsType) => {
+  const theme = useAppSelector(state => state.app.theme)
   const dispatch = useAppDispatch()
   const [answer, setAnswer] = useState(false)
   const [valueRadio, setValueRadio] = useState<number>(1)
@@ -37,13 +38,13 @@ export const LearnCard = (props: LearnCardPropsType) => {
   }
 
   return (
-    <div className={s.card}>
+    <div className={theme === 'dark' ? s.cardBlack : s.card}>
       <div className={s.question}>
         Question:
         {props.card.questionImg ? (
           <div style={{ maxWidth: '750px', display: 'flex', justifyContent: 'center' }}>
             <img
-              style={{ maxWidth: '375px', maxHeight: '120px' }}
+              style={{ maxWidth: '375px', maxHeight: '120px', marginTop: '20px' }}
               src={props.card.questionImg}
               alt={'question image'}
             />
@@ -52,7 +53,9 @@ export const LearnCard = (props: LearnCardPropsType) => {
           <div className={s.questionText}>{props.card.question}</div>
         )}
       </div>
-      <div className={s.count}>Количество попыток ответа на вопрос: {props.card.shots}</div>
+      <div className={theme === 'dark' ? s.countBlack : s.count}>
+        Количество попыток ответа на вопрос: {props.card.shots}
+      </div>
 
       <div className={s.button}>
         <Button
@@ -66,10 +69,10 @@ export const LearnCard = (props: LearnCardPropsType) => {
       {answer && (
         <>
           <div className={s.question}>
-            Answer:{' '}
+            Answer:
             {props.card.answerImg ? (
               <img
-                style={{ maxWidth: '375px', maxHeight: '120px' }}
+                style={{ maxWidth: '375px', maxHeight: '120px', marginTop: '20px' }}
                 src={props.card.answerImg}
                 alt={'answer image'}
               />
@@ -77,7 +80,7 @@ export const LearnCard = (props: LearnCardPropsType) => {
               <span className={s.questionText}> {props.card.answer}</span>
             )}
           </div>
-          <div>
+          <div className={s.rating}>
             <span>Rate yourself:</span>
             {grades.map((el, index) => {
               const onClickHandler = () => {

@@ -16,7 +16,16 @@
 
   margin: 20px 0px;
 }
+.moreIconBlack {
+  cursor: pointer !important;
 
+  margin-left: 10px ;
+
+color: white !important;
+
+  border: 2px solid white !important;
+  border-radius: 50% !important;
+}
 .moreIcon{
   cursor: pointer !important;
 
@@ -64,7 +73,7 @@
 .popover {
   display: flex;
   flex-direction: column;
-align-items: start;
+  align-items: start;
 }
 
 @media only screen and (max-width: 890px) {

@@ -29,7 +29,18 @@
 
   min-width: 60px;
 }
+.cardBlack {
+  display: block;
 
+  width: 420px;
+  margin-right: auto;
+  margin-left: auto;
+  padding-top: 40px;
+  padding-bottom: 40px;
+
+background: #28282B;
+  box-shadow: 0 2px 10px rgba(172, 217, 211, 0.32), inset 0 1px 0 rgba(172, 217, 211, 0.34);
+}
 .card {
   display: block;
 
@@ -41,7 +52,14 @@
 
   box-shadow: 0 2px 10px rgba(109, 109, 109, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
+.emailBlack {
+  margin-bottom: 20px;
 
+  font-size: small;
+  color: white;
+
+  opacity: 70%;
+}
 .email {
   margin-bottom: 20px;
 

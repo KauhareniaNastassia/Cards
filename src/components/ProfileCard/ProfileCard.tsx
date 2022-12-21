@@ -24,6 +24,7 @@ export const customAvatar =
 export const ProfileCard = () => {
   const dispatch = useAppDispatch()
   const avatar = useAppSelector(state => state.profile.avatar)
+  const theme = useAppSelector(state => state.app.theme)
   const name = useAppSelector(state => state.profile.name)
   const email = useAppSelector(state => state.profile.email)
   const userName = useAppSelector(state => state.profile.name)
@@ -65,7 +66,7 @@ export const ProfileCard = () => {
   return (
     <>
       <BackToPackList />
-      <div className={s.card}>
+      <div className={theme === 'dark' ? s.cardBlack : s.card}>
         <div className={s.container}>
           <div className={s.title}>Personal information</div>
           <label>
@@ -85,7 +86,7 @@ export const ProfileCard = () => {
           </label>
 
           <EditableSpan value={userName} onChange={UpdateDataHandler} />
-          <div className={s.email}>{email}</div>
+          <div className={theme === 'dark' ? s.emailBlack : s.email}>{email}</div>
           <SuperButton onClick={logOutHandler} className={s.button}>
             <LogoutIcon /> Log out
           </SuperButton>

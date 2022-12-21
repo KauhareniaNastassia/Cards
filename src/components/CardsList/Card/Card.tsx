@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 
 import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
+import StarBorderIcon from '@mui/icons-material/StarBorder'
 import { IconButton, Rating, styled, TableCell, tableCellClasses, TableRow } from '@mui/material'
 import dayjs from 'dayjs'
 
@@ -24,6 +25,7 @@ type CardPropsType = {
 
 export const Card = (props: CardPropsType) => {
   const myID = useAppSelector(state => state.profile._id)
+  const theme = useAppSelector(state => state.app.theme)
   const [openDeleteCardModal, setOpenDeleteCardModal] = useState(false)
   const [openEditCardModal, setOpenEditCardModal] = useState(false)
   const dispatch = useAppDispatch()
@@ -86,7 +88,17 @@ export const Card = (props: CardPropsType) => {
         {String(dayjs(`${props.card.updated}`).format('DD.MM.YYYY'))}
       </StyledTableCellRow>
       <StyledTableCellRow align="right">
-        <Rating name="read-only" defaultValue={props.card.grade} precision={0.1} readOnly />
+        {theme === 'light' ? (
+          <Rating name="read-only" defaultValue={props.card.grade} precision={0.1} readOnly />
+        ) : (
+          <Rating
+            name="read-only"
+            defaultValue={props.card.grade}
+            precision={0.1}
+            emptyIcon={<StarBorderIcon sx={{ color: 'white' }} />}
+            readOnly
+          />
+        )}
       </StyledTableCellRow>
       <StyledTableCellRow align="right">
         {myID === props.card.user_id && (
