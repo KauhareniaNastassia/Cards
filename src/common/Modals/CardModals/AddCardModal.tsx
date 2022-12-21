@@ -6,7 +6,6 @@ import InputLabel from '@mui/material/InputLabel/InputLabel'
 import TextField from '@mui/material/TextField/TextField'
 import { useParams } from 'react-router-dom'
 
-import { useAppSelector } from '../../../utils/hooks'
 import { InputTypeFile } from '../../../utils/uploadImages/InputTypeFile'
 import { BasicModal } from '../Basic Modal/BasicModal'
 import { ButtonBlockForModals } from '../ButtonBlockForModals/ButtonBlockForModals'
@@ -31,7 +30,6 @@ export const AddCardModal = (props: AddCardModalPropsType) => {
   const [typeOfQuestion, setTypeOfQuestion] = useState('Text')
   const [questionImg, setQuestionImg] = useState('')
   const [answerImg, setAnswerImg] = useState('')
-  const cardsPack_id = useAppSelector(state => state.cards.cardsPack_id)
 
   const onCloseModalHandler = () => {
     props.toggleOpenMode(false)

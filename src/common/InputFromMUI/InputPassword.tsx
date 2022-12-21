@@ -7,10 +7,6 @@ import InputAdornment from '@mui/material/InputAdornment'
 import InputLabel from '@mui/material/InputLabel/InputLabel'
 import OutlinedInput, { OutlinedInputProps } from '@mui/material/OutlinedInput/OutlinedInput'
 
-import t from '../../assets/styles/ThemeStyles.module.css'
-import { useAppSelector } from '../../utils/hooks'
-
-// тип пропсов обычного инпута
 type DefaultInputPropsType = DetailedHTMLProps<
   InputHTMLAttributes<HTMLInputElement>,
   HTMLInputElement
@@ -23,8 +19,6 @@ type inputPropsType = DefaultInputPropsType &
 
 const InputPassword: React.FC<inputPropsType> = ({ nameField, value, onChange, ...restProps }) => {
   const [eye, setEye] = useState<boolean>(false)
-
-  const theme = useAppSelector(state => state.app.theme)
 
   const handleClickShowPassword = () => {
     setEye(!eye)

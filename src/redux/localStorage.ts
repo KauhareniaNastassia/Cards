@@ -23,6 +23,3 @@ export const saveState = (theme: string) => {
     // ignore write errors
   }
 }
-
-// https://www.youtube.com/watch?v=U8f01SM8Kq4&t=542s     =>    localstorage в Redux part 2 (PreloadedState)
-// https://medium.com/@jrcreencia/persisting-redux-state-to-local-storage-f81eb0b90e7e

@@ -1,10 +1,4 @@
-import {
-  AddNewPackDataType,
-  cardsAPI,
-  GetPacksParamsType,
-  PacksType,
-  UpdatePackDataType,
-} from '../api/cards-API'
+import { AddNewPackDataType, cardsAPI, PacksType, UpdatePackDataType } from '../api/cards-API'
 import { handleServerNetworkError } from '../utils/error-handler'
 
 import { setAppStatusAC, SetAppSuccessAC } from './app-reducer'

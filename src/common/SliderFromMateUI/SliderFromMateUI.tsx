@@ -10,7 +10,6 @@ type propsType = {
   value: [number, number]
   min: number
   max: number
-  // width?: number
   className?: string
   onChangeCommitted: (value: [number, number]) => void
 }

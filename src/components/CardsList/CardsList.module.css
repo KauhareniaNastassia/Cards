@@ -16,32 +16,8 @@
 
   margin: 20px 0px;
 }
-.moreIconBlack {
-  cursor: pointer !important;
 
-  margin-left: 10px ;
 
-color: white !important;
-
-  border: 2px solid white !important;
-  border-radius: 50% !important;
-}
-.moreIcon{
-  cursor: pointer !important;
-
-  margin-left: 10px ;
-
-  border: 2px solid black !important;
-  border-radius: 50% !important;
-}
-.packName {
-  display: flex;
-
-  margin: 30px auto;
-
-  font-size: 20px;
-  font-weight: bold;
-}
 .div {
   margin: 40px auto;
 
@@ -50,31 +26,8 @@ color: white !important;
 .span {
   opacity: 50%;
 }
-.icon{
-  display:flex;
-  align-items: center;
-}
-.button {
-  text-decoration: none;
 
-  background: none;
-  border: none;
-}
-.superButton{
-  text-decoration: none;
 
-  background: none;
-  border: none;
-}
-.superButton:hover {
-  box-shadow: none;
-
-}
-.popover {
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-}
 
 @media only screen and (max-width: 890px) {
   .tableHead > th {
@@ -120,7 +73,7 @@ color: white !important;
 .packDeckCover {
   width: 170px;
   height: 107px;
-  margin: 30px auto;
+  margin: 10px auto;
 
   object-fit: cover;
 }

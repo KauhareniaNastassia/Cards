@@ -1,13 +1,13 @@
-import React, { ChangeEvent, useCallback, useEffect, useState } from 'react'
+import React, { ChangeEvent, useState } from 'react'
 
 import SearchIcon from '@mui/icons-material/Search'
-import { Button, debounce, InputBase } from '@mui/material'
+import { Button, InputBase } from '@mui/material'
 import { alpha, styled } from '@mui/material/styles'
-import { Link, useSearchParams } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import { PATH } from '../../../app/App'
 import { AddCardModal } from '../../../common/Modals/CardModals/AddCardModal'
-import { addNewCardTC, setCardsTC } from '../../../redux/cards-reducer'
+import { addNewCardTC } from '../../../redux/cards-reducer'
 import { useAppDispatch, useAppSelector } from '../../../utils/hooks'
 
 import s from './SearchForCards.module.css'

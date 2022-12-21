@@ -1,5 +1,3 @@
-import { createMuiTheme, createTheme } from '@mui/material'
-
 import { SetAppThemeAC } from '../../redux/app-reducer'
 import { saveState } from '../../redux/localStorage'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks'
@@ -37,6 +35,3 @@ export const ToggleThemeButton = () => {
     </div>
   )
 }
-
-// 12. Sun And Moon Toggle Switch
-// https://alvarotrigo.com/blog/toggle-switch-css/

@@ -1,8 +1,5 @@
-import MoreVertIcon from '@mui/icons-material/MoreVert'
 import { createTheme } from '@mui/material'
-import { red, blue, grey, common } from '@mui/material/colors'
-
-//https://mui.com/material-ui/customization/theme-components/#global-style-overrides
+import { blue, common, grey, red } from '@mui/material/colors'
 
 export const LightTheme = createTheme({
   palette: {

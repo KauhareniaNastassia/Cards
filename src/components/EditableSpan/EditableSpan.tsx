@@ -1,11 +1,10 @@
-import React, { ChangeEvent, useEffect, useState } from 'react'
+import React, { ChangeEvent, useState } from 'react'
 
 import EditIcon from '@mui/icons-material/Edit'
 import { Button } from '@mui/material'
 import TextField from '@mui/material/TextField'
 
-import { updateUserProfileTC } from '../../redux/profile-reducer'
-import { useAppDispatch, useAppSelector } from '../../utils/hooks'
+import { useAppDispatch } from '../../utils/hooks'
 
 import s from './EditableSpan.module.css'
 
@@ -14,7 +13,6 @@ type EditableSpanPropsType = {
   onChange: (newUserName: string) => void
 }
 export const EditableSpan = function (props: EditableSpanPropsType) {
-  const dispatch = useAppDispatch()
   let [editMode, setEditMode] = useState(false)
   const [userName, setUserName] = useState(props.value)
 

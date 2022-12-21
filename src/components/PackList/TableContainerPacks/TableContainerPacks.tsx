@@ -2,11 +2,9 @@ import React from 'react'
 
 import {
   Paper,
-  styled,
   Table,
   TableBody,
   TableCell,
-  tableCellClasses,
   TableContainer,
   TableHead,
   TableRow,
@@ -16,19 +14,6 @@ import { useAppSelector } from '../../../utils/hooks'
 import { Pack } from '../Pack/Pack'
 
 import s from './TableContainer.module.css'
-
-// const StyledTableCell = styled(TableCell)(({ theme }) => ({
-//   [`&.${tableCellClasses.head}`]: {
-//     backgroundColor: theme.palette.grey['200'],
-//     color: theme.palette.common.black,
-//     fontFamily: 'Montseratt',
-//     fontWeight: 'bold',
-//     fontSize: '15px',
-//     overflow: 'hidden',
-//     textOverflow: 'ellipsis',
-//     whiteSpace: 'nowrap',
-//   },
-// }))
 
 export const TableContainerPacks = () => {
   const packs = useAppSelector(state => state.packs.cardPacks)
