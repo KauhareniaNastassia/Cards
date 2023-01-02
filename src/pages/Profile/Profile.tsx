@@ -9,19 +9,19 @@ import { PATH } from '../../app/App'
 import photoCamera from '../../assets/picture/icons8-camera-48.png'
 import { BackToPackList } from '../../common/BackArrow/BackToPackList'
 import SuperButton from '../../common/Button/SuperButton/SuperButton'
+import { EditableSpan } from '../../components/EditableSpan/EditableSpan'
 import { SetAppErrorAC } from '../../redux/app-reducer'
 import { logOutTC } from '../../redux/auth-reducer'
 import { updateUserProfileTC } from '../../redux/profile-reducer'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks'
 import { convertToBase64 } from '../../utils/uploadImages/ConvertToBase64'
-import { EditableSpan } from '../EditableSpan/EditableSpan'
 
-import s from './ProfileCard.module.css'
+import s from './Profile.module.css'
 
 export const customAvatar =
   'https://media.istockphoto.com/id/1223671392/vector/default-profile-picture-avatar-photo-placeholder-vector-illustration.jpg?s=612x612&w=0&k=20&c=s0aTdmT5aU6b8ot7VKm11DeID6NctRCpB755rA1BIP0='
 
-export const ProfileCard = () => {
+export const Profile = () => {
   const dispatch = useAppDispatch()
   const avatar = useAppSelector(state => state.profile.avatar)
   const theme = useAppSelector(state => state.app.theme)

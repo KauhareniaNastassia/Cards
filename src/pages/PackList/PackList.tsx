@@ -6,6 +6,7 @@ import { Navigate, useSearchParams } from 'react-router-dom'
 import { PATH } from '../../app/App'
 import { AddPackModal } from '../../common/Modals/PackModals/AddPackModal'
 import { PaginationBar } from '../../common/PaginationBar/PaginationBar'
+import { FilterBar } from '../../components/FilterBar/FilterBar'
 import {
   addNewPackTC,
   getPacksTC,
@@ -15,7 +16,6 @@ import {
 import { filterAllParams } from '../../utils/filterParams'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks'
 import { useDebounce } from '../../utils/useDebounce'
-import { FilterBar } from '../FilterBar/FilterBar'
 
 import s from './PackList.module.css'
 import { TableContainerPacks } from './TableContainerPacks/TableContainerPacks'

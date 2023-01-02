@@ -8,18 +8,18 @@ import { Route, Routes } from 'react-router-dom'
 import { darkTheme, LightTheme } from '../assets/styles/theme'
 import t from '../assets/styles/ThemeStyles.module.css'
 import NotificationBar from '../common/Notification/NotificationBar'
-import { CardsList } from '../components/CardsList/CardsList'
-import { CheckEmail } from '../components/CheckEmail/CheckEmail'
-import { CreateNewPassword } from '../components/CreateNewPassword/CreateNewPassword'
-import { Error404 } from '../components/Error404/Error404'
 import { Header } from '../components/Header/Header'
 import { Home } from '../components/Home/Home'
-import { Learn } from '../components/Learn/Learn'
-import { Login } from '../components/Login/Login'
-import { PackList } from '../components/PackList/PackList'
-import { PasswordRecovery } from '../components/PasswordRecovery/PasswordRecovery'
-import { ProfileCard } from '../components/ProfileCard/ProfileCard'
-import { SignUp } from '../components/SignUp/SignUp'
+import { CardsList } from '../pages/CardsList/CardsList'
+import { CheckEmail } from '../pages/CheckEmail/CheckEmail'
+import { CreateNewPassword } from '../pages/CreateNewPassword/CreateNewPassword'
+import { Learn } from '../pages/Learn/Learn'
+import { Login } from '../pages/Login/Login'
+import { PackList } from '../pages/PackList/PackList'
+import { Page404 } from '../pages/Page404/Page404'
+import { PasswordRecovery } from '../pages/PasswordRecovery/PasswordRecovery'
+import { Profile } from '../pages/Profile/Profile'
+import { SignUp } from '../pages/SignUp/SignUp'
 import { AppThemeType, initializeAppTC, SetAppThemeAC } from '../redux/app-reducer'
 import { loadState } from '../redux/localStorage'
 import { useAppDispatch, useAppSelector } from '../utils/hooks'
@@ -67,8 +67,8 @@ function App() {
             <Route path={PATH.home} element={<Home />} />
             <Route path={PATH.login} element={<Login />} />
             <Route path={PATH.registration} element={<SignUp />} />
-            <Route path={PATH.profile} element={<ProfileCard />} />
-            <Route path={PATH.error404} element={<Error404 />} />
+            <Route path={PATH.profile} element={<Profile />} />
+            <Route path={PATH.error404} element={<Page404 />} />
             <Route path={PATH.passwordRecovery} element={<PasswordRecovery />} />
             <Route path={PATH.learn} element={<Learn />} />
             <Route path={PATH.createNewPassword} element={<CreateNewPassword />} />
@@ -76,6 +76,7 @@ function App() {
             <Route path={PATH.packList} element={<PackList />} />
             <Route path={PATH.pack} element={<CardsList />} />
           </Routes>
+
           <NotificationBar />
         </div>
       </ThemeProvider>

@@ -9,10 +9,10 @@ import { PATH } from '../../app/App'
 import incubatorLogoDark from '../../assets/picture/incubatorLogo-dark.png'
 import incubatorLogo from '../../assets/picture/incubatorLogo.png'
 import SuperButton from '../../common/Button/SuperButton/SuperButton'
-import { ToggleThemeButton } from '../../common/ToggleThemeButton/ToggleThemeButton'
+import { customAvatar } from '../../pages/Profile/Profile'
 import { logOutTC } from '../../redux/auth-reducer'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks'
-import { customAvatar } from '../ProfileCard/ProfileCard'
+import { ToggleThemeButton } from '../ToggleThemeButton/ToggleThemeButton'
 
 import s from './Header.module.css'
 
