@@ -1,6 +1,6 @@
+import { useAppDispatch, useAppSelector } from '../../common/utils/hooks'
 import { SetAppThemeAC } from '../../redux/app-reducer'
 import { saveState } from '../../redux/localStorage'
-import { useAppDispatch, useAppSelector } from '../../utils/hooks'
 
 import s from './ToggleThemeButton.module.css'
 

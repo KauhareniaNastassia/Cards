@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react'
+import React, { ChangeEvent } from 'react'
 
 import LogoutIcon from '@mui/icons-material/Logout'
 import { Avatar, styled } from '@mui/material'
@@ -8,13 +8,13 @@ import { Navigate } from 'react-router-dom'
 import { PATH } from '../../app/App'
 import photoCamera from '../../assets/picture/icons8-camera-48.png'
 import { BackToPackList } from '../../common/BackArrow/BackToPackList'
-import SuperButton from '../../common/Button/SuperButton/SuperButton'
+import SuperButton from '../../common/SuperButton/SuperButton'
+import { useAppDispatch, useAppSelector } from '../../common/utils/hooks'
+import { convertToBase64 } from '../../common/utils/uploadImages/ConvertToBase64'
 import { EditableSpan } from '../../components/EditableSpan/EditableSpan'
 import { SetAppErrorAC } from '../../redux/app-reducer'
 import { logOutTC } from '../../redux/auth-reducer'
 import { updateUserProfileTC } from '../../redux/profile-reducer'
-import { useAppDispatch, useAppSelector } from '../../utils/hooks'
-import { convertToBase64 } from '../../utils/uploadImages/ConvertToBase64'
 
 import s from './Profile.module.css'
 

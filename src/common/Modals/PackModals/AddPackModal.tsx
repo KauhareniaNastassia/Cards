@@ -3,7 +3,7 @@ import React, { ChangeEvent, useState } from 'react'
 import TextField from '@mui/material/TextField/TextField'
 
 import defaultPackCover from '../../../assets/picture/noImage.jpg'
-import { InputTypeFile } from '../../../utils/uploadImages/InputTypeFile'
+import { InputTypeFile } from '../../utils/uploadImages/InputTypeFile'
 import { BasicModal } from '../Basic Modal/BasicModal'
 import { ButtonBlockForModals } from '../ButtonBlockForModals/ButtonBlockForModals'
 

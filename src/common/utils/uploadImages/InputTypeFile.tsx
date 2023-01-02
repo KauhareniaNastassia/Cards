@@ -2,7 +2,7 @@ import React, { ChangeEvent } from 'react'
 
 import { Button } from '@mui/material'
 
-import { SetAppErrorAC } from '../../redux/app-reducer'
+import { SetAppErrorAC } from '../../../redux/app-reducer'
 import { useAppDispatch } from '../hooks'
 
 import { convertToBase64 } from './ConvertToBase64'

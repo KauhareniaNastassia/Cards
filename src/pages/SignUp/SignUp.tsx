@@ -9,9 +9,9 @@ import { RegistrationRequestDataType } from '../../api/auth-API'
 import { PATH } from '../../app/App'
 import s from '../../assets/styles/FormsStyle.module.css'
 import InputPassword from '../../common/InputFromMUI/InputPassword'
+import { useAppDispatch, useAppSelector } from '../../common/utils/hooks'
+import { validateUtil } from '../../common/utils/validate'
 import { RegisterMeTC } from '../../redux/auth-reducer'
-import { useAppDispatch, useAppSelector } from '../../utils/hooks'
-import { validateUtil } from '../../utils/validate'
 
 export const SignUp = () => {
   const loading = useAppSelector(state => state.app.status)

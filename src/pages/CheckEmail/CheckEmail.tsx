@@ -5,7 +5,7 @@ import { Link, Navigate } from 'react-router-dom'
 import { PATH } from '../../app/App'
 import checkEmailLogo from '../../assets/picture/CheckEmail.png'
 import s from '../../assets/styles/FormsStyle.module.css'
-import { useAppSelector } from '../../utils/hooks'
+import { useAppSelector } from '../../common/utils/hooks'
 
 export const CheckEmail = () => {
   const emailRecovery = useAppSelector(store => store.auth.emailRecovery)

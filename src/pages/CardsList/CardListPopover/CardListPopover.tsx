@@ -9,11 +9,11 @@ import { Link, useNavigate, useParams } from 'react-router-dom'
 
 import { cardsAPI } from '../../../api/cards-API'
 import { PATH } from '../../../app/App'
-import SuperButton from '../../../common/Button/SuperButton/SuperButton'
 import { DeletePackModal } from '../../../common/Modals/PackModals/DeletePackModal'
 import { EditPackModal } from '../../../common/Modals/PackModals/EditPackModal'
+import SuperButton from '../../../common/SuperButton/SuperButton'
+import { useAppDispatch, useAppSelector } from '../../../common/utils/hooks'
 import { setCardsTC } from '../../../redux/cards-reducer'
-import { useAppDispatch, useAppSelector } from '../../../utils/hooks'
 
 import s from './CardListPopover.module.css'
 

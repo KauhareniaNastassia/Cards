@@ -1,5 +1,5 @@
 import { AddNewPackDataType, cardsAPI, PacksType, UpdatePackDataType } from '../api/cards-API'
-import { handleServerNetworkError } from '../utils/error-handler'
+import { handleServerNetworkError } from '../common/utils/error-handler'
 
 import { setAppStatusAC, SetAppSuccessAC } from './app-reducer'
 import { AppThunkType } from './store'

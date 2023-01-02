@@ -8,11 +8,12 @@ import { Route, Routes } from 'react-router-dom'
 import { darkTheme, LightTheme } from '../assets/styles/theme'
 import t from '../assets/styles/ThemeStyles.module.css'
 import NotificationBar from '../common/Notification/NotificationBar'
+import { useAppDispatch, useAppSelector } from '../common/utils/hooks'
 import { Header } from '../components/Header/Header'
-import { Home } from '../components/Home/Home'
 import { CardsList } from '../pages/CardsList/CardsList'
 import { CheckEmail } from '../pages/CheckEmail/CheckEmail'
 import { CreateNewPassword } from '../pages/CreateNewPassword/CreateNewPassword'
+import { Home } from '../pages/Home/Home'
 import { Learn } from '../pages/Learn/Learn'
 import { Login } from '../pages/Login/Login'
 import { PackList } from '../pages/PackList/PackList'
@@ -22,7 +23,6 @@ import { Profile } from '../pages/Profile/Profile'
 import { SignUp } from '../pages/SignUp/SignUp'
 import { AppThemeType, initializeAppTC, SetAppThemeAC } from '../redux/app-reducer'
 import { loadState } from '../redux/localStorage'
-import { useAppDispatch, useAppSelector } from '../utils/hooks'
 
 export const PATH = {
   home: '/',
@@ -76,7 +76,6 @@ function App() {
             <Route path={PATH.packList} element={<PackList />} />
             <Route path={PATH.pack} element={<CardsList />} />
           </Routes>
-
           <NotificationBar />
         </div>
       </ThemeProvider>

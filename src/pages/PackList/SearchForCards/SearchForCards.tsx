@@ -7,8 +7,8 @@ import { Link } from 'react-router-dom'
 
 import { PATH } from '../../../app/App'
 import { AddCardModal } from '../../../common/Modals/CardModals/AddCardModal'
+import { useAppDispatch, useAppSelector } from '../../../common/utils/hooks'
 import { addNewCardTC } from '../../../redux/cards-reducer'
-import { useAppDispatch, useAppSelector } from '../../../utils/hooks'
 
 import s from './SearchForCards.module.css'
 

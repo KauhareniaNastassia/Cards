@@ -4,7 +4,7 @@ import MuiAlert, { AlertProps } from '@mui/material/Alert'
 import Snackbar from '@mui/material/Snackbar'
 
 import { SetAppErrorAC, SetAppSuccessAC } from '../../redux/app-reducer'
-import { useAppDispatch, useAppSelector } from '../../utils/hooks'
+import { useAppDispatch, useAppSelector } from '../utils/hooks'
 
 const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />

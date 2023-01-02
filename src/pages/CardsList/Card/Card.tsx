@@ -9,8 +9,8 @@ import dayjs from 'dayjs'
 import { CardPackType } from '../../../api/cards-API'
 import { DeleteCardModal } from '../../../common/Modals/CardModals/DeleteCardModal'
 import { EditCardModal } from '../../../common/Modals/CardModals/EditCardModal'
+import { useAppDispatch, useAppSelector } from '../../../common/utils/hooks'
 import { deleteCardTC, updateCardTC } from '../../../redux/cards-reducer'
-import { useAppDispatch, useAppSelector } from '../../../utils/hooks'
 
 const StyledTableCellRow = styled(TableCell)(({}) => ({
   [`&.${tableCellClasses.body}`]: {

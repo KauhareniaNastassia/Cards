@@ -5,17 +5,17 @@ import { Navigate, useSearchParams } from 'react-router-dom'
 
 import { PATH } from '../../app/App'
 import { AddPackModal } from '../../common/Modals/PackModals/AddPackModal'
-import { PaginationBar } from '../../common/PaginationBar/PaginationBar'
+import { filterAllParams } from '../../common/utils/filterParams'
+import { useAppDispatch, useAppSelector } from '../../common/utils/hooks'
+import { useDebounce } from '../../common/utils/useDebounce'
 import { FilterBar } from '../../components/FilterBar/FilterBar'
+import { PaginationBar } from '../../components/PaginationBar/PaginationBar'
 import {
   addNewPackTC,
   getPacksTC,
   setShowPackCardsAC,
   updateUrlParamsAC,
 } from '../../redux/pack-reducer'
-import { filterAllParams } from '../../utils/filterParams'
-import { useAppDispatch, useAppSelector } from '../../utils/hooks'
-import { useDebounce } from '../../utils/useDebounce'
 
 import s from './PackList.module.css'
 import { TableContainerPacks } from './TableContainerPacks/TableContainerPacks'

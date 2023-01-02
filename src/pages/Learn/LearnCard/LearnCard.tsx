@@ -5,8 +5,8 @@ import FormControlLabel from '@mui/material/FormControlLabel'
 import Radio from '@mui/material/Radio'
 
 import { CardPackType } from '../../../api/cards-API'
+import { useAppDispatch, useAppSelector } from '../../../common/utils/hooks'
 import { createLearnCardsTC } from '../../../redux/cards-reducer'
-import { useAppDispatch, useAppSelector } from '../../../utils/hooks'
 import { getCard } from '../GetCardSmartRandom/getCardSmartRandom'
 import s from '../Learn.module.css'
 

@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom'
 
 import { CardPackType } from '../../api/cards-API'
 import { BackToPackList } from '../../common/BackArrow/BackToPackList'
-import { useAppDispatch, useAppSelector } from '../../utils/hooks'
+import { useAppDispatch, useAppSelector } from '../../common/utils/hooks'
 
 import { getCard } from './GetCardSmartRandom/getCardSmartRandom'
 import s from './Learn.module.css'

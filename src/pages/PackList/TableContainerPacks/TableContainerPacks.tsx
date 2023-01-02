@@ -10,7 +10,7 @@ import {
   TableRow,
 } from '@mui/material'
 
-import { useAppSelector } from '../../../utils/hooks'
+import { useAppSelector } from '../../../common/utils/hooks'
 import { Pack } from '../Pack/Pack'
 
 import s from './TableContainer.module.css'

@@ -4,7 +4,7 @@ import { CircularProgress } from '@mui/material'
 import { Navigate } from 'react-router-dom'
 
 import { PATH } from '../../app/App'
-import { useAppSelector } from '../../utils/hooks'
+import { useAppSelector } from '../../common/utils/hooks'
 
 export const Home = () => {
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)

@@ -4,8 +4,8 @@ import FilterAltOffOutlinedIcon from '@mui/icons-material/FilterAltOffOutlined'
 import { Button, IconButton } from '@mui/material'
 
 import { SliderFromMateUI } from '../../common/SliderFromMateUI/SliderFromMateUI'
+import { useAppDispatch, useAppSelector } from '../../common/utils/hooks'
 import { setShowPackCardsAC } from '../../redux/pack-reducer'
-import { useAppDispatch, useAppSelector } from '../../utils/hooks'
 
 import s from './FilterBar.module.css'
 import { SearchBar } from './Search/Search'

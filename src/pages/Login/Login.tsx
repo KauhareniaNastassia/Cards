@@ -9,9 +9,9 @@ import { LogInRequestDataType } from '../../api/auth-API'
 import { PATH } from '../../app/App'
 import t from '../../assets/styles/ThemeStyles.module.css'
 import InputPassword from '../../common/InputFromMUI/InputPassword'
+import { useAppDispatch, useAppSelector } from '../../common/utils/hooks'
+import { validateUtil } from '../../common/utils/validate'
 import { loginTC } from '../../redux/auth-reducer'
-import { useAppDispatch, useAppSelector } from '../../utils/hooks'
-import { validateUtil } from '../../utils/validate'
 
 import s from './Login.module.css'
 

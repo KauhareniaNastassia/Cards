@@ -14,9 +14,9 @@ import { PATH } from '../../../app/App'
 import defaultPackCover from '../../../assets/picture/noImage.jpg'
 import { DeletePackModal } from '../../../common/Modals/PackModals/DeletePackModal'
 import { EditPackModal } from '../../../common/Modals/PackModals/EditPackModal'
+import { useAppDispatch, useAppSelector } from '../../../common/utils/hooks'
 import { setCardsTC } from '../../../redux/cards-reducer'
 import { deletePackTC, updatePackTC } from '../../../redux/pack-reducer'
-import { useAppDispatch, useAppSelector } from '../../../utils/hooks'
 import s from '../PackList.module.css'
 
 export const Pack = memo((props: PacksType) => {

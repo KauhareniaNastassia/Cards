@@ -7,9 +7,9 @@ import { Link, Navigate } from 'react-router-dom'
 
 import { PATH } from '../../app/App'
 import s from '../../assets/styles/FormsStyle.module.css'
+import { useAppDispatch, useAppSelector } from '../../common/utils/hooks'
+import { validateUtil } from '../../common/utils/validate'
 import { PasswordRecoveryTC } from '../../redux/auth-reducer'
-import { useAppDispatch, useAppSelector } from '../../utils/hooks'
-import { validateUtil } from '../../utils/validate'
 
 export const PasswordRecovery = () => {
   const dispatch = useAppDispatch()

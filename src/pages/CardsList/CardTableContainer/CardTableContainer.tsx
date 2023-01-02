@@ -8,7 +8,7 @@ import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 
-import { useAppSelector } from '../../../utils/hooks'
+import { useAppSelector } from '../../../common/utils/hooks'
 import { Card } from '../Card/Card'
 import s from '../CardsList.module.css'
 
