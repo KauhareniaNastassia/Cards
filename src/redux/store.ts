@@ -1,4 +1,4 @@
-import { applyMiddleware, combineReducers, legacy_createStore as createStore } from 'redux'
+import { applyMiddleware, combineReducers, compose, legacy_createStore as createStore } from 'redux'
 import thunk, { ThunkAction, ThunkDispatch } from 'redux-thunk'
 
 import { appReducer, AppReducerAT } from './app-reducer'
@@ -15,7 +15,10 @@ const RootReducer = combineReducers({
   cards: cardsReducer,
 })
 
-export const store = createStore(RootReducer, applyMiddleware(thunk))
+// @ts-ignore
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+
+export const store = createStore(RootReducer, composeEnhancers(applyMiddleware(thunk)))
 
 export type AppRootStateType = ReturnType<typeof RootReducer>
 export type AppActionsType =
