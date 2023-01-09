@@ -5,7 +5,7 @@ import {
   RegistrationRequestDataType,
   SetNewPasswordDataType,
 } from '../api/auth-API'
-import { handleServerNetworkError } from '../utils/error-handler'
+import { handleServerNetworkError } from '../common/utils/error-handler'
 
 import { setAppStatusAC, SetAppSuccessAC } from './app-reducer'
 import { setUserProfile } from './profile-reducer'

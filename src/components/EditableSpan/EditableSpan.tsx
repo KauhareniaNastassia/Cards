@@ -4,8 +4,6 @@ import EditIcon from '@mui/icons-material/Edit'
 import { Button } from '@mui/material'
 import TextField from '@mui/material/TextField'
 
-import { useAppDispatch } from '../../utils/hooks'
-
 import s from './EditableSpan.module.css'
 
 type EditableSpanPropsType = {

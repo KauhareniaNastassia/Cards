@@ -7,7 +7,7 @@ import {
   UpdateCardDataType,
   UpdatedGradeCartType,
 } from '../api/cards-API'
-import { handleServerNetworkError } from '../utils/error-handler'
+import { handleServerNetworkError } from '../common/utils/error-handler'
 
 import { setAppStatusAC } from './app-reducer'
 import { AppThunkType } from './store'

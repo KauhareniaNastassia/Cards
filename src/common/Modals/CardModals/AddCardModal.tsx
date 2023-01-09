@@ -6,7 +6,7 @@ import InputLabel from '@mui/material/InputLabel/InputLabel'
 import TextField from '@mui/material/TextField/TextField'
 import { useParams } from 'react-router-dom'
 
-import { InputTypeFile } from '../../../utils/uploadImages/InputTypeFile'
+import { InputTypeFile } from '../../utils/uploadImages/InputTypeFile'
 import { BasicModal } from '../Basic Modal/BasicModal'
 import { ButtonBlockForModals } from '../ButtonBlockForModals/ButtonBlockForModals'
 

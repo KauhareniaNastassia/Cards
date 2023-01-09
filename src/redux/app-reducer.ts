@@ -1,5 +1,5 @@
 import { authAPI } from '../api/auth-API'
-import { handleServerNetworkError } from '../utils/error-handler'
+import { handleServerNetworkError } from '../common/utils/error-handler'
 
 import { isLoggedInAC } from './auth-reducer'
 import { setUserProfile } from './profile-reducer'
