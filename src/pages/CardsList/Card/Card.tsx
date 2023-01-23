@@ -56,13 +56,20 @@ export const Card = (props: CardPropsType) => {
     setOpenEditCardModal(true)
   }
 
-  const editCard = (newQuestion: string, newAnswer: string) => {
+  const editCard = (
+    newQuestion: string,
+    newAnswer: string,
+    newQuestionImg: string,
+    newAnswerImg: string
+  ) => {
     dispatch(
       updateCardTC({
         card: {
           _id: props.card._id,
           answer: newAnswer,
           question: newQuestion,
+          questionImg: newQuestionImg,
+          answerImg: newAnswerImg,
         },
       })
     )
@@ -115,6 +122,9 @@ export const Card = (props: CardPropsType) => {
           title="Edit Card"
           cardQuestion={props.card.question}
           cardAnswer={props.card.answer}
+          cardQuestionImg={props.card.questionImg}
+          cardAnswerImg={props.card.answerImg}
+          questionType={props.card.type}
           open={openEditCardModal}
           toggleOpenMode={setOpenEditCardModal}
           editItem={editCard}
@@ -122,6 +132,7 @@ export const Card = (props: CardPropsType) => {
         <DeleteCardModal
           title="Delete Card"
           question={props.card.question}
+          cardQuestionImg={props.card.questionImg}
           open={openDeleteCardModal}
           toggleOpenMode={setOpenDeleteCardModal}
           deleteItem={deleteCard}

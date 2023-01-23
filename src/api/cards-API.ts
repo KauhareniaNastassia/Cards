@@ -83,7 +83,7 @@ export type UpdatedCardType = {
   grade: number
   shots: number
   comments: string
-  type: string
+  type: QuestionType
   rating: number
   more_id: string
   created: string
@@ -109,8 +109,10 @@ export type UpdateCardDataType = {
     grade?: number
     comments?: string
     rating?: number
+    type?: QuestionType
   }
 }
+export type QuestionType = 'Text' | 'Image'
 export type DeleteCardResponseType = {
   deletedCard: DeletedCardType
   token: string

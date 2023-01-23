@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 
 import { useParams } from 'react-router-dom'
 
-import { CardPackType } from '../../api/cards-API'
+import { CardPackType, QuestionType } from '../../api/cards-API'
 import { BackToPackList } from '../../common/BackArrow/BackToPackList'
 import { useAppDispatch, useAppSelector } from '../../common/utils/hooks'
 
