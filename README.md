@@ -24,3 +24,5 @@
 
 ![Image alt](https://github.com/KauhareniaNastassia/Cards/raw/main/src/assets/screenshots/cards.png)
 ![Image alt](https://github.com/KauhareniaNastassia/Cards/raw/main/src/assets/screenshots/questionAnswer.png)
+
+## Good luck in learning with Cards!
