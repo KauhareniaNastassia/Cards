@@ -4,6 +4,23 @@
 
 ### [Just try it!](https://kauharenianastassia.github.io/Cards/)
 
-For test this app use 
-email: t53035877@gmail.com 
-password: 12345678
+## We provide an initialization profile for test, but you can also register in the system yourself.
+
+![Image alt](https://github.com/KauhareniaNastassia/Cards/raw/main/src/assets/screenshots/login.png)
+
+### When you sign in, you have the opportunity to view the packs of cards for training (by clicking ''Back to back list''), change your profile (avatar and name).
+
+![Image alt](https://github.com/KauhareniaNastassia/Cards/raw/main/src/assets/screenshots/profile.png)
+
+### When you see the pack table, you can select one for training and click the icon for training. You can also create a pack yourself by filling it with cards (text or pictures).
+
+![Image alt](https://github.com/KauhareniaNastassia/Cards/raw/main/src/assets/screenshots/learn.png)
+
+### You can also view your pack by clicking on its name. Inside it is a menu for editing and learning. If the pack was created by another user, you cannot edit it, only training.
+
+![Image alt](https://github.com/KauhareniaNastassia/Cards/raw/main/src/assets/screenshots/pack.png)
+
+### The learning logic is implemented so that you receive more often those questions, that you did not know the answers to during the previous passage of the pack with cards.
+
+![Image alt](https://github.com/KauhareniaNastassia/Cards/raw/main/src/assets/screenshots/cards.png)
+![Image alt](https://github.com/KauhareniaNastassia/Cards/raw/main/src/assets/screenshots/questionAnswer.png)
