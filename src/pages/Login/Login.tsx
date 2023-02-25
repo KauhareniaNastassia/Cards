@@ -22,8 +22,8 @@ export const Login = () => {
   const theme = useAppSelector(state => state.app.theme)
   const formik = useFormik({
     initialValues: {
-      email: '',
-      password: '',
+      email: 'nya-admin@nya.nya',
+      password: '1qazxcvBG',
       rememberMe: false,
     },
     validate: validateUtil,
