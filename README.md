@@ -8,7 +8,7 @@
 
 ![Image alt](https://github.com/KauhareniaNastassia/Cards/raw/main/src/assets/screenshots/login.png)
 
-### When you sign in, you have the opportunity to view the packs of cards for training (by clicking ''Back to back list''), change your profile (avatar and name).
+### When you sign in, you have the opportunity to view the packs of cards for training (by clicking 'Back to pack list'), change your profile (avatar and name).
 
 ![Image alt](https://github.com/KauhareniaNastassia/Cards/raw/main/src/assets/screenshots/profile.png)
 
