@@ -35,3 +35,12 @@ h3 {
   border: 1px solid #d9d9d9;
   border-radius: 5px;
 }
+
+@media only screen and (max-width: 890px) {
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
