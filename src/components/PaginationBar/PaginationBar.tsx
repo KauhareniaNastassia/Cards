@@ -1,6 +1,6 @@
-import React, { ChangeEvent } from 'react'
+import React from 'react'
 
-import NativeSelect from '@mui/material/NativeSelect'
+import { MenuItem, Select, SelectChangeEvent } from '@mui/material'
 import Pagination from '@mui/material/Pagination'
 
 import s from './paginationBar.module.css'
@@ -15,8 +15,8 @@ type PropsType = {
 }
 
 export const PaginationBar = (props: PropsType) => {
-  const pageCountHandler = (e: ChangeEvent<HTMLSelectElement>) => {
-    props.pageCountHandler(e.currentTarget.value)
+  const pageCountHandler = (e: SelectChangeEvent) => {
+    props.pageCountHandler(e.target.value as string)
   }
   const handleChangePage = (event: unknown, page: number) => {
     props.handleChangePage(page)
@@ -31,15 +31,17 @@ export const PaginationBar = (props: PropsType) => {
         onChange={handleChangePage}
         count={props.paginationPages}
       />
-      <span>Show</span>
-      <NativeSelect value={props.pageCount} onChange={pageCountHandler}>
-        {props.selectOption.map((option, index) => (
-          <option key={index} value={option}>
-            {option}
-          </option>
-        ))}
-      </NativeSelect>
-      <span>Cards per page</span>
+      <div className={s.select}>
+        <span>Show</span>
+        <Select value={props.pageCount.toString()} onChange={pageCountHandler}>
+          {props.selectOption.map((option, index) => (
+            <MenuItem key={index} value={option}>
+              {option}
+            </MenuItem>
+          ))}
+        </Select>
+        <span>Cards per page</span>
+      </div>
     </div>
   )
 }

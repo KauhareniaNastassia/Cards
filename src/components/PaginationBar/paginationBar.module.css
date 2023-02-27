@@ -9,3 +9,16 @@
     font-size: 14px;
     font-weight: bold;
 }
+.select {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+}
+
+@media only screen and (max-width: 600px) {
+    .wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+}

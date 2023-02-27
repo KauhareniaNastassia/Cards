@@ -19,7 +19,7 @@ export const ToggleThemeButton = () => {
   }
 
   return (
-    <div>
+    <div className={s.wrapper}>
       <input id={s.toggle_checkbox} type="checkbox" checked={theme === 'light'} />
       <label onClick={HandleChangeTheme} className={s.label} htmlFor="toggle_checkbox">
         <div id={s.star}>

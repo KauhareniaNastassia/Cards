@@ -19,6 +19,14 @@ export const LightTheme = createTheme({
           overflow: 'hidden',
           textOverflow: 'ellipsis',
           whiteSpace: 'nowrap',
+          maxWidth: '100px',
+        },
+      },
+    },
+    MuiSelect: {
+      styleOverrides: {
+        select: {
+          padding: '5px 10px',
         },
       },
     },
@@ -32,13 +40,6 @@ export const darkTheme = createTheme({
     },
   },
   components: {
-    MuiModal: {
-      defaultProps: {
-        style: {
-          backgroundColor: '#28282B',
-        },
-      },
-    },
     MuiIconButton: {
       defaultProps: {
         style: {
@@ -76,10 +77,23 @@ export const darkTheme = createTheme({
         },
       },
     },
-    MuiNativeSelect: {
+    MuiSelect: {
       defaultProps: {
         style: {
           color: common.white,
+        },
+      },
+      styleOverrides: {
+        select: {
+          padding: '5px 10px',
+        },
+      },
+    },
+    MuiMenuItem: {
+      defaultProps: {
+        style: {
+          color: common.white,
+          backgroundColor: common.black,
         },
       },
     },
