@@ -8,11 +8,11 @@
 
 ![Image alt](https://github.com/KauhareniaNastassia/Cards/raw/main/src/assets/screenshots/login.png)
 
-### When you sign in, you have the opportunity to view the packs of cards for training (by clicking 'Back to pack list'), change your profile (avatar and name).
+### When you sign in, you have the opportunity to view the packs of cards for training (by clicking 'Back to pack list'), change your profile (avatar and name). Also, if you can sign in, you will see a positive notification.
 
 ![Image alt](https://github.com/KauhareniaNastassia/Cards/raw/main/src/assets/screenshots/profile.png)
 
-### When you see the pack table, you can select one for training and click the icon for training. You can also create a pack yourself by filling it with cards (text or pictures). You can change the theme in the app, search for the right packs by name in the search, filter the packs by the number of cards.
+### When you see the pack table, you can select one for training and click the icon for training. You can also create a pack yourself by filling it with cards (text or pictures). You can change the theme in the app, search for the right packs by name in the search, filter the packs by the number of cards, change background theme and etc.
 
 ![Image alt](https://github.com/KauhareniaNastassia/Cards/raw/main/src/assets/screenshots/learn.png)
 
